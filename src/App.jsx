@@ -1,34 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { pink, green, blueGrey, teal } from '@mui/material/colors';
+import LandingPage from "./pages/LandingPage/LandingPage";
+// import ResponsiveAppBar from "./components/Navbar/Nabvar";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#f178b6",
+      light: "#ffaae8",
+      dark: "#bc4786",
+    },
+    secondary: {
+      main: green[500],
+    },
+    info: {
+      main: pink[200],
+    },
+    warning: {
+      main: green[100],
+    },
+    success:{
+      main: green[300],
+    }
+  },
+});
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            {/* <Route path="dashboard" >
+              <Route index element={<Home />} />
+              <Route path="home" element={<Home />}></Route>
+              <Route path="dietplans" element={<DietPlans />}></Route>
+              <Route path="manage" element={<Manage />}></Route>
+              <Route path="settings" element={<Settings />}></Route>
+            </Route>
+            <Route path="admin">
+              <Route index element={<AdminHome />} />
+              <Route path="home" element={<Home />}></Route>
+              <Route path="foodlist" element={<FoodList />}></Route>
+              <Route path="settings" element={<Settings />}></Route>
+            </Route> */}
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
