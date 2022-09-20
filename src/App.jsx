@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { pink, green, blueGrey, teal } from '@mui/material/colors';
 import LandingPage from "./pages/LandingPage/LandingPage";
+import FoodListUser from "./pages/FoodListUser/FoodListUser";
 // import ResponsiveAppBar from "./components/Navbar/Nabvar";
 
 const theme = createTheme({
@@ -34,7 +35,7 @@ function App() {
       <BrowserRouter>
         <div className="App">
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<FoodListUser />} />
             {/* <Route path="dashboard" >
               <Route index element={<Home />} />
               <Route path="home" element={<Home />}></Route>
