@@ -3,7 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { pink, green, blueGrey, teal } from '@mui/material/colors';
-import LandingPage from "./pages/LandingPage/LandingPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 import FoodListUser from "./pages/FoodListUser/FoodListUser";
 import FoodListAdmin from "./pages/Admin/FoodListAdmin";
 import MainAdmin from "./pages/Admin/MainAdmin";
@@ -39,7 +40,11 @@ function App() {
       <BrowserRouter>
         <div className="App">
           <Routes>
+
             <Route path="/" element={<HomeUser />} />
+
+            <Route path="/" element={<SignUpPage />} />
+
             {/* <Route path="dashboard" >
               <Route index element={<Home />} />
               <Route path="home" element={<Home />}></Route>

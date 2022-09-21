@@ -1,0 +1,35 @@
+.landingContainer{
+    margin: 10vh 10vw;
+}
+
+.landingCard{
+display: flex;
+flex-direction: row;
+align-items: center;
+background-color: #fff;
+padding: 3vh 5vw;
+margin-bottom: 10vh;
+}
+
+.landingDesc{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: larger;
+}
+
+.landingCardImg{
+    height: 35vh;
+    margin: 0 3vw 0 3vw;
+}
+
+@media screen and (max-width: 1000px) {
+  .landingCard{
+flex-direction: column;
+}
+.landingCardImg{
+    margin-top: 3vh;
+}
+}
