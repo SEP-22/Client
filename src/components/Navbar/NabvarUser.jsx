@@ -42,7 +42,7 @@ const ResponsiveAppBar = () => {
           <Avatar
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
             alt="logo"
-            src="src\assets\images\logo.png"
+            src="/src/assets/images/logo.png"
           />
           <Typography
             variant="h5"
@@ -101,7 +101,7 @@ const ResponsiveAppBar = () => {
           <Avatar
             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
             alt="logo"
-            src="src\assets\images\logo.png"
+            src="/src/assets/images/logo.png"
           />
 
           <Typography

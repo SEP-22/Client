@@ -5,6 +5,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { pink, green, blueGrey, teal } from '@mui/material/colors';
 import LandingPage from "./pages/LandingPage/LandingPage";
 import FoodListUser from "./pages/FoodListUser/FoodListUser";
+import FoodListAdmin from "./pages/Admin/FoodListAdmin";
+import MainAdmin from "./pages/Admin/MainAdmin";
+import HomeAdmin from "./pages/Admin/HomeAdmin";
+import HomeUser from "./pages/FoodListUser/HomeUser";
 // import ResponsiveAppBar from "./components/Navbar/Nabvar";
 
 const theme = createTheme({
@@ -35,7 +39,7 @@ function App() {
       <BrowserRouter>
         <div className="App">
           <Routes>
-            <Route path="/" element={<FoodListUser />} />
+            <Route path="/" element={<HomeUser />} />
             {/* <Route path="dashboard" >
               <Route index element={<Home />} />
               <Route path="home" element={<Home />}></Route>
@@ -49,6 +53,11 @@ function App() {
               <Route path="foodlist" element={<FoodList />}></Route>
               <Route path="settings" element={<Settings />}></Route>
             </Route> */}
+            <Route path="admin" element={<MainAdmin/>}>
+              <Route index element={<HomeAdmin/>}/>
+              <Route path="home" element={<HomeAdmin/>}/>
+              <Route path="foodlist" element={<FoodListAdmin/>}/>
+            </Route>
           </Routes>
         </div>
       </BrowserRouter>

@@ -16,7 +16,7 @@ import { Typography } from "@mui/material";
 
 export default function FixedBottomNavigation() {
   return (
-    <Box sx={{ pb: 7 }}>
+    <Box sx={{ pb: 10 }}>
       <Paper
         sx={{ position:"fixed", bottom: 0, left: 0, right: 0, minHeight: "10vh" }}
         elevation={3}

@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import NutrientTable from "./NutrientTable";
 import ReactCardFlip from "react-card-flip";
-import Switch from '@mui/material/Switch';
 
 const FoodList = {
   Food: "Ice cream",
@@ -23,7 +22,7 @@ const FoodList = {
   Image: "src/assets/images/foods/icecream.jpg",
 };
 
-export default function FoodCard(props) {
+export default function FoodCardAdmin(props) {
   const [Flipped, setFlipped] = useState(false);
   const FoodItem = props.foodItem;
 
@@ -37,13 +36,13 @@ export default function FoodCard(props) {
 
   return (
     <ReactCardFlip isFlipped={Flipped} flipDirection="vertical">
-      <Card sx={{ maxWidth: "30vw", minHeight: "60vh", m: 2 }}>
+      <Card sx={{ maxWidth:"300", m: 2 , }}>
         <CardMedia
-          sx={{position:"cover"}}
+        sx={{}}
           component="img"
           alt={FoodItem.Food}
           width="100%"
-          height="200vh"
+          height="200"
           image={FoodItem.Image}
           loading="lazy"
         />
@@ -69,11 +68,8 @@ export default function FoodCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Switch
-            checked={true}
-            // onChange={}
-            inputProps={{ "aria-label": "controlled" }}
-          />
+          <Button size="small">Edit</Button>
+          <Button size="small">Remove</Button>
         </CardActions>
       </Card>
 

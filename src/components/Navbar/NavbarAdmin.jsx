@@ -11,9 +11,13 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import { NavLink } from "react-router-dom";
 
-const buttons = [ ["Login", "success"] , ["SignUp" , "primary"]];
+const pages = [
+  ["HOME", "home"],
+  ["FOOD LIST", "foodlist"],
+];
+const settings = ["Profile", "Logout"];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -90,9 +94,15 @@ const ResponsiveAppBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {buttons.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {pages.map((page) => (
+                <MenuItem
+                  className="nav-link"
+                  component={NavLink}
+                  to={page[1]}
+                  key={page[0]}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography textAlign="center">{page[0]}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -122,17 +132,50 @@ const ResponsiveAppBar = () => {
             EatSmart
           </Typography>
           <Box sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
-            {buttons.map((btn) => (
+            {pages.map((page) => (
+              // <NavLink style={{ color: "transparent" }} className="nav-link"  to={page[1]}>
               <Button
-                variant="contained"
-                color={btn[1]}
-                key={btn[0]}
+                className="nav-link"
+                component={NavLink}
+                to={page[1]}
+                key={page[0]}
                 onClick={handleCloseNavMenu}
-                sx={{ m: 2, color: "black", display: "block" }}
+                sx={{ my: 2, color: "black", display: "block" }}
               >
-                {btn[0]}
+                {page[0]}
               </Button>
+              // </NavLink>
             ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="User" src="/src/assets/admin.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
           </Box>
         </Toolbar>
       </Container>

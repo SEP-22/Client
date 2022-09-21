@@ -43,3 +43,9 @@
 .App{
   background-color: #e8f5e9;
 }
+
+a.nav-link.active{
+  font-weight: bolder;
+  /* font-style: italic; */
+}
+
