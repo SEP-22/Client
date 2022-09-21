@@ -11,6 +11,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { styled } from "@mui/material/styles";
 
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
   ...theme.typography.body2,
@@ -66,10 +67,12 @@ export default function GuideUserFoodList() {
         }}
       >
         <Paper sx={{ m: 4, p: 4, alignItems: "center" }}>
-          <Grid  >
+          <Grid>
             <Grid item xs={12}>
               <Item elevation={0}>
-                <Button  sx={{ width: "30vw" }} variant="contained">Add new Food</Button>
+                <Button sx={{ width: "30vw" }} variant="contained" >
+                  Add new Food
+                </Button>
               </Item>
             </Grid>
             <Grid item xs={12}>

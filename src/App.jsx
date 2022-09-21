@@ -43,7 +43,7 @@ function App() {
 
             <Route path="/" element={<HomeUser />} />
 
-            <Route path="/" element={<SignUpPage />} />
+            {/* <Route path="/" element={<LoginPage />} /> */}
 
             {/* <Route path="dashboard" >
               <Route index element={<Home />} />
