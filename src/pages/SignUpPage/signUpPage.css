@@ -1,11 +1,11 @@
-.loginContainer{
+.signUpContainer{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-.loginFormContainer{
+.signUpFormContainer{
     background-color: #fff;
     padding: 0 7vw 3vh 7vw;
     width: 25vw;
@@ -23,7 +23,7 @@
     color: #4CAF50;
 }
 
-.loginTitle{
+.signUpTitle{
     font-size: larger;
     font-weight: bold;
 }
