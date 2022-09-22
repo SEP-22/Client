@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import Navbar from "../../components/Navbar/NabvarUser";
 import Footer from "../../components/Footer/Footer";
 import Button from "@mui/material/Button";
-import FoodCard from "../../components/FoodCard/FoodCard";
+import FoodCard from "../../components/FoodCard/FoodCardUser";
 import NavbarLanding from "../../components/Navbar/NavbarLanding";
 import LandingImg1 from "../../assets/images/LandingPic1.png"
 import LandingImg2 from "../../assets/images/LandingPic2.png";

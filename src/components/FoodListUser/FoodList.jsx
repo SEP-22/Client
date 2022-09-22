@@ -136,7 +136,7 @@ const Vegetables = [
     Fiber: 0,
     Carbs: 8,
     Category: "Vegetables",
-    Image: "/src/assets/images/foods/broccoli.jpg",
+    Image: "src/assets/images/foods/broccoli.jpg",
   },
   {
     Food: "Carrots",
@@ -148,7 +148,7 @@ const Vegetables = [
     Fiber: 9,
     Carbs: 10,
     Category: "Vegetables",
-    Image: "/src/assets/images/foods/carrot.jpg",
+    Image: "src/assets/images/foods/carrot.jpg",
   },
   {
     Food: "Corn",
@@ -160,7 +160,7 @@ const Vegetables = [
     Fiber: 0.8,
     Carbs: 21,
     Category: "Vegetables",
-    Image: "/src/assets/images/foods/corn.jpg",
+    Image: "src/assets/images/foods/corn.jpg",
   },
   {
     Food: "Potato",
@@ -172,7 +172,7 @@ const Vegetables = [
     Fiber: 1,
     Carbs: 36,
     Category: "Vegetables",
-    Image: "/src/assets/images/foods/potato.jpg",
+    Image: "src/assets/images/foods/potato.jpg",
   },
   {
     Food: "Tomato",
@@ -184,7 +184,7 @@ const Vegetables = [
     Fiber: 1,
     Carbs: 4.5,
     Category: "Vegetables",
-    Image: "/src/assets/images/foods/tomato.jpg",
+    Image: "src/assets/images/foods/tomato.jpg",
   },
 ];
 
@@ -199,7 +199,7 @@ const Fruits = [
     Fiber: 1,
     Carbs: 18,
     Category: "Fruits",
-    Image: "/src/assets/images/foods/apple.jpg",
+    Image: "src/assets/images/foods/apple.jpg",
   },
   {
     Food: "Avacado",
@@ -211,7 +211,7 @@ const Fruits = [
     Fiber: 3.6,
     Carbs: 12,
     Category: "Fruits",
-    Image: "/src/assets/images/foods/avacado.jpg",
+    Image: "src/assets/images/foods/avacado.jpg",
   },
   {
     Food: "Banana",
@@ -223,7 +223,7 @@ const Fruits = [
     Fiber: 0.9,
     Carbs: 23,
     Category: "Fruits",
-    Image: "/src/assets/images/foods/banana.jpg",
+    Image: "src/assets/images/foods/banana.jpg",
   },
 ];
 
@@ -238,7 +238,7 @@ const DairyProducts = [
     Fiber: 0,
     Carbs: 29,
     Category: "Dairy products",
-    Image: "/src/assets/images/foods/icecream.jpg",
+    Image: "src/assets/images/foods/icecream.jpg",
   },
 ];
 

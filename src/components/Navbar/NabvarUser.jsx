@@ -36,7 +36,8 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static" color="secondary">
+<Box>   
+   <AppBar position="fixed" color="secondary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Avatar
@@ -166,6 +167,8 @@ const ResponsiveAppBar = () => {
         </Toolbar>
       </Container>
     </AppBar>
+    <Toolbar></Toolbar>
+    </Box>
   );
 };
 export default ResponsiveAppBar;
