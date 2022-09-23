@@ -1,7 +1,13 @@
-import React from "react";
-import { Grid, Box, Paper, Typography, Button, Container } from "@mui/material";
+import * as React from "react";
 import { styled } from "@mui/material/styles";
+import { Grid, Box, Paper, Typography, Container } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import ReminderDialog from "./ReminderDialog";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -12,12 +18,24 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const ReminderList = [
-  ["Breakfast", "08.00 AM"],
-  ["Lunch", "01.00 PM"],
-  ["Dinner", "08.00 PM"],
+  ["BREAKFAST", true, "08.00 AM"],
+  ["LUNCH", true, "13:46"],
+  ["DINNER", true, "21:08"],
 ];
 
-const EditReminder = () => {
+
+export default function EditReminder() {
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  }; 
+
   return (
     <Box
       sx={{
@@ -64,20 +82,48 @@ const EditReminder = () => {
                 }}
               >
                 <Typography align="center" variant="body1">
-                  {reminder[0]}: {reminder[1]}
+                  {reminder[0]}: {reminder[2]}
                 </Typography>
               </Box>
             </Grid>
           ))}
           <Grid item xs={12} md={3}>
-            <Button variant="contained" color="success" sx={{ width: "100%" }}>
+            <Button variant="contained" color="success" sx={{ width: "100%" }} onClick={handleClickOpen} >
               Edit Reminders
             </Button>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>
+                <Box
+                  sx={{
+                    justifyContent: 'center',
+                    display: "flex",
+                    pr: 15,
+                    pl: 15,
+                    mb:2,
+                  }}
+                >
+                  <Typography mr={1} variant="h6">
+                    REMINDERS
+                  </Typography>
+                  <NotificationsActiveIcon
+                    sx={{ display: "flex", alignSelf: "center" }}
+                    fontSize="small"
+                  />
+                </Box>
+              </DialogTitle>
+              <DialogContent>
+                {ReminderList.map((reminder) => (
+                  <ReminderDialog key={reminder[0]} reminders={reminder}/>
+                ))}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={handleClose}>Set Reminders</Button>
+              </DialogActions>
+            </Dialog>
           </Grid>
         </Grid>
       </Container>
     </Box>
   );
 };
-
-export default EditReminder;

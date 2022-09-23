@@ -13,7 +13,7 @@ import "./landingPage.css"
 export default function LandingPage() {
   return (
     <>
-      <Navbar />
+      <NavbarLanding />
       <div className="landingContainer">
         <div className="landingCard">
           <div className="landingDesc">

@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Box, Paper, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import FoodCardAdmin from "../FoodCard/FoodCardAdmin";
+import FoodCardUser from "../FoodCard/FoodCardUser";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -70,7 +70,7 @@ export default function FoodList(props) {
             </Grid>
             {getArray(type).map((food) => (
               <Grid key={food.Food} item xs={12} md={3}>
-                <FoodCardAdmin foodItem={food} />
+                <FoodCardUser foodItem={food} />
               </Grid>
             ))}
           </>
@@ -92,6 +92,7 @@ const Vegetables_Fruits = [
     Carbs: 8,
     Category: "Vegetables",
     Image: "/src/assets/images/foods/broccoli.jpg",
+    Selected: true,
   },
   {
     Food: "Carrots",
@@ -104,6 +105,7 @@ const Vegetables_Fruits = [
     Carbs: 10,
     Category: "Vegetables",
     Image: "/src/assets/images/foods/carrot.jpg",
+    Selected: false,
   },
   {
     Food: "Corn",
@@ -116,6 +118,7 @@ const Vegetables_Fruits = [
     Carbs: 21,
     Category: "Vegetables",
     Image: "/src/assets/images/foods/corn.jpg",
+    Selected: true,
   },
   {
     Food: "Potato",
@@ -128,6 +131,7 @@ const Vegetables_Fruits = [
     Carbs: 36,
     Category: "Vegetables",
     Image: "/src/assets/images/foods/potato.jpg",
+    Selected: false,
   },
   {
     Food: "Tomato",
@@ -140,6 +144,7 @@ const Vegetables_Fruits = [
     Carbs: 4.5,
     Category: "Vegetables",
     Image: "/src/assets/images/foods/tomato.jpg",
+    Selected: true,
   },
   {
     Food: "Apple",
@@ -152,6 +157,7 @@ const Vegetables_Fruits = [
     Carbs: 18,
     Category: "Fruits",
     Image: "/src/assets/images/foods/apple.jpg",
+    Selected: true,
   },
   {
     Food: "Avacado",
@@ -164,6 +170,7 @@ const Vegetables_Fruits = [
     Carbs: 12,
     Category: "Fruits",
     Image: "/src/assets/images/foods/avacado.jpg",
+    Selected: false,
   },
   {
     Food: "Banana",
@@ -176,6 +183,7 @@ const Vegetables_Fruits = [
     Carbs: 23,
     Category: "Fruits",
     Image: "/src/assets/images/foods/banana.jpg",
+    Selected: true,
   },
 ];
 
@@ -191,6 +199,7 @@ const Dairy_Fat = [
     Carbs: 29,
     Category: "Dairy products",
     Image: "/src/assets/images/foods/icecream.jpg",
+    Selected: true,
   },
 ];
 

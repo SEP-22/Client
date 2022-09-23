@@ -12,8 +12,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import FoodCard from "../FoodCard/FoodCardUser";
-import FoodCardAdmin from "../FoodCard/FoodCardAdmin";
-import FoodListAdmin from "./FoodListAdmin";
+import FoodCardUser from "../FoodCard/FoodCardUser";
+import FoodListUser from "./FoodListUser";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -42,7 +42,6 @@ const Category = [
   "Sugar",
 ];
 
-
 function getStyles(name, foodCategory, theme) {
   return {
     fontWeight:
@@ -52,7 +51,7 @@ function getStyles(name, foodCategory, theme) {
   };
 }
 
-export default function GuideAdminFoodList() {
+export default function UserFoodList() {
   const navigate = useNavigate();
   const theme = useTheme();
   const [foodCategory, setFoodCategory] = React.useState([]);
@@ -79,19 +78,18 @@ export default function GuideAdminFoodList() {
           justifyContent: "center",
         }}
       >
-        <Paper sx={{ mt: 4, mb: 4, p: 4, alignItems: "center" , minWidth:250}}>
+        <Paper sx={{ mt: 4, mb: 4, p: 4, alignItems: "center", minWidth: 250 }}>
           <Grid>
             <Grid item xs={12}>
               <Item elevation={0}>
-                <Box sx={{ pr: 2, pl: 2 }}>
-                  <Button
-                    onClick={() => navigate("addfood")}
-                    sx={{ width: "100%" }}
-                    variant="contained"
-                  >
-                    Add new Food
-                  </Button>
-                </Box>
+                <Typography
+                  sx={{ fontWeight: "bold" }}
+                  variant="subtitle1"
+                  component="h4"
+                  align="center"
+                >
+                  Filter food by Category
+                </Typography>
               </Item>
             </Grid>
             <Grid item xs={12}>
@@ -140,6 +138,18 @@ export default function GuideAdminFoodList() {
             </Grid>
             <Grid item xs={12}>
               <Item elevation={0}>
+                <Typography
+                  sx={{ fontWeight: "bold" }}
+                  variant="subtitle1"
+                  component="h4"
+                  align="center"
+                >
+                  Search food by name
+                </Typography>
+              </Item>
+            </Grid>
+            <Grid item xs={12}>
+              <Item elevation={0}>
                 <Box sx={{ pr: 2, pl: 2 }}>
                   <Autocomplete
                     value={value}
@@ -161,17 +171,34 @@ export default function GuideAdminFoodList() {
                 </Box>
               </Item>
             </Grid>
+            <Grid item xs={12}>
+              <Item elevation={0}>
+                <Typography
+                  sx={{ fontWeight: "bold", pt: 5, }}
+                  variant="h6"
+                  component="h4"
+                  color="primary"
+                  align="center"
+                >
+                  Choose AT LEAST TWO foods from each Category below
+                </Typography>
+              </Item>
+            </Grid>
           </Grid>
         </Paper>
       </Box>
       {value && (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Box sx={{ maxWidth: 300 }}>
-            <FoodCardAdmin foodItem={value} />
+            <FoodCardUser foodItem={value} />
           </Box>
         </Box>
       )}
-      {foodCategory.length === 0 ? <FoodListAdmin Category={Category}/> : <FoodListAdmin Category={foodCategory}/> }
+      {foodCategory.length === 0 ? (
+        <FoodListUser Category={Category} />
+      ) : (
+        <FoodListUser Category={foodCategory} />
+      )}
       {/* {console.log(foodCategory)} */}
     </>
   );

@@ -20,12 +20,15 @@ const FoodList = {
   Fiber: 0,
   Carbs: 29,
   Category: "Dairy products",
-  Image: "src/assets/images/foods/icecream.jpg",
+  Image: "/src/assets/images/foods/icecream.jpg",
 };
 
 export default function FoodCard(props) {
-  const [Flipped, setFlipped] = useState(false);
   const FoodItem = props.foodItem;
+
+  const [checked, setChecked] = React.useState(FoodItem.Selected);
+  const [Flipped, setFlipped] = useState(false);
+
 
   const setFlippedTrue = () => {
     setFlipped(true);
@@ -33,6 +36,10 @@ export default function FoodCard(props) {
 
   const setFlippedFalse = () => {
     setFlipped(false);
+  };
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
   };
 
   return (
@@ -70,8 +77,8 @@ export default function FoodCard(props) {
         </CardContent>
         <CardActions>
           <Switch
-            checked={true}
-            // onChange={}
+            checked={checked}
+            onChange={handleChange}
             inputProps={{ "aria-label": "controlled" }}
           />
         </CardActions>

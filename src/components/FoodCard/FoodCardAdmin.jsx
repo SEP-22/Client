@@ -19,7 +19,7 @@ const FoodList = {
   Fiber: 0,
   Carbs: 29,
   Category: "Dairy products",
-  Image: "src/assets/images/foods/icecream.jpg",
+  Image: "/src/assets/images/foods/icecream.jpg",
 };
 
 export default function FoodCardAdmin(props) {

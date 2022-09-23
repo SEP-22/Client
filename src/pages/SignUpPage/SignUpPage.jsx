@@ -13,7 +13,6 @@ import "./signUpPage.css";
 export default function LandingPage() {
   return (
     <>
-      <Navbar />
       <div className="signUpContainer">
         <div className="signUpFormContainer">
           <img src={loginImg} alt="" />

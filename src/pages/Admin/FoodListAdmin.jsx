@@ -9,7 +9,7 @@ const FoodListAdmin = () => {
   return (
     <>
       <GuideAdmin />
-      <FoodList/>
+      {/* <FoodList/> */}
   </>
   )
 }
