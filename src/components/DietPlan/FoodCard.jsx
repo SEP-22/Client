@@ -11,7 +11,7 @@ export default function FoodCard(props) {
    const FoodItem = props.foodItem;
 
   return (
-      <Card sx={{minHeight:{xs:"unset", md:270},maxHeight:{xs:"unset", md:290}, display:"flex" , flexDirection:"column"}}>
+      <Card sx={{minHeight:{xs:"unset", md:270}, maxHeight:{xs:"unset", md:290}, display:"flex" , flexDirection:"column",}}>
         <CardMedia
           component="img"
           alt={FoodItem.Food}

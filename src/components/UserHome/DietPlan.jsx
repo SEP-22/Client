@@ -1,209 +1,132 @@
-import React from "react";
-import { Grid, Box, Paper, Typography, Button, Container } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import FoodCard from "../DietPlan/FoodCard";
-import Stack from "@mui/material/Stack";
+import * as React from "react";
+import PropTypes from "prop-types";
+import SwipeableViews from "react-swipeable-views";
+import { useTheme } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Diet from "./Diet";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: "transparent",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-const DietPlan = () => {
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
+  };
+}
+
+export default function DietPlan() {
+  const theme = useTheme();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
+
   return (
     <Box
       sx={{
-        m: 2,
-        mt: 5,
-        display: "flex",
-        justifyContent: "center",
+        bgcolor: "background.paper",
+        m: 5,
+        mr:{md:15},
+        ml:{md:15},
       }}
     >
-      <Container>
-        <Grid container alignItems="stretch" direction="row">
-          <Grid xs={12} md={1}>
-            <Item
-              elevation={3}
-              sx={{
-                minHeight: {xs: "none", md:263},
-                backgroundColor: "#fff",
-                justifyContent: "center",
-                display:"flex",
-                alignContent:"center",
-                mb:{xs: 3, md:"none"}
-              }}
-            >
-              <Typography align="center" sx={{ fontSize: 20 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>
-                BREAKFAST
-              </Typography>
-            </Item>
-          </Grid>
-          <Grid xs={12} md={11}>
-            <Item elevation={0} sx={{pt:0}}>
-              <Grid container>
-                {Breakfast.map((food) => (
-                  <Grid xs={12} md={2}>
-                    <Item elevation={0} sx={{pt:0}}>
-                      <FoodCard foodItem={food} />
-                    </Item>
-                  </Grid>
-                ))}
-              </Grid>
-            </Item>
-          </Grid>
-          <Grid xs={12} md={1}>
-            <Item
-              elevation={3}
-              sx={{
-                minHeight: {xs: "none", md:263},
-                backgroundColor: "#fff",
-                justifyContent: "center",
-                display:"flex",
-                alignContent:"center",
-                mb:{xs: 3, md:"none"}
-              }}
-            >
-              <Typography align="center" sx={{ fontSize: 20 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>
-                LUNCH
-              </Typography>
-            </Item>
-          </Grid>
-          <Grid xs={12} md={11}>
-            <Item elevation={0} sx={{pt:0}}>
-              <Grid container>
-                {Lunch.map((food) => (
-                  <Grid xs={12} md={2}>
-                    <Item elevation={0} sx={{pt:0}}>
-                      <FoodCard foodItem={food} />
-                    </Item>
-                  </Grid>
-                ))}
-              </Grid>
-            </Item>
-          </Grid>
-          <Grid xs={12} md={1}>
-            <Item
-              elevation={3}
-              sx={{
-                minHeight: {xs: "none", md:263},
-                backgroundColor: "#fff",
-                justifyContent: "center",
-                display:"flex",
-                alignContent:"center",
-                mb:{xs: 3, md:"none"}
-              }}
-            >
-              <Typography align="center" sx={{ fontSize: 20 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>
-                DINNER
-              </Typography>
-            </Item>
-          </Grid>
-          <Grid xs={12} md={11}>
-            <Item elevation={0} sx={{pt:0}}>
-              <Grid container>
-                {Dinner.map((food) => (
-                  <Grid xs={12} md={2}>
-                    <Item elevation={0} sx={{pt:0}}>
-                      <FoodCard foodItem={food} />
-                    </Item>
-                  </Grid>
-                ))}
-              </Grid>
-            </Item>
-          </Grid>
-        </Grid>
-      </Container>
-      {/* <Paper sx={{ m: 4, p: 4, alignItems: "center" }} >
-
-      </Paper> */}
+      <AppBar position="static">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="secondary"
+          textColor="inherit"
+          variant="fullWidth"
+          aria-label="full width tabs"
+          sx={{ display: { xs: "none", md: "block" } }}
+        >
+          <Tab label="Monday" {...a11yProps(0)} />
+          <Tab label="Tuesday" {...a11yProps(1)} />
+          <Tab label="Wednesday" {...a11yProps(2)} />
+          <Tab label="Thursday" {...a11yProps(3)} />
+          <Tab label="Friday" {...a11yProps(4)} />
+          <Tab label="Saturday" {...a11yProps(5)} />
+          <Tab label="Sunday" {...a11yProps(6)} />
+        </Tabs>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          indicatorColor="secondary"
+          textColor="inherit"
+          variant="scrollable"
+          aria-label="full width tabs example"
+          sx={{ display: { md: "none" } }}
+        >
+          <Tab label="Monday" {...a11yProps(0)} />
+          <Tab label="Tuesday" {...a11yProps(1)} />
+          <Tab label="Wednesday" {...a11yProps(2)} />
+          <Tab label="Thursday" {...a11yProps(3)} />
+          <Tab label="Friday" {...a11yProps(4)} />
+          <Tab label="Saturday" {...a11yProps(5)} />
+          <Tab label="Sunday" {...a11yProps(6)} />
+        </Tabs>
+      </AppBar>
+      <SwipeableViews
+        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
+        <TabPanel value={value} index={0} dir={theme.direction}>
+          <Diet />
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          <Diet />
+        </TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}>
+          <Diet />
+        </TabPanel>
+        <TabPanel value={value} index={3} dir={theme.direction}>
+          <Diet />
+        </TabPanel>
+        <TabPanel value={value} index={4} dir={theme.direction}>
+          <Diet />
+        </TabPanel>
+        <TabPanel value={value} index={5} dir={theme.direction}>
+          <Diet />
+        </TabPanel>
+        <TabPanel value={value} index={6} dir={theme.direction}>
+          <Diet />
+        </TabPanel>
+      </SwipeableViews>
     </Box>
   );
-};
-
-export default DietPlan;
-
-// const FoodList = [Breakfast,Lunch,Dinner]
-
-const Breakfast = [
-  {
-    Food: "Ice cream",
-    Consume: 188,
-    Calories: 300,
-    Image: "src/assets/images/foods/icecream.jpg",
-  },
-  {
-    Food: "Potato",
-    Consume: 110,
-    Calories: 155,
-    Image: "src/assets/images/foods/potato.jpg",
-  },
-  {
-    Food: "Tomato",
-    Consume: 188,
-    Calories: 300,
-    Image: "src/assets/images/foods/tomato.jpg",
-  },
-  {
-    Food: "Apple",
-    Consume: 130,
-    Calories: 70,
-    Image: "src/assets/images/foods/apple.jpg",
-  },
-  {
-    Food: "Banana",
-    Consume: 150,
-    Calories: 85,
-    Image: "src/assets/images/foods/banana.jpg",
-  },
-];
-
-const Lunch = [
-  {
-    Food: "Potato",
-    Consume: 110,
-    Calories: 155,
-    Image: "src/assets/images/foods/potato.jpg",
-  },
-  {
-    Food: "Apple",
-    Consume: 130,
-    Calories: 70,
-    Image: "src/assets/images/foods/apple.jpg",
-  },
-  {
-    Food: "Banana",
-    Consume: 150,
-    Calories: 85,
-    Image: "src/assets/images/foods/banana.jpg",
-  },
-];
-
-const Dinner = [
-  {
-    Food: "Tomato",
-    Consume: 188,
-    Calories: 300,
-    Image: "src/assets/images/foods/tomato.jpg",
-  },
-  {
-    Food: "Potato",
-    Consume: 110,
-    Calories: 155,
-    Image: "src/assets/images/foods/potato.jpg",
-  },
-  {
-    Food: "Apple",
-    Consume: 130,
-    Calories: 70,
-    Image: "src/assets/images/foods/apple.jpg",
-  },
-  {
-    Food: "Banana",
-    Consume: 150,
-    Calories: 85,
-    Image: "src/assets/images/foods/banana.jpg",
-  },
-];
+}

@@ -9,7 +9,8 @@ import FoodListUser from "./pages/FoodListUser/FoodListUser";
 import FoodListAdmin from "./pages/Admin/FoodListAdmin";
 import MainAdmin from "./pages/Admin/MainAdmin";
 import HomeAdmin from "./pages/Admin/HomeAdmin";
-import HomeUser from "./pages/FoodListUser/HomeUser";
+import HomeUser from "./pages/User/HomeUser";
+import LandingPage from "./pages/LandingPage/LandingPage";
 // import ResponsiveAppBar from "./components/Navbar/Nabvar";
 
 const theme = createTheme({
@@ -23,7 +24,7 @@ const theme = createTheme({
       main: green[500],
     },
     info: {
-      main: pink[200],
+      main: pink[100],
     },
     warning: {
       main: green[100],
@@ -41,7 +42,7 @@ function App() {
         <div className="App">
           <Routes>
 
-            <Route path="/" element={<HomeUser />} />
+            <Route path="/" element={<LandingPage />} />
 
             {/* <Route path="/" element={<LoginPage />} /> */}
 

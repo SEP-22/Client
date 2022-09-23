@@ -4,6 +4,8 @@ import Footer from "../../components/Footer/Footer";
 import Box from '@mui/material/Box';
 import FoodCard from '../../components/DietPlan/FoodCard';
 import DietPlan from '../../components/UserHome/DietPlan';
+import Reminder from '../../components/UserHome/EditReminder';
+import SetReminder from '../../components/UserHome/SetReminder';
 
 const FoodList = [ {
     Food: "Ice cream",
@@ -20,6 +22,8 @@ const HomeUser = () => {
     <Box>
         {/* <FoodCard foodItem={FoodList[0]}/> */}
         <DietPlan/>
+        <Reminder/>
+
     </Box>
     <Footer />
   </>

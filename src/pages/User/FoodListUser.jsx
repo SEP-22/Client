@@ -11,7 +11,6 @@ export default function FoodListUser() {
         <Navbar />
         <Box>
           <GuideUserFoodList />
-
           <FoodList/>
         </Box>
         <Footer />
