@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { React, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Navbar from "../../components/Navbar/NabvarUser";
 import Footer from "../../components/Footer/Footer";
@@ -9,8 +9,36 @@ import NavbarLanding from "../../components/Navbar/NavbarLanding";
 import loginImg from "../../assets/images/loginImg.png";
 import TextField from "@mui/material/TextField";
 import "./signUpPage.css";
+import { signUp } from "../../utils/api/user";
 
-export default function LandingPage() {
+export default function SignUpPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
+  const nav = useNavigate();
+
+  const submitForm = async (event) => {
+    event.preventDefault();
+    if (
+      name != "" &&
+      email != "" &&
+      phone != "" &&
+      password != "" &&
+      repassword != ""
+    ) {
+      const res = await signUp({ name, email, phone, password });
+      if (res.status==201) {
+        nav("/login");
+      } else {
+        console.log(res.status);
+      }
+    } else {
+      alert("Invalid inputs");
+    }
+  };
+
   return (
     <>
       <div className="signUpContainer">
@@ -25,6 +53,9 @@ export default function LandingPage() {
               variant="outlined"
               fullWidth
               required
+              onChange={() => {
+                setName(event.target.value);
+              }}
             />
             <TextField
               style={{ marginBottom: "3vh" }}
@@ -34,6 +65,9 @@ export default function LandingPage() {
               type="email"
               fullWidth
               required
+              onChange={() => {
+                setEmail(event.target.value);
+              }}
             />
             <TextField
               style={{ marginBottom: "3vh" }}
@@ -44,6 +78,9 @@ export default function LandingPage() {
               pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
               fullWidth
               required
+              onChange={() => {
+                setPhone(event.target.value);
+              }}
             />
             <TextField
               style={{ marginBottom: "3vh" }}
@@ -53,6 +90,9 @@ export default function LandingPage() {
               type="password"
               fullWidth
               required
+              onChange={() => {
+                setPassword(event.target.value);
+              }}
             />
             <TextField
               style={{ marginBottom: "3vh" }}
@@ -62,6 +102,9 @@ export default function LandingPage() {
               type="password"
               fullWidth
               required
+              onChange={() => {
+                setRepassword(event.target.value);
+              }}
             />
             <Button
               className="formItem"
@@ -69,6 +112,7 @@ export default function LandingPage() {
               variant="contained"
               type="submit"
               fullWidth
+              onClick={submitForm}
             >
               CREATE YOUR ACCOUNT
             </Button>
