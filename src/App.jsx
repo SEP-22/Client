@@ -2,7 +2,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { pink, green, blueGrey, teal } from "@mui/material/colors";
+import { pink, green, blueGrey, teal, grey } from "@mui/material/colors";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import FoodListUser from "./pages/User/FoodListUser";
@@ -29,7 +29,7 @@ const theme = createTheme({
       main: pink[100],
     },
     warning: {
-      main: green[100],
+      main: grey[600],
     },
     success: {
       main: green[300],

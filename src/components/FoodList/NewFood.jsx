@@ -1,5 +1,13 @@
 import * as React from "react";
-import { Box, Container, Typography, Paper, Grid, Button } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Paper,
+  Grid,
+  Button,
+  Input,
+} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -7,9 +15,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import Chip from "@mui/material/Chip";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-
+import { useTheme } from "@mui/material/styles";
+import PhotoIcon from "@mui/icons-material/Photo";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -27,8 +37,49 @@ const Category = [
   "Sugar",
 ];
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name, medicalConditions, theme) {
+  return {
+    fontWeight:
+      medicalConditions.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+const MedicalConditions = ["Diabetics", "Cholesterol", "High Blood Pressure"];
+
 function NewFood() {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const [medConditions, setMedConditions] = React.useState([]);
+  const [category, setCategory] = React.useState("");
+  const [filename, setFilename] = React.useState(null);
+
+  const handleCategoryChange = (event) => {
+    setCategory(event.target.value);
+  };
+
+  const handleMedConditionChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setMedConditions(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
   return (
     <>
       <Box
@@ -69,8 +120,8 @@ function NewFood() {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Category"
-                // value={age}
-                // onChange={handleChange}
+                value={category}
+                onChange={handleCategoryChange}
               >
                 {Category.map((type) => (
                   <MenuItem value={type} key={type}>
@@ -86,7 +137,7 @@ function NewFood() {
               <InputLabel htmlFor="component-outlined">
                 Calories per Gram
               </InputLabel>
-              <OutlinedInput
+              <TextField
                 id="component-outlined"
                 // value={Grams}
                 // onChange={}
@@ -95,6 +146,45 @@ function NewFood() {
                   <InputAdornment position="end">kcal/g</InputAdornment>
                 }
               />
+            </FormControl>
+          </Box>
+          <br></br>
+          <Box sx={{ pr: 2, pl: 2 }}>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel id="demo-multiple-chip-label">
+                Medical Conditions
+              </InputLabel>
+              <Select
+                labelId="demo-multiple-chip-label"
+                id="demo-multiple-chip"
+                multiple
+                value={medConditions}
+                onChange={handleMedConditionChange}
+                input={
+                  <OutlinedInput
+                    id="select-multiple-chip"
+                    label="Medical Conditions"
+                  />
+                }
+                renderValue={(selected) => (
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                    {selected.map((value) => (
+                      <Chip key={value} label={value} />
+                    ))}
+                  </Box>
+                )}
+                MenuProps={MenuProps}
+              >
+                {MedicalConditions.map((med) => (
+                  <MenuItem
+                    key={med}
+                    value={med}
+                    style={getStyles(med, MedicalConditions, theme)}
+                  >
+                    {med}
+                  </MenuItem>
+                ))}
+              </Select>
             </FormControl>
           </Box>
           <br></br>
@@ -158,6 +248,47 @@ function NewFood() {
               />
             </FormControl>
           </Box>
+          <br></br>
+          <Box sx={{ pr: 2, pl: 2 }}>
+            <FormControl sx={{ width: "100%" }}>
+              <Button
+                variant="outlined"
+                color="warning"
+                component="label"
+              >
+                Upload an Image of Food
+                <input
+                  hidden
+                  accept="image/*"
+                  multiple
+                  type="file"
+                  onChange={(event) => {
+                    setFilename(event.target.files[0].name);
+                  }}
+                />
+              </Button>
+              {filename && (
+                <Box
+                  sx={{
+                    alignContent: "flex-start",
+                    display: "flex",
+                    pr: 15,
+                    pl: 15,
+                    mt:1,
+                  }}
+                >
+                  <PhotoIcon
+                    sx={{ display: "flex", alignSelf: "center" }}
+                    fontSize="small"
+                  />
+                  <Typography ml={1} align="center">
+                    {filename}
+                  </Typography>
+                </Box>
+              )}
+            </FormControl>
+          </Box>
+          <br></br>
           <br></br>
           <Box
             sx={{
