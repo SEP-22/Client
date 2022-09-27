@@ -1,0 +1,21 @@
+.image {
+    margin:auto;
+}
+.center {
+    margin: auto;
+    margin-top: 15px;
+    width: 50%;
+    border: 3px ;
+    padding: 10px 10px;
+    background-color: white;
+}
+.profiledetails {
+    background-color: aliceblue;
+}
+.cardMedia{
+    padding-top: 81.25%;
+    height: 160px;
+    width: 160px;
+    border-radius: 80px;
+    margin: 28px;
+}
