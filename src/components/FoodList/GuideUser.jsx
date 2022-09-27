@@ -72,18 +72,18 @@ export default function GuideUserFoodList() {
           justifyContent: "center",
         }}
       >
-        <Item sx={{ m: 4, p: 4, alignItems: "center" }}>
+        <Item sx={{ m:{xs:0, sm:4,} , p: 4, alignItems: "center" }}>
           <Typography  sx={{fontWeight: 'bold'}} variant="h6" component="h4" color="primary">Choose AT LEAST TWO from each Category</Typography>
           <br></br>
           <FormControl sx={{ m: 1, width: "30vw" }}>
-            <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+            <InputLabel id="demo-multiple-chip-label">Category</InputLabel>
             <Select
               labelId="demo-multiple-chip-label"
               id="demo-multiple-chip"
               multiple
               value={foodCategory}
               onChange={handleChange}
-              input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+              input={<OutlinedInput id="select-multiple-chip" label="Category" />}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                   {selected.map((value) => (
@@ -139,6 +139,6 @@ const FoodList = [
     Fiber: 0,
     Carbs: 29,
     Category: "Dairy products",
-    Image: "src/assets/images/foods/icecream.jpg",
+    Image: "/src/assets/images/foods/icecream.jpg",
   },
 ];

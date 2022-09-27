@@ -19,7 +19,7 @@ const FoodList = {
   Fiber: 0,
   Carbs: 29,
   Category: "Dairy products",
-  Image: "src/assets/images/foods/icecream.jpg",
+  Image: "/src/assets/images/foods/icecream.jpg",
 };
 
 export default function FoodCardAdmin(props) {
@@ -36,13 +36,12 @@ export default function FoodCardAdmin(props) {
 
   return (
     <ReactCardFlip isFlipped={Flipped} flipDirection="vertical">
-      <Card sx={{ maxWidth:"300", m: 2 , }}>
+      <Card sx={{ maxWidth:"300", m: 2 ,display:"flex" , flexDirection:"column" }}>
         <CardMedia
         sx={{}}
           component="img"
           alt={FoodItem.Food}
           width="100%"
-          height="200"
           image={FoodItem.Image}
           loading="lazy"
         />
