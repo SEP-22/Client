@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import NutrientTable from "./NutrientTable";
 import ReactCardFlip from "react-card-flip";
+import Switch from '@mui/material/Switch';
 
 const FoodList = {
   Food: "Ice cream",
@@ -19,12 +20,15 @@ const FoodList = {
   Fiber: 0,
   Carbs: 29,
   Category: "Dairy products",
-  Image: "src/assets/images/foods/icecream.jpg",
+  Image: "/src/assets/images/foods/icecream.jpg",
 };
 
 export default function FoodCard(props) {
-  const [Flipped, setFlipped] = useState(false);
   const FoodItem = props.foodItem;
+
+  const [checked, setChecked] = React.useState(FoodItem.Selected);
+  const [Flipped, setFlipped] = useState(false);
+
 
   const setFlippedTrue = () => {
     setFlipped(true);
@@ -34,10 +38,15 @@ export default function FoodCard(props) {
     setFlipped(false);
   };
 
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
   return (
     <ReactCardFlip isFlipped={Flipped} flipDirection="vertical">
-      <Card sx={{ maxWidth: 345, m: 2 , }}>
+      <Card sx={{ maxWidth: "30vw", minHeight: "60vh", m: 2 }}>
         <CardMedia
+          sx={{position:"cover"}}
           component="img"
           alt={FoodItem.Food}
           width="100%"
@@ -67,8 +76,11 @@ export default function FoodCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Edit</Button>
-          <Button size="small">Remove</Button>
+          <Switch
+            checked={checked}
+            onChange={handleChange}
+            inputProps={{ "aria-label": "controlled" }}
+          />
         </CardActions>
       </Card>
 

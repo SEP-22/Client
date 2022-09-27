@@ -11,9 +11,12 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import { NavLink } from "react-router-dom";
 
-const pages = ["HOME", "DIET PLANS", "MANAGE", "FOOD LIST", "SHOPPING LIST"];
+const pages = [
+  ["HOME", "home"],
+  ["FOOD LIST", "foodlist"],
+];
 const settings = ["Profile", "Logout"];
 
 const ResponsiveAppBar = () => {
@@ -36,8 +39,7 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-<Box>   
-   <AppBar position="fixed" color="secondary">
+    <AppBar position="static" color="secondary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Avatar
@@ -93,8 +95,14 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem
+                  className="nav-link"
+                  component={NavLink}
+                  to={page[1]}
+                  key={page[0]}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography textAlign="center">{page[0]}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -125,20 +133,25 @@ const ResponsiveAppBar = () => {
           </Typography>
           <Box sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
+              // <NavLink style={{ color: "transparent" }} className="nav-link"  to={page[1]}>
               <Button
-                key={page}
+                className="nav-link"
+                component={NavLink}
+                to={page[1]}
+                key={page[0]}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "black", display: "block" }}
               >
-                {page}
+                {page[0]}
               </Button>
+              // </NavLink>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="User" src="" />
+                <Avatar alt="User" src="/src/assets/admin.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -167,8 +180,6 @@ const ResponsiveAppBar = () => {
         </Toolbar>
       </Container>
     </AppBar>
-    <Toolbar></Toolbar>
-    </Box>
   );
 };
 export default ResponsiveAppBar;

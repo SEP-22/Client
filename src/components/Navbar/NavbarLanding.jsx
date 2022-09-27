@@ -12,27 +12,24 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useNavigate } from "react-router-dom";
 
-const buttons = [ ["Login", "success"] , ["SignUp" , "primary"]];
+const buttons = [ ["login", "success"] , ["signup" , "primary"]];
 
 const ResponsiveAppBar = () => {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+
 
   return (
     <AppBar position="static" color="secondary">
@@ -41,7 +38,7 @@ const ResponsiveAppBar = () => {
           <Avatar
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
             alt="logo"
-            src="src\assets\images\logo.png"
+            src="/src/assets/images/logo.png"
           />
           <Typography
             variant="h5"
@@ -100,7 +97,7 @@ const ResponsiveAppBar = () => {
           <Avatar
             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
             alt="logo"
-            src="src\assets\images\logo.png"
+            src="/src/assets/images/logo.png"
           />
 
           <Typography
@@ -127,7 +124,7 @@ const ResponsiveAppBar = () => {
                 variant="contained"
                 color={btn[1]}
                 key={btn[0]}
-                onClick={handleCloseNavMenu}
+                onClick={() => navigate(btn[0])}
                 sx={{ m: 2, color: "black", display: "block" }}
               >
                 {btn[0]}

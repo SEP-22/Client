@@ -10,7 +10,7 @@ export default function NutrientTable(props) {
   const FoodItem = props.foodItem;
   return (
     <TableContainer>
-      <Table sx={{ maxWidth: 345 }} aria-label="nutrient table">
+      <Table sx={{ maxWidth:"30vw" }} aria-label="nutrient table">
         <TableHead>
           <TableRow>
             <TableCell>Nutrient</TableCell>
@@ -26,10 +26,10 @@ export default function NutrientTable(props) {
             <TableCell>Fat</TableCell>
             <TableCell align="right">{FoodItem.Fat}</TableCell>
           </TableRow>
-          <TableRow>
+          {/* <TableRow>
             <TableCell>Saturated Fat</TableCell>
             <TableCell align="right">{FoodItem.SaturatedFat}</TableCell>
-          </TableRow>
+          </TableRow> */}
           <TableRow>
             <TableCell>Fiber</TableCell>
             <TableCell align="right">{FoodItem.Fiber}</TableCell>
