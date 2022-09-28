@@ -13,8 +13,12 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-const buttons = [ ["login", "success"] , ["signup" , "primary"]];
+const buttons = [
+  ["login", "success"],
+  ["signup", "primary"],
+];
 
 const ResponsiveAppBar = () => {
   const navigate = useNavigate();
@@ -28,8 +32,6 @@ const ResponsiveAppBar = () => {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-
 
   return (
     <AppBar position="static" color="secondary">
@@ -88,8 +90,14 @@ const ResponsiveAppBar = () => {
               }}
             >
               {buttons.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem
+                  key={page[0]}
+                  to={page[0]}
+                  className="nav-link"
+                  component={NavLink}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography textAlign="center" variant="button">{page[0]}</Typography>
                 </MenuItem>
               ))}
             </Menu>

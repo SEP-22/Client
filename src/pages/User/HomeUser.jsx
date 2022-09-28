@@ -18,13 +18,11 @@ const FoodList = [ {
 const HomeUser = () => {
   return (
     <>
-    <Navbar />
     <Box>
         {/* <FoodCard foodItem={FoodList[0]}/> */}
         <DietPlan/>
         <Reminder/>
     </Box>
-    <Footer />
   </>
   )
 }

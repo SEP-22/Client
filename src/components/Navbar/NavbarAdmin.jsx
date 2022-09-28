@@ -171,8 +171,14 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem
+                  key={setting[0]}
+                  to={setting[0]}
+                  className="nav-link"
+                  component={NavLink}
+                  onClick={handleCloseUserMenu}
+                >
+                  <Typography textAlign="center" variant="button">{setting[0]}</Typography>
                 </MenuItem>
               ))}
             </Menu>

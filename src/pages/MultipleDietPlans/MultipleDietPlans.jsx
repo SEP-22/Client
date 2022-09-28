@@ -6,9 +6,7 @@ import Footer from '../../components/Footer/Footer'
 const MultipleDietPlans = () => {
   return (
     <div>
-      <NavBar/>
       <DietPlan/>
-      <Footer/>
     </div>
   )
 }

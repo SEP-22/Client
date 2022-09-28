@@ -13,6 +13,12 @@ import HomeUser from "./pages/User/HomeUser";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import NewFood from "./components/FoodList/NewFood";
 import FoodListMain from "./pages/Admin/FoodListMain";
+import ShoppingLists from "./pages/ShoppingList/ShoppingList";
+import ProfilePage from "./pages/Profile/ProfilePage";
+import MultipleDietPlans from "./pages/MultipleDietPlans/MultipleDietPlans";
+import Quiz from "./components/DietPlan/Quiz";
+import MainUser from "./pages/User/MainUser";
+import Manage from "./components/DietPlan/Manage";
 // import ResponsiveAppBar from "./components/Navbar/Nabvar";
 
 const theme = createTheme({
@@ -47,10 +53,15 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
 
-            <Route path="eatsmart">
+            <Route path="eatsmart" element={<MainUser/>}>
               <Route index element={<HomeUser />} />
               <Route path="home" element={<HomeUser />} />
               <Route path="foodlist" element={<FoodListUser />} />
+              <Route path="shoppinglist" element={<ShoppingLists />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="dietplans" element={<MultipleDietPlans />} />
+              <Route path="quiz" element={<Quiz />} />
+              <Route path="manage" element={<Manage />} />
             </Route>
 
             {/* <Route path="dashboard" >

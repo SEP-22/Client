@@ -11,13 +11,11 @@ import "./profilePage.css"
 const ProfilePage = () => {
   return (
     <>
-      <Navbar/>
       <Box>
         {/* <DietPlan/> */}
         {/* <FoodCard/> */}
         <UserProfile/>
       </Box>
-      <Footer/>
     </>
   )
 }
