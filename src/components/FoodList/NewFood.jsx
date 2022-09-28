@@ -5,6 +5,7 @@ import {
   Typography,
   Paper,
   Grid,
+  Avatar,
   Button,
   Input,
 } from "@mui/material";
@@ -77,6 +78,8 @@ function NewFood() {
   const [medConditions, setMedConditions] = React.useState([]);
   const [category, setCategory] = React.useState("");
   const [filename, setFilename] = React.useState(null);
+  const [imageData, setimageData] = React.useState("");
+  const [imageloading, setimageloading] = React.useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -155,243 +158,253 @@ function NewFood() {
           </Typography>
           <br></br>
           <form>
-          <Box sx={{ pr: 2, pl: 2 }}>
-            <FormControl sx={{ width: "100%" }}>
-              <InputLabel htmlFor="component-outlined" required>
-                Name
-              </InputLabel>
-              <OutlinedInput
-                name="name"
-                onChange={handleChange}
-                label="Name"
-                required
-              />
-            </FormControl>
-          </Box>
+            <Box sx={{ pr: 2, pl: 2 }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel htmlFor="component-outlined" required>
+                  Name
+                </InputLabel>
+                <OutlinedInput
+                  name="name"
+                  onChange={handleChange}
+                  label="Name"
+                  required
+                />
+              </FormControl>
+            </Box>
 
-          <br></br>
+            <br></br>
 
-          <Box sx={{ pr: 2, pl: 2 }}>
-            <FormControl sx={{ width: "100%" }}>
-              <InputLabel htmlFor="component-outlined" required>
-                Category
-              </InputLabel>
-              <Select
-                name="category"
-                label="Category"
-                value={category}
-                onChange={handleCategoryChange}
-                required
-              >
-                {Category.map((type) => (
-                  <MenuItem value={type} key={type}>
-                    {type}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
+            <Box sx={{ pr: 2, pl: 2 }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel htmlFor="component-outlined" required>
+                  Category
+                </InputLabel>
+                <Select
+                  name="category"
+                  label="Category"
+                  value={category}
+                  onChange={handleCategoryChange}
+                  required
+                >
+                  {Category.map((type) => (
+                    <MenuItem value={type} key={type}>
+                      {type}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
 
-          <br></br>
+            <br></br>
 
-          <Box sx={{ pr: 2, pl: 2 }}>
-            <FormControl sx={{ width: "100%" }}>
-              <InputLabel htmlFor="component-outlined" required>
-                Calories per Gram
-              </InputLabel>
-              <OutlinedInput
-                name="cal_per_gram"
-                onChange={handleChange}
-                label="Calories per Gram"
-                endAdornment={
-                  <InputAdornment position="end">kcal/g</InputAdornment>
-                }
-                required
-              />
-            </FormControl>
-          </Box>
+            <Box sx={{ pr: 2, pl: 2 }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel htmlFor="component-outlined" required>
+                  Calories per Gram
+                </InputLabel>
+                <OutlinedInput
+                  name="cal_per_gram"
+                  onChange={handleChange}
+                  label="Calories per Gram"
+                  endAdornment={
+                    <InputAdornment position="end">kcal/g</InputAdornment>
+                  }
+                  required
+                />
+              </FormControl>
+            </Box>
 
-          <br></br>
+            <br></br>
 
-          <Box sx={{ pr: 2, pl: 2 }}>
-            <FormControl sx={{ width: "100%" }}>
-              <InputLabel id="demo-multiple-chip-label">
-                Medical Conditions
-              </InputLabel>
-              <Select
-                name="medConditions"
-                multiple
-                value={medConditions}
-                onChange={handleMedConditionChange}
-                input={
-                  <OutlinedInput
-                    id="select-multiple-chip"
-                    label="Medical Conditions"
+            <Box sx={{ pr: 2, pl: 2 }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel id="demo-multiple-chip-label">
+                  Medical Conditions
+                </InputLabel>
+                <Select
+                  name="medConditions"
+                  multiple
+                  value={medConditions}
+                  onChange={handleMedConditionChange}
+                  input={
+                    <OutlinedInput
+                      id="select-multiple-chip"
+                      label="Medical Conditions"
+                    />
+                  }
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {MedicalConditions.map((med) => (
+                    <MenuItem
+                      key={med}
+                      value={med}
+                      style={getStyles(med, MedicalConditions, theme)}
+                    >
+                      {med}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
+
+            <br></br>
+
+            <Typography
+              sx={{ fontWeight: "bold" }}
+              variant="subtitle2"
+              component="h6"
+              align="center"
+            >
+              NUTRIENTS
+            </Typography>
+            <br></br>
+
+            <Box sx={{ pr: 2, pl: 2 }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel htmlFor="component-outlined" required>
+                  Protein
+                </InputLabel>
+                <OutlinedInput
+                  name="protein"
+                  onChange={handleChange}
+                  label="Protein"
+                  endAdornment={
+                    <InputAdornment position="end">g</InputAdornment>
+                  }
+                  required
+                />
+              </FormControl>
+            </Box>
+
+            <br></br>
+
+            <Box sx={{ pr: 2, pl: 2 }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel htmlFor="component-outlined" required>
+                  Fat
+                </InputLabel>
+                <OutlinedInput
+                  name="fat"
+                  onChange={handleChange}
+                  label="Fat"
+                  endAdornment={
+                    <InputAdornment position="end">g</InputAdornment>
+                  }
+                  required
+                />
+              </FormControl>
+            </Box>
+
+            <br></br>
+
+            <Box sx={{ pr: 2, pl: 2 }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel htmlFor="component-outlined" required>
+                  Fiber
+                </InputLabel>
+                <OutlinedInput
+                  name="fiber"
+                  onChange={handleChange}
+                  label="Fiber"
+                  endAdornment={
+                    <InputAdornment position="end">g</InputAdornment>
+                  }
+                  required
+                />
+              </FormControl>
+            </Box>
+
+            <br></br>
+
+            <Box sx={{ pr: 2, pl: 2 }}>
+              <FormControl sx={{ width: "100%" }}>
+                <InputLabel htmlFor="component-outlined" required>
+                  Carbs
+                </InputLabel>
+                <OutlinedInput
+                  name="carbs"
+                  onChange={handleChange}
+                  label="Carbs"
+                  endAdornment={
+                    <InputAdornment position="end">g</InputAdornment>
+                  }
+                  required
+                />
+              </FormControl>
+            </Box>
+
+            <br></br>
+            <Avatar
+              alt={ "avatar"}
+              src={imageData}
+              // src={user.image ? "data:image/jpeg;base64," + user.image : "#"}
+              sx={{ width: 150, height: 150 }}
+            />
+
+            <Box sx={{ pr: 2, pl: 2 }}>
+              <FormControl sx={{ width: "100%" }}>
+                <Button variant="outlined" color="warning" component="label">
+                  Upload an Image of Food
+                  <input
+                    hidden
+                    accept="image/*"
+                    multiple
+                    type="file"
+                    required
+                    onChange={(event) => {
+                      setFilename(event.target.files[0].name);
+                    }}
                   />
-                }
-                renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip key={value} label={value} />
-                    ))}
+                </Button>
+                {filename && (
+                  <Box
+                    sx={{
+                      alignContent: "flex-start",
+                      display: "flex",
+                      pr: 15,
+                      pl: 15,
+                      mt: 1,
+                    }}
+                  >
+                    <PhotoIcon
+                      sx={{ display: "flex", alignSelf: "center" }}
+                      fontSize="small"
+                    />
+                    <Typography ml={1} align="center">
+                      {filename}
+                    </Typography>
                   </Box>
                 )}
-                MenuProps={MenuProps}
-              >
-                {MedicalConditions.map((med) => (
-                  <MenuItem
-                    key={med}
-                    value={med}
-                    style={getStyles(med, MedicalConditions, theme)}
-                  >
-                    {med}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
-
-          <br></br>
-
-          <Typography
-            sx={{ fontWeight: "bold" }}
-            variant="subtitle2"
-            component="h6"
-            align="center"
-          >
-            NUTRIENTS
-          </Typography>
-          <br></br>
-
-          <Box sx={{ pr: 2, pl: 2 }}>
-            <FormControl sx={{ width: "100%" }}>
-              <InputLabel htmlFor="component-outlined" required>
-                Protein
-              </InputLabel>
-              <OutlinedInput
-                name="protein"
-                onChange={handleChange}
-                label="Protein"
-                endAdornment={<InputAdornment position="end">g</InputAdornment>}
-                required
-              />
-            </FormControl>
-          </Box>
-
-          <br></br>
-
-          <Box sx={{ pr: 2, pl: 2 }}>
-            <FormControl sx={{ width: "100%" }}>
-              <InputLabel htmlFor="component-outlined" required>
-                Fat
-              </InputLabel>
-              <OutlinedInput
-                name="fat"
-                onChange={handleChange}
-                label="Fat"
-                endAdornment={<InputAdornment position="end">g</InputAdornment>}
-                required
-              />
-            </FormControl>
-          </Box>
-
-          <br></br>
-
-          <Box sx={{ pr: 2, pl: 2 }}>
-            <FormControl sx={{ width: "100%" }}>
-              <InputLabel htmlFor="component-outlined" required>
-                Fiber
-              </InputLabel>
-              <OutlinedInput
-                name="fiber"
-                onChange={handleChange}
-                label="Fiber"
-                endAdornment={<InputAdornment position="end">g</InputAdornment>}
-                required
-              />
-            </FormControl>
-          </Box>
-
-          <br></br>
-
-          <Box sx={{ pr: 2, pl: 2 }}>
-            <FormControl sx={{ width: "100%" }}>
-              <InputLabel htmlFor="component-outlined" required>
-                Carbs
-              </InputLabel>
-              <OutlinedInput
-                name="carbs"
-                onChange={handleChange}
-                label="Carbs"
-                endAdornment={<InputAdornment position="end">g</InputAdornment>}
-                required
-              />
-            </FormControl>
-          </Box>
-
-          <br></br>
-
-          {/* <Box sx={{ pr: 2, pl: 2 }}>
-            <FormControl sx={{ width: "100%" }}>
+              </FormControl>
+            </Box>
+            <br></br>
+            <br></br>
+            <Box
+              sx={{
+                pr: 2,
+                pl: 2,
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
               <Button
                 variant="outlined"
-                color="warning"
-                component="label"
+                color="secondary"
+                onClick={() => navigate(-1)}
               >
-                Upload an Image of Food
-                <input
-                  hidden
-                  accept="image/*"
-                  multiple
-                  type="file"
-                  required
-                  onChange={(event) => {
-                    setFilename(event.target.files[0].name);
-                  }}
-                />
+                Back
               </Button>
-              {filename && (
-                <Box
-                  sx={{
-                    alignContent: "flex-start",
-                    display: "flex",
-                    pr: 15,
-                    pl: 15,
-                    mt:1,
-                  }}
-                >
-                  <PhotoIcon
-                    sx={{ display: "flex", alignSelf: "center" }}
-                    fontSize="small"
-                  />
-                  <Typography ml={1} align="center">
-                    {filename}
-                  </Typography>
-                </Box>
-              )}
-            </FormControl>
-          </Box> */}
-          <br></br>
-          <br></br>
-          <Box
-            sx={{
-              pr: 2,
-              pl: 2,
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => navigate(-1)}
-            >
-              Back
-            </Button>
-            <Button variant="contained" type="submit" onClick={handleSubmit}>
-              Submit
-            </Button>
-          </Box>
+              <Button variant="contained" type="submit" onClick={handleSubmit}>
+                Submit
+              </Button>
+            </Box>
           </form>
         </Paper>
       </Box>
