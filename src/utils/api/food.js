@@ -21,7 +21,7 @@ const addImage = async (formData) => {
 
 const getFoods = async () => {
   try {
-    const res = await baseApi.get("food");
+    const res = await baseApi.get("food/allfoods");
     console.log(res)
     console.log("next")
     return res;
