@@ -9,6 +9,24 @@ const addFood = async (body) => {
   }
 };
 
+const getFoods = async () => {
+  try {
+    const res = await baseApi.get("food/allfoods");
+    console.log("hi")
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
+const foodByCategory = async () => {
+  try {
+    const res = await baseApi.get("food/foodbycategory");
+    return res;
+  } catch (error) {
+    console.log(error);
 
-export { addFood };
+  }
+};
+
+export { addFood, foodByCategory, getFoods };

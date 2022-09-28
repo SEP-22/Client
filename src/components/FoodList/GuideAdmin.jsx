@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import FoodCard from "../FoodCard/FoodCardUser";
 import FoodCardAdmin from "../FoodCard/FoodCardAdmin";
 import FoodListAdmin from "./FoodListAdmin";
+import { getFoods } from "../../utils/api/food";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -58,6 +59,7 @@ export default function GuideAdminFoodList() {
   const [foodCategory, setFoodCategory] = React.useState([]);
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState("");
+  const [FoodList, setFoodList] = React.useState([]);
 
   const handleChange = (event) => {
     const {
@@ -68,6 +70,26 @@ export default function GuideAdminFoodList() {
       typeof value === "string" ? value.split(",") : value
     );
   };
+
+   
+
+  React.useEffect(() => {
+    const getData = async () => {
+      const res = await getFoods();
+      if (res.status==200) {
+        const data = res.data;
+        // console.log(data);
+        setFoodList(data)
+      } else {
+        console.log(res);
+      }
+    }
+
+    getData();
+    console.log(FoodList)
+
+  }, [])
+  
 
   return (
     <>
@@ -152,7 +174,7 @@ export default function GuideAdminFoodList() {
                     }}
                     id="search"
                     options={FoodList}
-                    getOptionLabel={(option) => option.Food}
+                    getOptionLabel={(option) => option.name}
                     sx={{ width: "100%" }}
                     renderInput={(params) => (
                       <TextField {...params} label="Search for " />
@@ -177,114 +199,114 @@ export default function GuideAdminFoodList() {
   );
 }
 
-const FoodList = [
-  {
-    Food: "Ice cream",
-    Measure: "1 cup",
-    Grams: 188,
-    Calories: 300,
-    Protein: 6,
-    Fat: 18,
-    SaturatedFat: 16,
-    Fiber: 0,
-    Carbs: 29,
-    Category: "Dairy products",
-    Image: "/src/assets/images/foods/icecream.jpg",
-  },
-  {
-    Food: "Broccoli",
-    Measure: "1 cup",
-    Grams: 150,
-    Calories: 45,
-    Protein: 5,
-    Fat: 0,
-    Fiber: 0,
-    Carbs: 8,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/broccoli.jpg",
-  },
-  {
-    Food: "Carrots",
-    Measure: "1 cup",
-    Grams: 150,
-    Calories: 45,
-    Protein: 1,
-    Fat: 0,
-    Fiber: 9,
-    Carbs: 10,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/carrot.jpg",
-  },
-  {
-    Food: "Corn",
-    Measure: "1 ear",
-    Grams: 100,
-    Calories: 92,
-    Protein: 3,
-    Fat: 1,
-    Fiber: 0.8,
-    Carbs: 21,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/corn.jpg",
-  },
-  {
-    Food: "Potato",
-    Measure: "1 medium",
-    Grams: 110,
-    Calories: 155,
-    Protein: 2,
-    Fat: 1,
-    Fiber: 1,
-    Carbs: 36,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/potato.jpg",
-  },
-  {
-    Food: "Tomato",
-    Measure: "1 medium",
-    Grams: 120,
-    Calories: 25,
-    Protein: 1,
-    Fat: 0,
-    Fiber: 1,
-    Carbs: 4.5,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/tomato.jpg",
-  },
-  {
-    Food: "Apple",
-    Measure: "1 medium",
-    Grams: 130,
-    Calories: 70,
-    Protein: 0,
-    Fat: 0,
-    Fiber: 1,
-    Carbs: 18,
-    Category: "Fruits",
-    Image: "/src/assets/images/foods/apple.jpg",
-  },
-  {
-    Food: "Avacado",
-    Measure: "1 large",
-    Grams: 216,
-    Calories: 370,
-    Protein: 4,
-    Fat: 36,
-    Fiber: 3.6,
-    Carbs: 12,
-    Category: "Fruits",
-    Image: "/src/assets/images/foods/avacado.jpg",
-  },
-  {
-    Food: "Banana",
-    Measure: "1 medium",
-    Grams: 150,
-    Calories: 85,
-    Protein: 1,
-    Fat: 0,
-    Fiber: 0.9,
-    Carbs: 23,
-    Category: "Fruits",
-    Image: "/src/assets/images/foods/banana.jpg",
-  },
-];
+// const FoodList = [
+//   {
+//     Food: "Ice cream",
+//     Measure: "1 cup",
+//     Grams: 188,
+//     Calories: 300,
+//     Protein: 6,
+//     Fat: 18,
+//     SaturatedFat: 16,
+//     Fiber: 0,
+//     Carbs: 29,
+//     Category: "Dairy products",
+//     Image: "/src/assets/images/foods/icecream.jpg",
+//   },
+//   {
+//     Food: "Broccoli",
+//     Measure: "1 cup",
+//     Grams: 150,
+//     Calories: 45,
+//     Protein: 5,
+//     Fat: 0,
+//     Fiber: 0,
+//     Carbs: 8,
+//     Category: "Vegetables",
+//     Image: "/src/assets/images/foods/broccoli.jpg",
+//   },
+//   {
+//     Food: "Carrots",
+//     Measure: "1 cup",
+//     Grams: 150,
+//     Calories: 45,
+//     Protein: 1,
+//     Fat: 0,
+//     Fiber: 9,
+//     Carbs: 10,
+//     Category: "Vegetables",
+//     Image: "/src/assets/images/foods/carrot.jpg",
+//   },
+//   {
+//     Food: "Corn",
+//     Measure: "1 ear",
+//     Grams: 100,
+//     Calories: 92,
+//     Protein: 3,
+//     Fat: 1,
+//     Fiber: 0.8,
+//     Carbs: 21,
+//     Category: "Vegetables",
+//     Image: "/src/assets/images/foods/corn.jpg",
+//   },
+//   {
+//     Food: "Potato",
+//     Measure: "1 medium",
+//     Grams: 110,
+//     Calories: 155,
+//     Protein: 2,
+//     Fat: 1,
+//     Fiber: 1,
+//     Carbs: 36,
+//     Category: "Vegetables",
+//     Image: "/src/assets/images/foods/potato.jpg",
+//   },
+//   {
+//     Food: "Tomato",
+//     Measure: "1 medium",
+//     Grams: 120,
+//     Calories: 25,
+//     Protein: 1,
+//     Fat: 0,
+//     Fiber: 1,
+//     Carbs: 4.5,
+//     Category: "Vegetables",
+//     Image: "/src/assets/images/foods/tomato.jpg",
+//   },
+//   {
+//     Food: "Apple",
+//     Measure: "1 medium",
+//     Grams: 130,
+//     Calories: 70,
+//     Protein: 0,
+//     Fat: 0,
+//     Fiber: 1,
+//     Carbs: 18,
+//     Category: "Fruits",
+//     Image: "/src/assets/images/foods/apple.jpg",
+//   },
+//   {
+//     Food: "Avacado",
+//     Measure: "1 large",
+//     Grams: 216,
+//     Calories: 370,
+//     Protein: 4,
+//     Fat: 36,
+//     Fiber: 3.6,
+//     Carbs: 12,
+//     Category: "Fruits",
+//     Image: "/src/assets/images/foods/avacado.jpg",
+//   },
+//   {
+//     Food: "Banana",
+//     Measure: "1 medium",
+//     Grams: 150,
+//     Calories: 85,
+//     Protein: 1,
+//     Fat: 0,
+//     Fiber: 0.9,
+//     Carbs: 23,
+//     Category: "Fruits",
+//     Image: "/src/assets/images/foods/banana.jpg",
+//   },
+// ];
