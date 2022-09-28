@@ -81,6 +81,52 @@ function NewFood() {
   const [imageData, setimageData] = React.useState("");
   const [imageloading, setimageloading] = React.useState(false);
 
+  const renderImage = (file) => {
+    try {
+      if (file.type === "Buffer") {
+        const reader = "data:image/png;base64," + encode(file.data);
+
+        return setimageData(reader);
+      } else {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onloadend = async () => {
+          return setimageData(reader.result);
+        };
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUpload = async (e) => {
+    const file = e.target.files[0];
+
+    if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
+      try {
+        renderImage(file);
+        // const formData = new FormData();
+        // formData.append("image", file);
+        // formData.append("category", "profile");
+        // setimageloading(true);
+        // const res = await addImage(user._id, formData);
+        // if (res) {
+        //   changeDP(res);
+        //   //TODO:handle errors
+        // }
+        console.log("handleUpload");
+      } catch (error) {
+        //TODO:show error
+        console.log("Faild");
+      }
+      setimageloading(false);
+    } else {
+      //TODO:show error
+      console.log("no file selected");
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setformValues({ ...formValues, [name]: value });
@@ -123,7 +169,7 @@ function NewFood() {
       diabetics: diabetics,
       cholesterol: cholesterol,
       bloodpressure: bloodpressure,
-      image : "/src/assets/images/foods/carrot.jpg"
+      image : imageData
     });
   };
 
@@ -342,7 +388,7 @@ function NewFood() {
 
             <br></br>
             <Avatar
-              alt={ "avatar"}
+              alt={"avatar"}
               src={imageData}
               // src={user.image ? "data:image/jpeg;base64," + user.image : "#"}
               sx={{ width: 150, height: 150 }}
@@ -354,16 +400,14 @@ function NewFood() {
                   Upload an Image of Food
                   <input
                     hidden
-                    accept="image/*"
                     multiple
+                    accept="image/png,  image/jpeg"
                     type="file"
                     required
-                    onChange={(event) => {
-                      setFilename(event.target.files[0].name);
-                    }}
+                    onChange={handleUpload}
                   />
                 </Button>
-                {filename && (
+                {/*{filename && (
                   <Box
                     sx={{
                       alignContent: "flex-start",
@@ -381,7 +425,7 @@ function NewFood() {
                       {filename}
                     </Typography>
                   </Box>
-                )}
+                  )}*/}
               </FormControl>
             </Box>
             <br></br>
