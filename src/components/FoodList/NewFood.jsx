@@ -32,7 +32,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Category = [
-  "Fruit and Vegetables",
+  "Fruits and Vegetables",
   "Starchy food",
   "Proteins",
   "Dairy and Fats",
