@@ -10,13 +10,11 @@ import ShoppingList from '../../components/ShoppingList/ShoppingList';
 const ShoppingLists = () => {
   return (
     <>
-      <Navbar/>
       <Box>
         {/* <DietPlan/> */}
         {/* <FoodCard/> */}
         <ShoppingList/>
       </Box>
-      <Footer/>
     </>
   )
 }

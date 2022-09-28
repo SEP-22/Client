@@ -7,11 +7,9 @@ import UserFoodList from "../../components/FoodList/UserFoodList";
 export default function FoodListUser() {
     return (
       <>
-        <Navbar />
         <Box>
           <UserFoodList/>
         </Box>
-        <Footer />
       </>
     );
   }
