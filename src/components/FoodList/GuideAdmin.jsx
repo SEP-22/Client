@@ -78,7 +78,7 @@ export default function GuideAdminFoodList() {
       const res = await getFoods();
       if (res.status==200) {
         const data = res.data;
-        // console.log(data);
+        console.log(data);
         setFoodList(data)
       } else {
         console.log(res);

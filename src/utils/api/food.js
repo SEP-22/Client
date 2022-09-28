@@ -9,10 +9,21 @@ const addFood = async (body) => {
   }
 };
 
+const addImage = async (formData) => {
+  try {
+    const res = await baseApi.post("image", formData);
+    // console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getFoods = async () => {
   try {
-    const res = await baseApi.get("food/allfoods");
-    console.log("hi")
+    const res = await baseApi.get("food");
+    console.log(res)
+    console.log("next")
     return res;
   } catch (error) {
     console.log(error);
@@ -29,4 +40,4 @@ const foodByCategory = async () => {
   }
 };
 
-export { addFood, foodByCategory, getFoods };
+export { addFood, foodByCategory, getFoods, addImage };

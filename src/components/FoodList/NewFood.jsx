@@ -21,7 +21,7 @@ import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import PhotoIcon from "@mui/icons-material/Photo";
-import { addFood } from "../../utils/api/food";
+import { addFood, addImage } from "../../utils/api/food";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -79,6 +79,7 @@ function NewFood() {
   const [category, setCategory] = React.useState("");
   const [filename, setFilename] = React.useState(null);
   const [imageData, setimageData] = React.useState("");
+  const [imageBuffer, setimageBuffer] = React.useState("");
   const [imageloading, setimageloading] = React.useState(false);
 
   const renderImage = (file) => {
@@ -106,15 +107,16 @@ function NewFood() {
     if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
       try {
         renderImage(file);
-        // const formData = new FormData();
-        // formData.append("image", file);
-        // formData.append("category", "profile");
-        // setimageloading(true);
-        // const res = await addImage(user._id, formData);
-        // if (res) {
-        //   changeDP(res);
-        //   //TODO:handle errors
-        // }
+        const formData = new FormData();
+        formData.append("image", file);
+        setimageloading(true);
+        const res = await addImage(formData);
+        if (res) {
+          setimageBuffer(res);
+          return(res)
+          // changeDP(res);
+          //TODO:handle errors
+        }
         console.log("handleUpload");
       } catch (error) {
         //TODO:show error
@@ -169,7 +171,7 @@ function NewFood() {
       diabetics: diabetics,
       cholesterol: cholesterol,
       bloodpressure: bloodpressure,
-      image : imageData
+      image:imageBuffer
     });
   };
 
