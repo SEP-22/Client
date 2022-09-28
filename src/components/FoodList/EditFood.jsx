@@ -1,27 +1,23 @@
 import * as React from "react";
 import {
   Box,
-  Container,
   Typography,
   Paper,
-  Grid,
   Avatar,
   Button,
-  Input,
 } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import PhotoIcon from "@mui/icons-material/Photo";
-import { addFood, addImage } from "../../utils/api/food";
+import { addFood, addImage, editFood } from "../../utils/api/food";
+import { useLocation } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -61,22 +57,43 @@ function getStyles(name, medicalConditions, theme) {
 
 const MedicalConditions = ["Diabetics", "Cholesterol", "High Blood Pressure"];
 
-function NewFood() {
+function EditFood(props) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const food = location.state?.food;
   const theme = useTheme();
+
   const initialValues = {
-    name: "",
-    cal_per_gram: "",
-    med_con: "",
-    protein: "",
-    fiber: "",
-    fat: "",
-    carbs: "",
+    name: food.name,
+    cal_per_gram: food.cal_per_gram,
+    med_con: food.med_con,
+    protein: food.protein,
+    fiber: food.fiber,
+    fat: food.fat,
+    carbs: food.carbs,
   };
+
+  const getMedConditions = () => {
+    let med = []
+    if (food.cholesterol === 1 || food.cholesterol === true) {
+        med.push("Cholesterol")
+        
+    }  if (food.diabetics === 1 || food.diabetics === true) {
+        med.push("Diabetics")
+        
+    }if (food.bloodpressure === 1 || food.bloodpressure === true) {
+        med.push("High Blood Pressure")
+        
+    }
+
+    return med;
+
+  }
+
   const [formValues, setformValues] = React.useState(initialValues);
   const [formError, setformError] = React.useState(initialValues);
-  const [medConditions, setMedConditions] = React.useState([]);
-  const [category, setCategory] = React.useState("");
+  const [medConditions, setMedConditions] = React.useState(getMedConditions);
+  const [category, setCategory] = React.useState(food.category);
   const [filename, setFilename] = React.useState(null);
   const [imageData, setimageData] = React.useState("");
   const [imageBuffer, setimageBuffer] = React.useState("");
@@ -175,7 +192,7 @@ function NewFood() {
   };
 
   const sendData = async (data) => {
-    const res = await addFood(data);
+    const res = await editFood(food._id,data);
     if (res.status == 200) {
       console.log(res.body);
       navigate(-1);
@@ -202,7 +219,7 @@ function NewFood() {
             color="primary"
             align="center"
           >
-            ADD NEW FOOD
+            EDIT FOOD
           </Typography>
           <br></br>
           <form>
@@ -216,6 +233,7 @@ function NewFood() {
                   onChange={handleChange}
                   label="Name"
                   required
+                  value={formValues.name}
                 />
               </FormControl>
             </Box>
@@ -258,6 +276,7 @@ function NewFood() {
                     <InputAdornment position="end">kcal/g</InputAdornment>
                   }
                   required
+                  value={formValues.cal_per_gram}
                 />
               </FormControl>
             </Box>
@@ -327,6 +346,7 @@ function NewFood() {
                     <InputAdornment position="end">g</InputAdornment>
                   }
                   required
+                  value={formValues.protein}
                 />
               </FormControl>
             </Box>
@@ -346,6 +366,7 @@ function NewFood() {
                     <InputAdornment position="end">g</InputAdornment>
                   }
                   required
+                  value={formValues.fat}
                 />
               </FormControl>
             </Box>
@@ -365,6 +386,7 @@ function NewFood() {
                     <InputAdornment position="end">g</InputAdornment>
                   }
                   required
+                  value={formValues.fiber}
                 />
               </FormControl>
             </Box>
@@ -384,6 +406,7 @@ function NewFood() {
                     <InputAdornment position="end">g</InputAdornment>
                   }
                   required
+                  value={formValues.carbs}
                 />
               </FormControl>
             </Box>
@@ -468,4 +491,4 @@ function NewFood() {
   );
 }
 
-export default NewFood;
+export default EditFood;

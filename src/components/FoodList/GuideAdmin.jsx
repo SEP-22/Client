@@ -43,7 +43,6 @@ const Category = [
   "Sugar",
 ];
 
-
 function getStyles(name, foodCategory, theme) {
   return {
     fontWeight:
@@ -71,25 +70,19 @@ export default function GuideAdminFoodList() {
     );
   };
 
-   
-
   React.useEffect(() => {
     const getData = async () => {
       const res = await getFoods();
-      if (res.status==200) {
+      if (res.status == 200) {
         const data = res.data;
-        console.log(data);
-        setFoodList(data)
+
+        setFoodList(data);
       } else {
-        console.log(res);
       }
-    }
+    };
 
     getData();
-    console.log(FoodList)
-
-  }, [])
-  
+  }, []);
 
   return (
     <>
@@ -101,7 +94,7 @@ export default function GuideAdminFoodList() {
           justifyContent: "center",
         }}
       >
-        <Paper sx={{ mt: 4, mb: 4, p: 4, alignItems: "center" , minWidth:250}}>
+        <Paper sx={{ mt: 4, mb: 4, p: 4, alignItems: "center", minWidth: 250 }}>
           <Grid>
             <Grid item xs={12}>
               <Item elevation={0}>
@@ -189,11 +182,16 @@ export default function GuideAdminFoodList() {
       {value && (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Box sx={{ maxWidth: 300 }}>
+          {console.log(value)}
             <FoodCardAdmin foodItem={value} />
           </Box>
         </Box>
       )}
-      {foodCategory.length === 0 ? <FoodListAdmin Category={Category}/> : <FoodListAdmin Category={foodCategory}/> }
+      {foodCategory.length === 0 ? (
+        <FoodListAdmin Category={Category} />
+      ) : (
+        <FoodListAdmin Category={foodCategory} />
+      )}
       {/* {console.log(foodCategory)} */}
     </>
   );

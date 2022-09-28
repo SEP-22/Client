@@ -19,6 +19,7 @@ import MultipleDietPlans from "./pages/MultipleDietPlans/MultipleDietPlans";
 import Quiz from "./components/DietPlan/Quiz";
 import MainUser from "./pages/User/MainUser";
 import Manage from "./components/DietPlan/Manage";
+import EditFood from "./components/FoodList/EditFood";
 // import ResponsiveAppBar from "./components/Navbar/Nabvar";
 
 const theme = createTheme({
@@ -64,25 +65,13 @@ function App() {
               <Route path="manage" element={<Manage />} />
             </Route>
 
-            {/* <Route path="dashboard" >
-              <Route index element={<Home />} />
-              <Route path="home" element={<Home />}></Route>
-              <Route path="dietplans" element={<DietPlans />}></Route>
-              <Route path="manage" element={<Manage />}></Route>
-              <Route path="settings" element={<Settings />}></Route>
-            </Route>
-            <Route path="admin">
-              <Route index element={<AdminHome />} />
-              <Route path="home" element={<Home />}></Route>
-              <Route path="foodlist" element={<FoodList />}></Route>
-              <Route path="settings" element={<Settings />}></Route>
-            </Route> */}
             <Route path="admin" element={<MainAdmin />}>
               <Route index element={<HomeAdmin />} />
               <Route path="home" element={<HomeAdmin />} />
               <Route path="foodlist" element={<FoodListMain />}>
                 <Route index element={<FoodListAdmin />} />
                 <Route path="addfood" element={<NewFood />} />
+                <Route path="editfood" element={<EditFood />} />
               </Route>
             </Route>
           </Routes>
