@@ -95,9 +95,10 @@ export default function ShoppingList() {
               {/* <Item color="secondary"><Avatar alt="food image" src={food.Image} sx={{ width: 50, height: 50 }} 
               />{food.Food} - { food.Grams} grams</Item> */}
               <Chip
+                sx={{minWidth:200, maxHeight:50 }}
                 avatar={<Avatar alt={food.Food} src={food.Image} />}
-                label={food.Food}
-                variant="outlined"
+                label={food.Food+`-`+food.Grams+`g`}
+                variant="contained"
               />
             </div>
             

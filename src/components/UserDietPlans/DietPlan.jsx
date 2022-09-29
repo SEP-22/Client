@@ -6,6 +6,7 @@ import Meal from "../Meal/Meal"
 import "./UserDietPlans.css"
 import { width } from "@mui/system";
 import Chip from '@mui/material/Chip';
+import { Link, NavLink } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -35,7 +36,7 @@ export default function FoodList() {
           width:"50%"}}
         >
         <Grid item xs={12}>
-          <Button variant="contained" sx={{mb:4}}>
+          <Button variant="contained" sx={{mb:4}} component={Link} to="/eatsmart/quiz">
             Create a Diet Plan
           </Button>
         </Grid>
