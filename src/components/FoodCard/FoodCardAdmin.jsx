@@ -64,7 +64,7 @@ export default function FoodCardAdmin(props) {
           component="img"
           alt={FoodItem.name}
           width="100%"
-          image={FoodItem.Image}
+          image={FoodItem.image}
           loading="lazy"
         />
         <CardContent>

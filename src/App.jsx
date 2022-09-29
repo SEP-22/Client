@@ -20,6 +20,7 @@ import Quiz from "./components/DietPlan/Quiz";
 import MainUser from "./pages/User/MainUser";
 import Manage from "./components/DietPlan/Manage";
 import EditFood from "./components/FoodList/EditFood";
+import AddFood from "./components/FoodList/AddFood";
 // import ResponsiveAppBar from "./components/Navbar/Nabvar";
 
 const theme = createTheme({
@@ -70,7 +71,7 @@ function App() {
               <Route path="home" element={<HomeAdmin />} />
               <Route path="foodlist" element={<FoodListMain />}>
                 <Route index element={<FoodListAdmin />} />
-                <Route path="addfood" element={<NewFood />} />
+                <Route path="addfood" element={<AddFood />} />
                 <Route path="editfood" element={<EditFood />} />
               </Route>
             </Route>

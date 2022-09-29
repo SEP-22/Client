@@ -56,7 +56,7 @@ function getStyles(name, medicalConditions, theme) {
 
 const MedicalConditions = ["Diabetics", "Cholesterol", "High Blood Pressure"];
 
-function NewFood() {
+function AddFood() {
   const navigate = useNavigate();
   const theme = useTheme();
   const initialValues = {
@@ -67,62 +67,11 @@ function NewFood() {
     fiber: "",
     fat: "",
     carbs: "",
+    image: ""
   };
   const [formValues, setformValues] = React.useState(initialValues);
-  const [formError, setformError] = React.useState(initialValues);
   const [medConditions, setMedConditions] = React.useState([]);
   const [category, setCategory] = React.useState("");
-  const [filename, setFilename] = React.useState(null);
-  const [imageData, setimageData] = React.useState("");
-  const [imageBuffer, setimageBuffer] = React.useState("");
-  const [imageloading, setimageloading] = React.useState(false);
-
-  const renderImage = (file) => {
-    try {
-      if (file.type === "Buffer") {
-        const reader = "data:image/png;base64," + encode(file.data);
-
-        return setimageData(reader);
-      } else {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-
-        reader.onloadend = async () => {
-          return setimageData(reader.result);
-        };
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleUpload = async (e) => {
-    const file = e.target.files[0];
-
-    if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
-      try {
-        renderImage(file);
-        const formData = new FormData();
-        formData.append("image", file);
-        setimageloading(true);
-        const res = await addImage(formData);
-        if (res) {
-          setimageBuffer(res);
-          return res;
-          // changeDP(res);
-          //TODO:handle errors
-        }
-        console.log("handleUpload");
-      } catch (error) {
-        //TODO:show error
-        console.log("Faild");
-      }
-      setimageloading(false);
-    } else {
-      //TODO:show error
-      console.log("no file selected");
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -165,7 +114,6 @@ function NewFood() {
       diabetics: diabetics,
       cholesterol: cholesterol,
       bloodpressure: bloodpressure,
-      image: imageBuffer,
     });
   };
 
@@ -385,15 +333,14 @@ function NewFood() {
 
             <br></br>
 
-            {imageData !== "" && (
+            {formValues.image !== "" && (
               <Box
                 sx={{ pr: 2, pl: 2, display: "flex", justifyContent: "center" }}
               >
                 <Avatar
                   variant="square"
                   alt={"avatar"}
-                  src={imageData}
-                  // src={user.image ? "data:image/jpeg;base64," + user.image : "#"}
+                  src={formValues.image}
                   sx={{ width: 150, height: 150 }}
                 />
               </Box>
@@ -403,36 +350,15 @@ function NewFood() {
 
             <Box sx={{ pr: 2, pl: 2 }}>
               <FormControl sx={{ width: "100%" }}>
-                <Button variant="outlined" color="warning" component="label">
-                  Upload an Image of Food
-                  <input
-                    hidden
-                    multiple
-                    accept="image/png,  image/jpeg"
-                    type="file"
-                    required
-                    onChange={handleUpload}
-                  />
-                </Button>
-                {/* {filename && (
-                  <Box
-                    sx={{
-                      alignContent: "flex-start",
-                      display: "flex",
-                      pr: 15,
-                      pl: 15,
-                      mt: 1,
-                    }}
-                  >
-                    <PhotoIcon
-                      sx={{ display: "flex", alignSelf: "center" }}
-                      fontSize="small"
-                    />
-                    <Typography ml={1} align="center">
-                      {filename}
-                    </Typography>
-                  </Box>
-                  )} */}
+                <InputLabel htmlFor="component-outlined" required>
+                  Enter Image Link
+                </InputLabel>
+                <OutlinedInput
+                  name="image"
+                  onChange={handleChange}
+                  label="Enter Image Link"
+                  required
+                />
               </FormControl>
             </Box>
             <br></br>
@@ -463,4 +389,4 @@ function NewFood() {
   );
 }
 
-export default NewFood;
+export default AddFood;

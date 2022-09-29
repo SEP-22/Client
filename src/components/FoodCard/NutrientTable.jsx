@@ -14,7 +14,7 @@ export default function NutrientTable(props) {
         <TableHead>
           <TableRow>
             <TableCell>Nutrient</TableCell>
-            <TableCell align="right">Grams&nbsp;(g)</TableCell>
+            <TableCell align="right">Percentage&nbsp;(%)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

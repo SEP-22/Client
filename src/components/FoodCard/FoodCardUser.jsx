@@ -70,7 +70,7 @@ export default function FoodCard(props) {
           alt={FoodItem.Food}
           width="100%"
           height="200vh"
-          image={FoodItem.Image}
+          image={FoodItem.image}
           loading="lazy"
         />
         <CardContent>
