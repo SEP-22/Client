@@ -42,7 +42,7 @@ export default function LandingPage() {
           <form className="loginFormContainer">
             <TextField
               style={{ marginBottom: "3vh" }}
-              id="outlined-basic"
+              id="login-email"
               label="E-mail"
               variant="outlined"
               required
@@ -53,7 +53,7 @@ export default function LandingPage() {
             />
             <TextField
               style={{ marginBottom: "3vh" }}
-              id="outlined-basic"
+              id="login-password"
               label="Password"
               variant="outlined"
               type="password"
