@@ -1,26 +1,21 @@
 import * as React from "react";
 import {
   Box,
-  Container,
   Typography,
   Paper,
-  Grid,
   Avatar,
   Button,
-  Input,
 } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import PhotoIcon from "@mui/icons-material/Photo";
 import { addFood, addImage } from "../../utils/api/food";
 
 const Item = styled(Paper)(({ theme }) => ({

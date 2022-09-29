@@ -13,13 +13,6 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-// const Category = [
-//   "Fruits and Vegetables",
-//   "Starchy food",
-//   "Proteins",
-//   "Dairy and Fats",
-//   "Sugar",
-// ];
 
 export default function FoodList(props) {
   const [Vegetables_Fruits, setVegetablesFruits] = React.useState([]);

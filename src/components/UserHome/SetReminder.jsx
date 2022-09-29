@@ -68,8 +68,7 @@ export default function FormDialog() {
             <Box sx={{display:"flex", justifyContent:"center", m:2, }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <TimePicker
-                orientation="landscape"
-                  label="Basic example"
+                  label="timepicker"
                   value={value}
                   onChange={(newValue) => {
                     setValue(newValue);
