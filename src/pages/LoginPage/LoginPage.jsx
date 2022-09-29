@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Navbar from "../../components/Navbar/NabvarUser";
@@ -10,19 +10,24 @@ import loginImg from "../../assets/images/loginImg.png";
 import TextField from "@mui/material/TextField";
 import "./loginPage.css";
 import { signIn } from "../../utils/api/user";
+import useAuth from "../../utils/providers/AuthProvider";
 
-export default function LandingPage() {
+
+export default function LogInPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isMatch, setIsMatch] = useState(true);
 
   const nav = useNavigate();
+  
+  const { user, signUser } = useAuth();
 
   const login = async (event) => {
     event.preventDefault();
     if (username != "" && password != "") {
       const res = await signIn({ username, password });
       if (res.data.message=="success") {
+        signUser(res.data.user);
         nav("/");
       }else if (res.data.message == "invalid email or password") {
         setIsMatch(false);
@@ -32,6 +37,11 @@ export default function LandingPage() {
       alert("Invalid inputs");
     }
   };
+
+
+  useEffect(()=>{
+    console.log(user)
+  },[])
 
   return (
     <>

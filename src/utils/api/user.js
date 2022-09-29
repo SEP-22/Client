@@ -13,7 +13,6 @@ const signIn = async (body) => {
   try {
     const res = await baseApi.post("user/signIn", body);
     localStorage.setItem("_RT", res.headers["x-refresh-token"]);
-
     sessionStorage.setItem("_AT", res.headers["x-access-token"]);
     return res;
   } catch (error) {
