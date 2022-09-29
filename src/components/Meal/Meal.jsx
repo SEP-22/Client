@@ -24,7 +24,6 @@ export default function Meal() {
         alignItems: "center",
         display: "flex",
         justifyContent: "center",
-        flexGrow: 1,
       }}>
       {/* <Stack direction="row" alignItems="center" gap={1}>
         <Typography variant="body1" align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>BREAKFAST</Typography>

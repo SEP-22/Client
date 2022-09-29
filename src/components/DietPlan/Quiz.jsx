@@ -1,8 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { Typography, Paper, Grid, Button } from "@mui/material";
-import Navbar from "../Navbar/NabvarUser";
-import Footer from "../Footer/Footer";
 import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -12,22 +10,69 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
+import { getInputs } from "../../utils/api/dietPlan";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Quiz() {
-  const [value, setValue] = React.useState(dayjs());
+  const navigate = useNavigate();
+  const [date, setDate] = React.useState(null);
+  const [gender, setGender] = React.useState("female");
+  const [activity, setActivity] = React.useState("moderate");
+  const [intention, setIntention] = React.useState("maintain");
+  const [height, setHeight] = React.useState("");
+  const [weight, setWeight] = React.useState("");
+
+  const _id = "6333e004e19aa18ac6e06aec";
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
+
+  const handleActivityChange = (event) => {
+    setActivity(event.target.value);
+  };
+
+  const handleIntentionChange = (event) => {
+    setIntention(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Hi");
+    if (date !== null && height !== "" && weight !== "") {
+      let d = date.toDate();
+      const data = {
+        user_Id: _id,
+        dob: d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(),
+        gender: gender,
+        activity: activity,
+        intention: intention,
+        height: height,
+        weight: weight,
+      };
+      sendData(data);
+    }
+  };
+
+  const sendData = async (data) => {
+    const res = await getInputs(data);
+    if (res.status == 200) {
+      console.log(res.body);
+      
+    } else {
+      console.log(res.status);
+    }
+  };
 
   return (
     <>
-      <Navbar />
       <Box
         mt={10}
         sx={{
           m: 2,
-          pt: 5,
           alignItems: "center",
           display: "flex",
           justifyContent: "center",
@@ -81,9 +126,9 @@ export default function Quiz() {
                     label="Birthday"
                     openTo="year"
                     views={["year", "month", "day"]}
-                    value={value}
+                    value={date}
                     onChange={(newValue) => {
-                      setValue(newValue);
+                      setDate(newValue);
                     }}
                     renderInput={(params) => <TextField {...params} required />}
                   />
@@ -116,9 +161,11 @@ export default function Quiz() {
               <Grid item xs={12} align="center">
                 <FormControl>
                   <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
+                    aria-labelledby="gender-group-label"
                     defaultValue="female"
-                    name="radio-buttons-group"
+                    name="gender-group"
+                    value={gender}
+                    onChange={handleGenderChange}
                   >
                     <FormControlLabel
                       value="female"
@@ -164,12 +211,15 @@ export default function Quiz() {
                   </InputLabel>
                   <OutlinedInput
                     name="height"
-                    //   onChange={handleChange}
+                    onChange={() => {
+                      setHeight(event.target.value);
+                    }}
                     label="height"
                     endAdornment={
                       <InputAdornment position="end">cm</InputAdornment>
                     }
                     required
+                    type="number"
                   />
                 </FormControl>
               </Grid>
@@ -204,11 +254,14 @@ export default function Quiz() {
                   </InputLabel>
                   <OutlinedInput
                     name="weight"
-                    //   onChange={handleChange}
+                    onChange={() => {
+                      setWeight(event.target.value);
+                    }}
                     label="weight"
                     endAdornment={
                       <InputAdornment position="end">kg</InputAdornment>
                     }
+                    type="number"
                     required
                   />
                 </FormControl>
@@ -240,9 +293,11 @@ export default function Quiz() {
               <Grid item xs={12} align="center">
                 <FormControl>
                   <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
+                    aria-labelledby="activity-group-label"
                     defaultValue="moderate"
-                    name="radio-buttons-group"
+                    name="activity-group"
+                    value={activity}
+                    onChange={handleActivityChange}
                   >
                     <FormControlLabel
                       value="verylight"
@@ -299,9 +354,11 @@ export default function Quiz() {
               <Grid item xs={12} align="center">
                 <FormControl>
                   <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
+                    aria-labelledby="intention-group-label"
                     defaultValue="maintain"
-                    name="radio-buttons-group"
+                    name="intention-group"
+                    value={intention}
+                    onChange={handleIntentionChange}
                   >
                     <FormControlLabel
                       value="loose"
@@ -339,7 +396,12 @@ export default function Quiz() {
                   Make sure you entered the correct details
                 </Typography>
                 <br></br>
-                <Button variant="contained" color="secondary" type="submit">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  type="submit"
+                  onClick={handleSubmit}
+                >
                   Generate Diet Plan
                 </Button>
               </Paper>
@@ -347,7 +409,6 @@ export default function Quiz() {
           </Grid>
         </form>
       </Box>
-      <Footer />
     </>
   );
 }

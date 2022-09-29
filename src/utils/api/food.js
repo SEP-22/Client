@@ -22,8 +22,6 @@ const addImage = async (formData) => {
 const getFoods = async () => {
   try {
     const res = await baseApi.get("food/allfoods");
-    console.log(res)
-    console.log("next")
     return res;
   } catch (error) {
     console.log(error);
@@ -40,4 +38,23 @@ const foodByCategory = async () => {
   }
 };
 
-export { addFood, foodByCategory, getFoods, addImage };
+const editFood = async (id,body) => {
+  try {
+    const res = await baseApi.patch(`food/editFood/${id}`, body);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteFood = async (id) => {
+  try {
+    const res = await baseApi.delete(`food/deleteFood/${id}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+
+};
+
+export { addFood, foodByCategory, getFoods, addImage, editFood, deleteFood,  };

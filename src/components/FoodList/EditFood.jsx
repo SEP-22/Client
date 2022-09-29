@@ -16,9 +16,8 @@ import Chip from "@mui/material/Chip";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
-import { addFood, addImage } from "../../utils/api/food";
-import useAuth from "../../utils/providers/AuthProvider";
-import { useEffect } from "react";
+import { addFood, addImage, editFood } from "../../utils/api/food";
+import { useLocation } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -58,77 +57,44 @@ function getStyles(name, medicalConditions, theme) {
 
 const MedicalConditions = ["Diabetics", "Cholesterol", "High Blood Pressure"];
 
-function NewFood() {
-
-  const { user, setUser } = useAuth();
+function EditFood(props) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const food = location.state?.food;
   const theme = useTheme();
+
   const initialValues = {
-    name: "",
-    cal_per_gram: "",
-    med_con: "",
-    protein: "",
-    fiber: "",
-    fat: "",
-    carbs: "",
+    name: food.name,
+    cal_per_gram: food.cal_per_gram,
+    med_con: food.med_con,
+    protein: food.protein,
+    fiber: food.fiber,
+    fat: food.fat,
+    carbs: food.carbs,
+    image: food.image,
   };
+
+  const getMedConditions = () => {
+    let med = []
+    if (food.cholesterol === 1 || food.cholesterol === true) {
+        med.push("Cholesterol")
+        
+    }  if (food.diabetics === 1 || food.diabetics === true) {
+        med.push("Diabetics")
+        
+    }if (food.bloodpressure === 1 || food.bloodpressure === true) {
+        med.push("High Blood Pressure")
+        
+    }
+
+    return med;
+
+  }
+
   const [formValues, setformValues] = React.useState(initialValues);
   const [formError, setformError] = React.useState(initialValues);
-  const [medConditions, setMedConditions] = React.useState([]);
-  const [category, setCategory] = React.useState("");
-  const [filename, setFilename] = React.useState(null);
-  const [imageData, setimageData] = React.useState("");
-  const [imageBuffer, setimageBuffer] = React.useState("");
-  const [imageloading, setimageloading] = React.useState(false);
-
-  const renderImage = (file) => {
-    try {
-      if (file.type === "Buffer") {
-        const reader = "data:image/png;base64," + encode(file.data);
-
-        console.log("file");
-        return setimageData(reader);
-      } else {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        
-        console.log(reader.result);
-        reader.onloadend = async () => {
-          return setimageData(reader.result);
-        };
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleUpload = async (e) => {
-    const file = e.target.files[0];
-
-    if (file && (file.type === "image/jpeg" || file.type === "image/png")) {
-      try {
-        renderImage(file);
-        const formData = new FormData();
-        formData.append("image", file);
-        setimageloading(true);
-        const res = await addImage(formData);
-        if (res) {
-          setimageBuffer(res);
-          return res;
-          // changeDP(res);
-          //TODO:handle errors
-        }
-        console.log("handleUpload");
-      } catch (error) {
-        //TODO:show error
-        console.log("Faild");
-      }
-      setimageloading(false);
-    } else {
-      //TODO:show error
-      console.log("no file selected");
-    }
-  };
+  const [medConditions, setMedConditions] = React.useState(getMedConditions);
+  const [category, setCategory] = React.useState(food.category);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -176,7 +142,7 @@ function NewFood() {
   };
 
   const sendData = async (data) => {
-    const res = await addFood(data);
+    const res = await editFood(food._id,data);
     if (res.status == 200) {
       console.log(res.body);
       navigate(-1);
@@ -184,10 +150,6 @@ function NewFood() {
       console.log(res.status);
     }
   };
-
-  useEffect(()=>{
-    console.log(user)
-  },[])
 
   return (
     <>
@@ -207,7 +169,7 @@ function NewFood() {
             color="primary"
             align="center"
           >
-            ADD NEW FOOD
+            EDIT FOOD
           </Typography>
           <br></br>
           <form>
@@ -221,6 +183,7 @@ function NewFood() {
                   onChange={handleChange}
                   label="Name"
                   required
+                  value={formValues.name}
                 />
               </FormControl>
             </Box>
@@ -263,6 +226,7 @@ function NewFood() {
                     <InputAdornment position="end">kcal/g</InputAdornment>
                   }
                   required
+                  value={formValues.cal_per_gram}
                 />
               </FormControl>
             </Box>
@@ -332,6 +296,7 @@ function NewFood() {
                     <InputAdornment position="end">g</InputAdornment>
                   }
                   required
+                  value={formValues.protein}
                 />
               </FormControl>
             </Box>
@@ -351,6 +316,7 @@ function NewFood() {
                     <InputAdornment position="end">g</InputAdornment>
                   }
                   required
+                  value={formValues.fat}
                 />
               </FormControl>
             </Box>
@@ -370,6 +336,7 @@ function NewFood() {
                     <InputAdornment position="end">g</InputAdornment>
                   }
                   required
+                  value={formValues.fiber}
                 />
               </FormControl>
             </Box>
@@ -389,21 +356,21 @@ function NewFood() {
                     <InputAdornment position="end">g</InputAdornment>
                   }
                   required
+                  value={formValues.carbs}
                 />
               </FormControl>
             </Box>
 
             <br></br>
 
-            {imageData !== "" && (
+            {formValues.image !== "" && (
               <Box
                 sx={{ pr: 2, pl: 2, display: "flex", justifyContent: "center" }}
               >
                 <Avatar
                   variant="square"
                   alt={"avatar"}
-                  src={imageData}
-                  // src={user.image ? "data:image/jpeg;base64," + user.image : "#"}
+                  src={formValues.image}
                   sx={{ width: 150, height: 150 }}
                 />
               </Box>
@@ -413,36 +380,16 @@ function NewFood() {
 
             <Box sx={{ pr: 2, pl: 2 }}>
               <FormControl sx={{ width: "100%" }}>
-                <Button variant="outlined" color="warning" component="label">
-                  Upload an Image of Food
-                  <input
-                    hidden
-                    multiple
-                    accept="image/png,  image/jpeg"
-                    type="file"
-                    required
-                    onChange={handleUpload}
-                  />
-                </Button>
-                {/* {filename && (
-                  <Box
-                    sx={{
-                      alignContent: "flex-start",
-                      display: "flex",
-                      pr: 15,
-                      pl: 15,
-                      mt: 1,
-                    }}
-                  >
-                    <PhotoIcon
-                      sx={{ display: "flex", alignSelf: "center" }}
-                      fontSize="small"
-                    />
-                    <Typography ml={1} align="center">
-                      {filename}
-                    </Typography>
-                  </Box>
-                  )} */}
+                <InputLabel htmlFor="component-outlined" required>
+                  Enter Image Link
+                </InputLabel>
+                <OutlinedInput
+                  name="image"
+                  onChange={handleChange}
+                  label="Enter Image Link"
+                  value={formValues.image}
+                  required
+                />
               </FormControl>
             </Box>
             <br></br>
@@ -473,4 +420,4 @@ function NewFood() {
   );
 }
 
-export default NewFood;
+export default EditFood;

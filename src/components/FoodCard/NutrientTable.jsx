@@ -14,17 +14,17 @@ export default function NutrientTable(props) {
         <TableHead>
           <TableRow>
             <TableCell>Nutrient</TableCell>
-            <TableCell align="right">Grams&nbsp;(g)</TableCell>
+            <TableCell align="right">Percentage&nbsp;(%)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
             <TableCell>Protein</TableCell>
-            <TableCell align="right">{FoodItem.Protein}</TableCell>
+            <TableCell align="right">{FoodItem.protein}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Fat</TableCell>
-            <TableCell align="right">{FoodItem.Fat}</TableCell>
+            <TableCell align="right">{FoodItem.fat}</TableCell>
           </TableRow>
           {/* <TableRow>
             <TableCell>Saturated Fat</TableCell>
@@ -32,11 +32,11 @@ export default function NutrientTable(props) {
           </TableRow> */}
           <TableRow>
             <TableCell>Fiber</TableCell>
-            <TableCell align="right">{FoodItem.Fiber}</TableCell>
+            <TableCell align="right">{FoodItem.fiber}</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Carbs</TableCell>
-            <TableCell align="right">{FoodItem.Carbs}</TableCell>
+            <TableCell align="right">{FoodItem.carbs}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

@@ -107,23 +107,10 @@ export default function FoodList() {
             <FoodCard foodItem={food} />
           </Grid>
         ))}
-        {/* {category.map((category) => (
-        <Typography key={category}>{category}</Typography>
-      ))} */}
       </Grid>
     </Box>
   );
 }
-
-const category = ["Vegetables", "Fruits", "Dairy Products", "Proteins", "Fat"];
-
-// const Foods = {
-//     "Vegetables": Vegetables,
-//     "Fruits" : Fruits,
-//     "DairyProducts" : DairyProducts,
-//     "Proteins" : Proteins,
-//     "Fat": Fat,
-// };
 
 const Vegetables = [
   {

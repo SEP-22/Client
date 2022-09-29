@@ -20,7 +20,12 @@ import Quiz from "./components/DietPlan/Quiz";
 import MainUser from "./pages/User/MainUser";
 import Manage from "./components/DietPlan/Manage";
 import UserPrivateRoute from "./PrivateRoutes/UserPrivateRoute";
-// import ResponsiveAppBar from "./components/Navbar/Nabvar";
+import EditFood from "./components/FoodList/EditFood";
+import AddFood from "./components/FoodList/AddFood";
+import EditName from "./components/User/EditName";
+import EditPhone from "./components/User/EditPhone";
+import EditEmail from "./components/User/EditEmail";
+import ProfilePageMain from "./pages/Profile/ProfilePageMain";
 
 const theme = createTheme({
   palette: {
@@ -59,66 +64,24 @@ function App() {
               <Route path="home" element={<HomeUser />} />
               <Route path="foodlist" element={<FoodListUser />} />
               <Route path="shoppinglist" element={<ShoppingLists />} />
-              <Route path="profile" element={<ProfilePage />} />
+              <Route path="profile" element={<ProfilePageMain />}>
+                <Route index element={<ProfilePage />} />
+                <Route path="editname" element={<EditName />} />
+                <Route path="editemail" element={<EditEmail />} />
+                <Route path="editphone" element={<EditPhone />} />
+              </Route>
               <Route path="dietplans" element={<MultipleDietPlans />} />
               <Route path="quiz" element={<Quiz />} />
               <Route path="manage" element={<Manage />} />
             </Route>
 
-            {/* <Route path="dashboard" >
-              <Route index element={<Home />} />
-              <Route path="home" element={<Home />}></Route>
-              <Route path="dietplans" element={<DietPlans />}></Route>
-              <Route path="manage" element={<Manage />}></Route>
-              <Route path="settings" element={<Settings />}></Route>
-            </Route>
-            <Route path="admin">
-              <Route index element={<AdminHome />} />
-              <Route path="home" element={<Home />}></Route>
-              <Route path="foodlist" element={<FoodList />}></Route>
-              <Route path="settings" element={<Settings />}></Route>
-            </Route> */}
             <Route path="admin" element={<MainAdmin />}>
-              <Route
-                index
-                element={
-                  <UserPrivateRoute>
-                    <HomeAdmin />
-                  </UserPrivateRoute>
-                }
-              />
-              <Route
-                path="home"
-                element={
-                  <UserPrivateRoute>
-                    <HomeAdmin />
-                  </UserPrivateRoute>
-                }
-              />
-              <Route
-                path="foodlist"
-                element={
-                  <UserPrivateRoute>
-                    <FoodListMain />
-                  </UserPrivateRoute>
-                }
-              >
-                <Route
-                  index
-                  element={
-                    <UserPrivateRoute>
-                      <FoodListAdmin />
-                    </UserPrivateRoute>
-                  }
-                />
-                <Route
-                  path="addfood"
-                  element={
-                    <UserPrivateRoute>
-                      <NewFood />
-                    </UserPrivateRoute>
-                  }
-                />
+              <Route index element={<UserPrivateRoute> <HomeAdmin /> </UserPrivateRoute>} />
+              <Route path="home" element={<UserPrivateRoute> <HomeAdmin /> </UserPrivateRoute>} />
+              <Route path="foodlist" element={<UserPrivateRoute> <FoodListMain /> </UserPrivateRoute>}>
+                <Route index element={<FoodListAdmin />} />
+                <Route path="addfood" element={ <AddFood />} />
+                <Route path="editfood" element={ <EditFood />} />
               </Route>
             </Route>
           </Routes>
