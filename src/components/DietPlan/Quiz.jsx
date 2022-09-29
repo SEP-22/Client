@@ -14,10 +14,8 @@ import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import { getInputs } from "../../utils/api/dietPlan";
-import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Quiz() {
-  const navigate = useNavigate();
   const [date, setDate] = React.useState(null);
   const [gender, setGender] = React.useState("female");
   const [activity, setActivity] = React.useState("moderate");
@@ -25,7 +23,7 @@ export default function Quiz() {
   const [height, setHeight] = React.useState("");
   const [weight, setWeight] = React.useState("");
 
-  const _id = "6333e004e19aa18ac6e06aec";
+  const _id = JSON.parse(localStorage.getItem("user"));
 
   const handleGenderChange = (event) => {
     setGender(event.target.value);
@@ -211,7 +209,8 @@ export default function Quiz() {
                   </InputLabel>
                   <OutlinedInput
                     name="height"
-                    onChange={() => {
+                    data-testid="height"
+                    onChange={(event) => {
                       setHeight(event.target.value);
                     }}
                     label="height"
@@ -254,7 +253,7 @@ export default function Quiz() {
                   </InputLabel>
                   <OutlinedInput
                     name="weight"
-                    onChange={() => {
+                    onChange={(event) => {
                       setWeight(event.target.value);
                     }}
                     label="weight"

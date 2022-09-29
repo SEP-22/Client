@@ -1,5 +1,5 @@
-import { React, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { React, useEffect, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Navbar from "../../components/Navbar/NabvarUser";
 import Footer from "../../components/Footer/Footer";
@@ -10,20 +10,29 @@ import loginImg from "../../assets/images/loginImg.png";
 import TextField from "@mui/material/TextField";
 import "./loginPage.css";
 import { signIn } from "../../utils/api/user";
+import useAuth from "../../utils/providers/AuthProvider";
 
-export default function LandingPage() {
+
+export default function LogInPage() {
+  const nav = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isMatch, setIsMatch] = useState(true);
-
-  const nav = useNavigate();
+  const { user, signUser } = useAuth();
 
   const login = async (event) => {
     event.preventDefault();
-    if (username != "" && password != "") {
+    if (username !== "" && password !== "") {
       const res = await signIn({ username, password });
-      if (res.data.message=="success") {
-        nav("/");
+      if (res.data.message ==="success") {
+        signUser(res.data.user);
+        console.log(res.data.user)
+        if(res.data.user.role === 'user'){
+          nav("/eatsmart")
+        }else{
+          nav("/admin")
+        }
       }else if (res.data.message == "invalid email or password") {
         setIsMatch(false);
         console.log(res.data.message);
@@ -32,6 +41,11 @@ export default function LandingPage() {
       alert("Invalid inputs");
     }
   };
+
+
+  useEffect(()=>{
+    console.log(user)
+  },[])
 
   return (
     <>
@@ -42,24 +56,24 @@ export default function LandingPage() {
           <form className="loginFormContainer">
             <TextField
               style={{ marginBottom: "3vh" }}
-              id="outlined-basic"
+              id="login-email"
               label="E-mail"
               variant="outlined"
               required
               fullWidth
-              onChange={() => {
+              onChange={(event) => {
                 setUsername(event.target.value);
               }}
             />
             <TextField
               style={{ marginBottom: "3vh" }}
-              id="outlined-basic"
+              id="login-password"
               label="Password"
               variant="outlined"
               type="password"
               required
               fullWidth
-              onChange={() => {
+              onChange={(event) => {
                 setPassword(event.target.value);
               }}
             />

@@ -57,6 +57,7 @@ export default function FoodList() {
     <Box
       sx={{
         m: 2,
+        mt:5,
         alignItems: "center",
         display: "flex",
         justifyContent: "center",

@@ -99,7 +99,7 @@ export default function FoodList(props) {
               </Item>
             </Grid>
             {getArray(type).map((food) => (
-              <Grid key={food.Food} item xs={12} md={3}>
+              <Grid key={food.name} item xs={12} md={3}>
                 <FoodCardAdmin foodItem={food} />
               </Grid>
             ))}
