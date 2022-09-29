@@ -22,6 +22,8 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import PhotoIcon from "@mui/icons-material/Photo";
 import { addFood, addImage } from "../../utils/api/food";
+import useAuth from "../../utils/providers/AuthProvider";
+import { useEffect } from "react";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -62,6 +64,8 @@ function getStyles(name, medicalConditions, theme) {
 const MedicalConditions = ["Diabetics", "Cholesterol", "High Blood Pressure"];
 
 function NewFood() {
+
+  const { user, setUser } = useAuth();
   const navigate = useNavigate();
   const theme = useTheme();
   const initialValues = {
@@ -87,11 +91,13 @@ function NewFood() {
       if (file.type === "Buffer") {
         const reader = "data:image/png;base64," + encode(file.data);
 
+        console.log("file");
         return setimageData(reader);
       } else {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-
+        
+        console.log(reader.result);
         reader.onloadend = async () => {
           return setimageData(reader.result);
         };
@@ -183,6 +189,10 @@ function NewFood() {
       console.log(res.status);
     }
   }
+
+  useEffect(()=>{
+    console.log(user)
+  },[])
 
   return (
     <>
