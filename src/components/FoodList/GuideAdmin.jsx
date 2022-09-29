@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, Box, Paper, Typography, Button } from "@mui/material";
+import { Grid, Box, Paper, Typography, Button, Avatar } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -59,6 +59,8 @@ export default function GuideAdminFoodList() {
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState("");
   const [FoodList, setFoodList] = React.useState([]);
+  const [url, setUrl] = React.useState([]);
+  const [a, setA] = React.useState("");
 
   const handleChange = (event) => {
     const {
@@ -75,7 +77,6 @@ export default function GuideAdminFoodList() {
       const res = await getFoods();
       if (res.status == 200) {
         const data = res.data;
-
         setFoodList(data);
       } else {
       }
@@ -83,6 +84,7 @@ export default function GuideAdminFoodList() {
 
     getData();
   }, []);
+
 
   return (
     <>

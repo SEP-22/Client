@@ -10,6 +10,7 @@ import loginImg from "../../assets/images/loginImg.png";
 import TextField from "@mui/material/TextField";
 import "./signUpPage.css";
 import { signUp } from "../../utils/api/user";
+import useAuth from "../../utils/providers/AuthProvider";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
@@ -18,6 +19,8 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
   const nav = useNavigate();
+  
+  const { user, signUser } = useAuth();
 
   const submitForm = async (event) => {
     event.preventDefault();
@@ -30,6 +33,8 @@ export default function SignUpPage() {
     ) {
       const res = await signUp({ name, email, phone, password });
       if (res.status==201) {
+        signUser(res.data.newUser);
+        // console.log(user)
         nav("/login");
       } else {
         console.log(res.status);
