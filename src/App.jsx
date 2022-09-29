@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter,useNavigate } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { pink, green, blueGrey, teal, grey } from "@mui/material/colors";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
@@ -59,7 +59,7 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
 
-            <Route path="eatsmart" element={<MainUser />}>
+            <Route path="eatsmart" element={<UserPrivateRoute> <MainUser /> </UserPrivateRoute>}>
               <Route index element={<HomeUser />} />
               <Route path="home" element={<HomeUser />} />
               <Route path="foodlist" element={<FoodListUser />} />
@@ -75,10 +75,10 @@ function App() {
               <Route path="manage" element={<Manage />} />
             </Route>
 
-            <Route path="admin" element={<MainAdmin />}>
-              <Route index element={<UserPrivateRoute> <HomeAdmin /> </UserPrivateRoute>} />
-              <Route path="home" element={<UserPrivateRoute> <HomeAdmin /> </UserPrivateRoute>} />
-              <Route path="foodlist" element={<UserPrivateRoute> <FoodListMain /> </UserPrivateRoute>}>
+            <Route path="admin" element={<UserPrivateRoute> <MainAdmin /> </UserPrivateRoute>}>
+              <Route index element={<HomeAdmin />} />
+              <Route path="home" element={ <HomeAdmin /> } />
+              <Route path="foodlist" element={ <FoodListMain /> }>
                 <Route index element={<FoodListAdmin />} />
                 <Route path="addfood" element={ <AddFood />} />
                 <Route path="editfood" element={ <EditFood />} />

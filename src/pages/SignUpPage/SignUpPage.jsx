@@ -1,11 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
-import Navbar from "../../components/Navbar/NabvarUser";
 import Footer from "../../components/Footer/Footer";
 import Button from "@mui/material/Button";
-import FoodCard from "../../components/FoodCard/FoodCardUser";
-import NavbarLanding from "../../components/Navbar/NavbarLanding";
 import loginImg from "../../assets/images/loginImg.png";
 import TextField from "@mui/material/TextField";
 import "./signUpPage.css";
@@ -31,7 +27,7 @@ export default function SignUpPage() {
       password != "" &&
       repassword != ""
     ) {
-      const res = await signUp({ name, email, phone, password });
+      const res = await signUp({ name, email, phone, password, role: "user" });
       if (res.status==201) {
         signUser(res.data.newUser);
         // console.log(user)
@@ -58,7 +54,7 @@ export default function SignUpPage() {
               variant="outlined"
               fullWidth
               required
-              onChange={() => {
+              onChange={(event) => {
                 setName(event.target.value);
               }}
             />
@@ -70,7 +66,7 @@ export default function SignUpPage() {
               type="email"
               fullWidth
               required
-              onChange={() => {
+              onChange={(event) => {
                 setEmail(event.target.value);
               }}
             />
@@ -83,7 +79,7 @@ export default function SignUpPage() {
               pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
               fullWidth
               required
-              onChange={() => {
+              onChange={(event) => {
                 setPhone(event.target.value);
               }}
             />
@@ -95,7 +91,7 @@ export default function SignUpPage() {
               type="password"
               fullWidth
               required
-              onChange={() => {
+              onChange={(event) => {
                 setPassword(event.target.value);
               }}
             />
@@ -107,7 +103,7 @@ export default function SignUpPage() {
               type="password"
               fullWidth
               required
-              onChange={() => {
+              onChange={(event) => {
                 setRepassword(event.target.value);
               }}
             />
