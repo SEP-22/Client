@@ -57,13 +57,13 @@ export default function FoodList() {
     <Box
       sx={{
         m: 2,
-        mt:5,
         alignItems: "center",
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
       }}
     >
-      <Grid container spacing={2}>
+      
         {/* <Grid item xs={12} sx={{display:"flex", flexDirection:"row",alignItems:"center",justifyContent:"center",}}>
           <Item>
             <Typography
@@ -95,13 +95,33 @@ export default function FoodList() {
           
         </Grid>
           <Meal/>
-          <Button>View</Button>
-          <Button>Active</Button>
+          <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
+          <Button variant="contained" color="primary">Deactivate</Button>
+        </div>
+        
+        <div className="scrollable">
+        <Grid item xs={12}>
+          <Item>
+            <Typography
+              sx={{ fontWeight: "bold"}}
+              variant="h6"
+              component="h4"
+              color="secondary"
+            >
+              Diet Plan 2
+            </Typography>
+            {/* <Button>Active</Button> */}
+            {/* <Chip label="Active" color="primary" /> */}
+          </Item>
+          
+        </Grid>
+          <Meal/>
+          <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
+          <Button variant="contained" color="primary">Activate</Button>
         </div>
         {/* {category.map((category) => (
         <Typography key={category}>{category}</Typography>
       ))} */}
-      </Grid>
     </Box>
     </>
   );
