@@ -7,7 +7,10 @@ import ProfileDetail from './ProfileDetail';
 import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
+import Modal from '@mui/material/Modal';
+import { Link, useNavigate } from "react-router-dom";
 //import SmileIcon from "@mui/icons/Mood";
+
 
 const UserProfile = () => {
   const str = (Detail.Type.padEnd(20,' ')+Detail.Value).padEnd(60,' ');
@@ -15,6 +18,8 @@ const UserProfile = () => {
   const str2 = (Detail2.Type.padEnd(20,' ')+Detail2.Value).padEnd(60,' ');
   const str3 = (Detail3.Type.padEnd(20,' ')+Detail3.Value).padEnd(60,' ');
   //const str2 = str1.padEnd(15,' ');
+
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -57,7 +62,7 @@ const UserProfile = () => {
           <CardActions>
             {/* <Button variant="contained" endIcon={<EditIcon />}>
           </Button> */}
-            <IconButton size='small' color='primary'>
+            <IconButton size='small' color='primary' component={Link} to="editname">
               <EditIcon fontSize='small'/>
             </IconButton>
           </CardActions>
@@ -75,7 +80,7 @@ const UserProfile = () => {
           <CardActions>
             {/* <Button variant="contained" endIcon={<EditIcon />}>
           </Button> */}
-            <IconButton size='small' color='primary'>
+            <IconButton size='small' color='primary' component={Link} to="editemail">
               <EditIcon fontSize='small'/>
             </IconButton>
           </CardActions>
@@ -93,7 +98,7 @@ const UserProfile = () => {
           <CardActions>
             {/* <Button variant="contained" endIcon={<EditIcon />}>
           </Button> */}
-            <IconButton size='small' color='primary'> 
+            <IconButton size='small' color='primary' component={Link} to="editphone"> 
               <EditIcon fontSize='small'/>
             </IconButton>
           </CardActions>
