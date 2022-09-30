@@ -40,7 +40,7 @@ const EditName = () => {
                     name='name'
                     label="Name"
                     required
-                    value={"jithmi"}
+                    value={"Jonathan Herondale"}
                     />
                 </FormControl>
             </Box>

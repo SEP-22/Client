@@ -89,17 +89,40 @@ export default function ShoppingList() {
           </Grid>
         ))} */}
         {FoodList.map((food) => (
-          <Grid key={food.Food} item xs={2} sm={4} md={4}>
+          <Grid key={food.Food} item xs={2} sm={4} md={3}>
             {/* <FoodCard foodItem={food} /> */}
             <div >
               {/* <Item color="secondary"><Avatar alt="food image" src={food.Image} sx={{ width: 50, height: 50 }} 
               />{food.Food} - { food.Grams} grams</Item> */}
-              <Chip
-                sx={{minWidth:200, maxHeight:50 }}
+              <Item color="secondary"
+              sx={{
+                display:"flex",
+                flexDirection: "row",
+                alignContent: "center",
+              }}><Avatar alt="food image" src={food.Image} sx={{ width: 45, height: 45 ,m:3}} 
+              />
+              <div align='center' display="flex" alignContent="center">
+                <Typography 
+                  sx={{ fontWeight: "bold" }}
+                  variant="h6"
+                  component="h4"
+                  color="secondary"
+                  align="center"
+                >
+                  {food.Food}
+                </Typography>
+                <br></br>
+                <Typography>
+                { food.Grams} grams
+                </Typography>
+              </div>
+              </Item>
+              {/* <Chip
+                sx={{minWidth:300, maxHeight:100 }}
                 avatar={<Avatar alt={food.Food} src={food.Image} />}
                 label={food.Food+`-`+food.Grams+`g`}
                 variant="contained"
-              />
+              /> */}
             </div>
             
           </Grid>
