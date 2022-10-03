@@ -137,13 +137,12 @@ function EditFood(props) {
       diabetics: diabetics,
       cholesterol: cholesterol,
       bloodpressure: bloodpressure,
-      image: imageBuffer,
     });
   };
 
   const sendData = async (data) => {
     const res = await editFood(food._id,data);
-    if (res.status == 200) {
+    if (res.status === 200) {
       console.log(res.body);
       navigate(-1);
     } else {

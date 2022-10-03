@@ -46,7 +46,7 @@ export default function FoodCardAdmin(props) {
 
   const deleteFoodCard = async() => {
     const res = await deleteFood(FoodItem._id);
-    if (res.status == 200) {
+    if (res.status === 200) {
       console.log(res.body);
       navigate(0);
     } else {

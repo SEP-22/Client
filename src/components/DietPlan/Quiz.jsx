@@ -23,7 +23,9 @@ export default function Quiz() {
   const [height, setHeight] = React.useState("");
   const [weight, setWeight] = React.useState("");
 
-  const _id = JSON.parse(localStorage.getItem("user"));
+  // const _id = JSON.parse(localStorage.getItem("user"));
+  const _id = (JSON.parse(localStorage.getItem("user"))).id;
+  // console.log((JSON.parse(localStorage.getItem("user"))).id)
 
   const handleGenderChange = (event) => {
     setGender(event.target.value);

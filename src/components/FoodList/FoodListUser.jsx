@@ -27,7 +27,7 @@ export default function FoodList(props) {
     const getData = async () => {
       setIsLoading(true);
       const res = await foodByCategory();
-      if (res.status == 200) {
+      if (res.status === 200) {
         const data = res.data;
         setVegetablesFruits(data.Vegetables_Fruits);
         setStartchyFood(data.StarchyFood);
