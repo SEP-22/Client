@@ -11,7 +11,6 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import FoodCard from "../FoodCard/FoodCardUser";
 import FoodCardAdmin from "../FoodCard/FoodCardAdmin";
 import FoodListAdmin from "./FoodListAdmin";
 import { getFoods } from "../../utils/api/food";

@@ -11,6 +11,10 @@ import TextField from "@mui/material/TextField";
 import "./loginPage.css";
 import { signIn } from "../../utils/api/user";
 import useAuth from "../../utils/providers/AuthProvider";
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
 
 
 export default function LogInPage() {
@@ -19,6 +23,7 @@ export default function LogInPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isMatch, setIsMatch] = useState(true);
+  const [showPassword, setShowPassword] = useState(false)
   const { user, signUser } = useAuth();
 
   const login = async (event) => {
@@ -47,6 +52,14 @@ export default function LogInPage() {
     console.log(user)
   },[])
 
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword)
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <div className="loginContainer">
@@ -70,12 +83,24 @@ export default function LogInPage() {
               id="login-password"
               label="Password"
               variant="outlined"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               required
               fullWidth
               onChange={(event) => {
                 setPassword(event.target.value);
               }}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
             {!isMatch ? <p>Invalid email or password</p>:<p></p>}
             <Button

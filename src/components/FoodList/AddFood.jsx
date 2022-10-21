@@ -119,7 +119,7 @@ function AddFood() {
 
   const sendData = async (data) => {
     const res = await addFood(data);
-    if (res.status == 200) {
+    if (res.status === 200) {
       console.log(res.body);
       navigate(-1);
     } else {

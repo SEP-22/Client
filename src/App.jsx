@@ -11,7 +11,6 @@ import MainAdmin from "./pages/Admin/MainAdmin";
 import HomeAdmin from "./pages/Admin/HomeAdmin";
 import HomeUser from "./pages/User/HomeUser";
 import LandingPage from "./pages/LandingPage/LandingPage";
-import NewFood from "./components/FoodList/NewFood";
 import FoodListMain from "./pages/Admin/FoodListMain";
 import ShoppingLists from "./pages/ShoppingList/ShoppingList";
 import ProfilePage from "./pages/Profile/ProfilePage";
@@ -26,6 +25,7 @@ import EditName from "./components/User/EditName";
 import EditPhone from "./components/User/EditPhone";
 import EditEmail from "./components/User/EditEmail";
 import ProfilePageMain from "./pages/Profile/ProfilePageMain";
+import FoodSelection from "./components/DietPlan/FoodSelection";
 
 const theme = createTheme({
   palette: {
@@ -72,6 +72,7 @@ function App() {
               </Route>
               <Route path="dietplans" element={<MultipleDietPlans />} />
               <Route path="quiz" element={<Quiz />} />
+              <Route path="foodselection" element={<FoodSelection />} />
               <Route path="manage" element={<Manage />} />
             </Route>
 

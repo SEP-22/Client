@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { Typography, Paper, Grid, Button } from "@mui/material";
-import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -13,19 +12,84 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
+import Select from "@mui/material/Select";
+import Chip from "@mui/material/Chip";
+import MenuItem from "@mui/material/MenuItem";
 import { getInputs } from "../../utils/api/dietPlan";
+import { styled } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+
+function getStyles(name, medicalConditions, theme) {
+  return {
+    fontWeight:
+      medicalConditions.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const MedicalConditions = ["Diabetics", "Cholesterol", "High Blood Pressure"];
 
 export default function Quiz() {
+  const theme = useTheme();
+  const navigate = useNavigate();
+
   const [date, setDate] = React.useState(null);
   const [gender, setGender] = React.useState("female");
   const [activity, setActivity] = React.useState("moderate");
   const [intention, setIntention] = React.useState("maintain");
   const [height, setHeight] = React.useState("");
   const [weight, setWeight] = React.useState("");
+  const [medConditions, setMedConditions] = React.useState([]);
 
   // const _id = JSON.parse(localStorage.getItem("user"));
-  const _id = (JSON.parse(localStorage.getItem("user"))).id;
+  const _id = JSON.parse(localStorage.getItem("user")).id;
   // console.log((JSON.parse(localStorage.getItem("user"))).id)
+
+  function getSteps(id) {
+    switch (id) {
+      case 0:
+        return [
+          "Fruits and Vegetables",
+          "Starchy food",
+          "Proteins",
+          "Dairy and Fats",
+          "Sugar",
+        ];
+
+      case 1:
+        return ["Fruits and Vegetables", "Starchy food", "Proteins"];
+
+      case 2:
+        return [
+          "Fruits and Vegetables",
+          "Starchy food",
+          "Proteins",
+          "Dairy and Fats",
+        ];
+
+      case 3:
+        return ["Fruits and Vegetables", "Starchy food", "Sugar"];
+
+      case 4:
+        return ["Fruits and Vegetables", "Starchy food"];
+
+      default:
+        return [];
+    }
+  }
 
   const handleGenderChange = (event) => {
     setGender(event.target.value);
@@ -39,9 +103,33 @@ export default function Quiz() {
     setIntention(event.target.value);
   };
 
+  const handleMedConditionChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setMedConditions(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Hi");
+
+    let diabetics = 0;
+    let cholesterol = 0;
+    let bloodpressure = 0;
+
+    medConditions.map((med) => {
+      if (med === "Diabetics") {
+        diabetics = 1;
+      } else if (med === "Cholesterol") {
+        cholesterol = 1;
+      } else if (med === "High Blood Pressure") {
+        bloodpressure = 1;
+      }
+    });
+
     if (date !== null && height !== "" && weight !== "") {
       let d = date.toDate();
       const data = {
@@ -52,6 +140,9 @@ export default function Quiz() {
         intention: intention,
         height: height,
         weight: weight,
+        diabetics: diabetics,
+        cholesterol: cholesterol,
+        bloodpressure: bloodpressure,
       };
       sendData(data);
     }
@@ -59,9 +150,23 @@ export default function Quiz() {
 
   const sendData = async (data) => {
     const res = await getInputs(data);
-    if (res.status == 200) {
-      console.log(res.body);
-      
+    if (res.status === 200) {
+      console.log(res.data._id);
+      let id = 0;
+      if (data.bloodpressure || (data.bloodpressure && data.diabetics)) {
+        id = 1;
+      } else if (data.diabetics) {
+        id = 2;
+      } else if (data.cholesterol) {
+        id = 3;
+      } else if (
+        (data.bloodpressure && data.cholesterol) ||
+        (data.diabetics && data.cholesterol) ||
+        (data.bloodpressure && data.diabetics && data.cholesterol)
+      ) {
+        id = 4;
+      }
+      navigate("/eatsmart/foodselection", { state: { steps: getSteps(id) } });
     } else {
       console.log(res.status);
     }
@@ -79,7 +184,7 @@ export default function Quiz() {
           flexDirection: "column",
         }}
       >
-        <form>
+        <form onSubmit={handleSubmit}>
           <Grid>
             <Grid item xs={12}>
               <Paper
@@ -351,7 +456,6 @@ export default function Quiz() {
                   Select your Diet Intention
                 </Typography>
               </Grid>
-
               <Grid item xs={12} align="center">
                 <FormControl>
                   <RadioGroup
@@ -383,6 +487,65 @@ export default function Quiz() {
           </Grid>
 
           <Grid>
+            <Paper
+              sx={{
+                mt: 1,
+                mb: 1,
+                p: 4,
+                minWidth: { md: 400 },
+                borderRadius: 10,
+              }}
+            >
+              <Grid item xs={12}>
+                <Typography
+                  align="center"
+                  component="h4"
+                  variant="h6"
+                  gutterBottom
+                >
+                  Select if you have any of the following illnesses
+                </Typography>
+              </Grid>
+              <br></br>
+              <Grid item xs={12} align="center">
+                <FormControl sx={{ width: "200px" }}>
+                  <InputLabel>Medical Conditions</InputLabel>
+                  <Select
+                    name="medConditions"
+                    multiple
+                    value={medConditions}
+                    onChange={handleMedConditionChange}
+                    input={
+                      <OutlinedInput
+                        id="select-multiple-chip"
+                        label="Medical Conditions"
+                      />
+                    }
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                          <Chip key={value} label={value} />
+                        ))}
+                      </Box>
+                    )}
+                    MenuProps={MenuProps}
+                  >
+                    {MedicalConditions.map((med) => (
+                      <MenuItem
+                        key={med}
+                        value={med}
+                        style={getStyles(med, MedicalConditions, theme)}
+                      >
+                        {med}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Paper>
+          </Grid>
+
+          <Grid>
             <Grid item xs={12} align="center">
               <Paper
                 sx={{
@@ -401,7 +564,7 @@ export default function Quiz() {
                   variant="contained"
                   color="secondary"
                   type="submit"
-                  onClick={handleSubmit}
+                  // onClick={handleSubmit}
                 >
                   Generate Diet Plan
                 </Button>
