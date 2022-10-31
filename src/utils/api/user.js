@@ -34,6 +34,19 @@ const setPreferedFoods = async (body) => {
   }
 };
 
+const getPreferedFoods = async (body) => {
+  try {
+    const res = await baseApi.post("user/getpreferedfoods", body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    //TODO: add custom error
+    console.log(error);
+  }
+};
+
 const haveActiveDietPlan = async (body) => {
   try {
     const res = await baseApi.post("user/activeplan", body);
@@ -60,4 +73,4 @@ const updateActiveDietPlan = async (body) => {
   }
 };
 
-export { signUp, signIn, setPreferedFoods ,haveActiveDietPlan,updateActiveDietPlan};
+export { signUp, signIn, setPreferedFoods ,haveActiveDietPlan,updateActiveDietPlan,getPreferedFoods};

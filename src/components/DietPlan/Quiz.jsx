@@ -60,8 +60,8 @@ export default function Quiz() {
   const [activePlan, setActivePlan] = React.useState(null);
   const [makeActive, setMakeActive] = React.useState(false);
 
-  // const _id = JSON.parse(localStorage.getItem("user")).id;
-  const _id = "633601573507a646fb339d94"
+  const _id = JSON.parse(localStorage.getItem("user")).id;
+  // const _id = "633601573507a646fb339d94"
 
   React.useEffect(() => {
     const getData = async () => {

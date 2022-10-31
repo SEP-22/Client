@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import FoodCardUser from "../FoodCard/FoodCardUser";
 import { foodByCategory } from "../../utils/api/food";
 import CircularProgress from "@mui/material/CircularProgress";
+import { getPreferedFoods } from "../../utils/api/user";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -19,7 +20,11 @@ export default function FoodList(props) {
   const [Proteins, setProteins] = React.useState([]);
   const [Dairy_Fat, setDairyFat] = React.useState([]);
   const [Sugar, setSugar] = React.useState([]);
+  const [state, setState] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
+
+  // const _id = JSON.parse(localStorage.getItem("user")).id;
+  const _id = "633601573507a646fb339d94"
 
   const Category = props.Category;
 
@@ -28,14 +33,35 @@ export default function FoodList(props) {
       setIsLoading(true);
       const res = await foodByCategory();
       if (res.status === 200) {
+        let states = {}; 
         const data = res.data;
         setVegetablesFruits(data.Vegetables_Fruits);
         setStartchyFood(data.StarchyFood);
         setDairyFat(data.Dairy_Fat);
         setProteins(data.Proteins);
         setSugar(data.Sugar);
+        data.Vegetables_Fruits.map((f) => (states[f._id] = false));
+        data.StarchyFood.map((f) => (states[f._id] = false));
+        data.Dairy_Fat.map((f) => (states[f._id] = false));
+        data.Proteins.map((f) => (states[f._id] = false));
+        data.Sugar.map((f) => (states[f._id] = false));
+
+        const res1 = await getPreferedFoods({ user_Id : _id});
+        if (res1.status === 200) {
+          const prefered = res1.data.preferedFoods;
+          prefered.map((p) => (states.p = true))
+          setState(states);
+          setIsLoading(false);
+          console.log(state)
+        }else{
+          console.log(res)
+          setIsLoading(false);   
+        }
+
         setIsLoading(false);
       } else {
+        console.log(res)
+        setIsLoading(false);
       }
     };
 
