@@ -28,7 +28,7 @@ export default function SignUpPage() {
       repassword != ""
     ) {
       const res = await signUp({ name, email, phone, password, role: "user" });
-      if (res.status==201) {
+      if (res.status===201) {
         signUser(res.data.newUser);
         // console.log(user)
         nav("/login");

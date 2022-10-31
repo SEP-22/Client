@@ -59,36 +59,43 @@ export default function Quiz() {
   // console.log((JSON.parse(localStorage.getItem("user"))).id)
 
   function getSteps(id) {
+    let temp = [];
     switch (id) {
       case 0:
-        return [
+        temp = [
           "Fruits and Vegetables",
           "Starchy food",
           "Proteins",
           "Dairy and Fats",
           "Sugar",
         ];
+        break;
 
       case 1:
-        return ["Fruits and Vegetables", "Starchy food", "Proteins"];
+        temp = ["Fruits and Vegetables", "Starchy food", "Proteins"];
+        break;
 
       case 2:
-        return [
+        temp = [
           "Fruits and Vegetables",
           "Starchy food",
           "Proteins",
           "Dairy and Fats",
         ];
+        break;
 
       case 3:
-        return ["Fruits and Vegetables", "Starchy food", "Sugar"];
+        temp = ["Fruits and Vegetables", "Starchy food", "Sugar"];
+        break;
 
       case 4:
-        return ["Fruits and Vegetables", "Starchy food"];
+        temp = ["Fruits and Vegetables", "Starchy food"];
+        break;
 
       default:
-        return [];
+        break;
     }
+    return temp;       
   }
 
   const handleGenderChange = (event) => {
@@ -166,7 +173,12 @@ export default function Quiz() {
       ) {
         id = 4;
       }
-      navigate("/eatsmart/foodselection", { state: { steps: getSteps(id) } });
+      navigate("/eatsmart/foodselection", {
+        state: {
+          steps: getSteps(id),
+          _id: res.data._id,
+        },
+      });
     } else {
       console.log(res.status);
     }

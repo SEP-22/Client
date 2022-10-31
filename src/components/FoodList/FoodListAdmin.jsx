@@ -84,8 +84,8 @@ export default function FoodList(props) {
           </Box>
         )}
         {Category.map((type) => (
-          <>
-            <Grid key={type} item xs={12}>
+          <> 
+             <Grid key={type} item xs={12}>
               <Item>
                 <Typography
                   sx={{ fontWeight: "bold" }}
