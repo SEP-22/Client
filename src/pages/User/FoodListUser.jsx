@@ -1,8 +1,6 @@
 import React from "react";
 import Box from '@mui/material/Box';
-import Navbar from "../../components/Navbar/NabvarUser";
-import Footer from "../../components/Footer/Footer";
-import UserFoodList from "../../components/FoodList/UserFoodList";
+import UserFoodList from "../../components/FoodList/GuideUser";
 
 export default function FoodListUser() {
     return (

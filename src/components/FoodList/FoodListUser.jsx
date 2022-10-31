@@ -34,7 +34,6 @@ export default function FoodList(props) {
         setDairyFat(data.Dairy_Fat);
         setProteins(data.Proteins);
         setSugar(data.Sugar);
-        console.log(FoodList);
         setIsLoading(false);
       } else {
       }

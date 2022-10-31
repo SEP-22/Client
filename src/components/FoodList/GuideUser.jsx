@@ -10,10 +10,12 @@ import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { styled } from "@mui/material/styles";
-import { display } from "@mui/system";
+import { getFoods } from "../../utils/api/food";
+import FoodCard from "../FoodCard/FoodCardUser";
+import FoodListUser from "./FoodListUser";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  backgroundColor: "transparent",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
@@ -31,12 +33,12 @@ const MenuProps = {
   },
 };
 
-const category = [
-  "Vagetables",
-  "Fruits",
-  "Dairy Products",
+const Category = [
+  "Fruits and Vegetables",
+  "Starchy food",
   "Proteins",
-  "Fat",
+  "Dairy and Fats",
+  "Sugar",
 ];
 
 function getStyles(name, foodCategory, theme) {
@@ -51,6 +53,9 @@ function getStyles(name, foodCategory, theme) {
 export default function GuideUserFoodList() {
   const theme = useTheme();
   const [foodCategory, setFoodCategory] = React.useState([]);
+  const [value, setValue] = React.useState(null);
+  const [inputValue, setInputValue] = React.useState("");
+  const [FoodList, setFoodList] = React.useState([]);
 
   const handleChange = (event) => {
     const {
@@ -62,6 +67,19 @@ export default function GuideUserFoodList() {
     );
   };
 
+  React.useEffect(() => {
+    const getData = async () => {
+      const res = await getFoods();
+      if (res.status === 200) {
+        const data = res.data;
+        setFoodList(data);
+      } else {
+      }
+    };
+
+    getData();
+  }, []);
+
   return (
     <>
       <Box
@@ -72,73 +90,92 @@ export default function GuideUserFoodList() {
           justifyContent: "center",
         }}
       >
-        <Item sx={{ m:{xs:0, sm:4,} , p: 4, alignItems: "center" }}>
-          <Typography  sx={{fontWeight: 'bold'}} variant="h6" component="h4" color="primary">Choose AT LEAST TWO from each Category</Typography>
-          <br></br>
-          <FormControl sx={{ m: 1, width: "30vw" }}>
-            <InputLabel id="demo-multiple-chip-label">Category</InputLabel>
-            <Select
-              labelId="demo-multiple-chip-label"
-              id="demo-multiple-chip"
-              multiple
-              value={foodCategory}
-              onChange={handleChange}
-              input={<OutlinedInput id="select-multiple-chip" label="Category" />}
-              renderValue={(selected) => (
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selected.map((value) => (
-                    <Chip key={value} label={value} />
-                  ))}
+        <Paper sx={{ mt: 4, mb: 4, p: 4, alignItems: "center", minWidth: 250 }}>
+          <Grid>
+            <Grid item xs={12}>
+              <Item elevation={0}>
+                <Box sx={{ pr: 2, pl: 2 }}>
+                  <FormControl sx={{ width: "100%" }}>
+                    <InputLabel id="demo-multiple-chip-label">
+                      Category
+                    </InputLabel>
+                    <Select
+                      labelId="demo-multiple-chip-label"
+                      id="demo-multiple-chip"
+                      multiple
+                      value={foodCategory}
+                      onChange={handleChange}
+                      input={
+                        <OutlinedInput
+                          id="select-multiple-chip"
+                          label="Category"
+                        />
+                      }
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+                        >
+                          {selected.map((value) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {Category.map((name) => (
+                        <MenuItem
+                          key={name}
+                          value={name}
+                          style={getStyles(name, foodCategory, theme)}
+                        >
+                          {name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Box>
-              )}
-              MenuProps={MenuProps}
-            >
-              {category.map((name) => (
-                <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, foodCategory, theme)}
-                >
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <Autocomplete
-            freeSolo
-            id="search"
-            options={FoodList.map((option) => option.Food)}
-            renderInput={(params) => (
-              <TextField
-                sx={{ m: 1, width: "30vw" }}
-                {...params}
-                label="Search for "
-                InputProps={{
-                  ...params.InputProps,
-                  type: "search",
-                }}
-              />
-            )}
-          />
-        </Item>
+              </Item>
+            </Grid>
+            <Grid item xs={12}>
+              <Item elevation={0}>
+                <Box sx={{ pr: 2, pl: 2 }}>
+                  <Autocomplete
+                    value={value}
+                    onChange={(event, newValue) => {
+                      setValue(newValue);
+                    }}
+                    inputValue={inputValue}
+                    onInputChange={(event, newInputValue) => {
+                      setInputValue(newInputValue);
+                    }}
+                    id="search"
+                    options={FoodList}
+                    getOptionLabel={(option) => option.name}
+                    sx={{ width: "100%" }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Search for " />
+                    )}
+                  />
+                </Box>
+              </Item>
+            </Grid>
+          </Grid>
+        </Paper>
       </Box>
+      {value && (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ maxWidth: 300 }}>
+          {console.log(value)}
+            <FoodCard foodItem={value} />
+          </Box>
+        </Box>
+      )}
+      {foodCategory.length === 0 ? (
+        <FoodListUser Category={Category} />
+      ) : (
+        <FoodListUser Category={foodCategory} />
+      )}
+      {/* {console.log(foodCategory)} */}
     </>
   );
 }
-
-const FoodList = [
-  {
-    Food: "Ice cream",
-    Measure: "1 cup",
-    Grams: 188,
-    Calories: 300,
-    Protein: 6,
-    Fat: 18,
-    SaturatedFat: 16,
-    Fiber: 0,
-    Carbs: 29,
-    Category: "Dairy products",
-    Image: "/src/assets/images/foods/icecream.jpg",
-  },
-];

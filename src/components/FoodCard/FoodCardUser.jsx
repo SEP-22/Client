@@ -7,28 +7,14 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import NutrientTable from "./NutrientTable";
 import ReactCardFlip from "react-card-flip";
-import Switch from '@mui/material/Switch';
+import Switch from "@mui/material/Switch";
 
-const FoodList = {
-  Food: "Ice cream",
-  Measure: "1 cup",
-  Grams: 188,
-  Calories: 300,
-  Protein: 6,
-  Fat: 18,
-  SaturatedFat: 16,
-  Fiber: 0,
-  Carbs: 29,
-  Category: "Dairy products",
-  Image: "/src/assets/images/foods/icecream.jpg",
-};
 
 export default function FoodCard(props) {
   const FoodItem = props.foodItem;
 
   const [checked, setChecked] = React.useState(FoodItem.Selected);
   const [Flipped, setFlipped] = useState(false);
-
 
   const setFlippedTrue = () => {
     setFlipped(true);
@@ -43,33 +29,39 @@ export default function FoodCard(props) {
   };
 
   const getMedConditions = (food) => {
-    let med_con = ""
+    let med_con = "";
     if (food.cholesterol === 1 || food.cholesterol === true) {
-      med_con = med_con.concat(" Cholesterol, ")
-      
-    } if (food.diabetics === 1 || food.diabetics === true) {
-      med_con = med_con.concat(" Diabetics, ")
-
-    } if (food.bloodpressure === 1 || food.bloodpressure === true) {
-      med_con = med_con.concat(" High Blood Pressure, ")
+      med_con = med_con.concat(" Cholesterol, ");
+    }
+    if (food.diabetics === 1 || food.diabetics === true) {
+      med_con = med_con.concat(" Diabetics, ");
+    }
+    if (food.bloodpressure === 1 || food.bloodpressure === true) {
+      med_con = med_con.concat(" High Blood Pressure, ");
     }
 
-    if(med_con === ""){
-      return "None"
-    }else {
-      return med_con.slice(0, med_con.length-2)
+    if (med_con === "") {
+      return "None";
+    } else {
+      return med_con.slice(0, med_con.length - 2);
     }
-  }
+  };
 
   return (
     <ReactCardFlip isFlipped={Flipped} flipDirection="vertical">
-      <Card sx={{ maxWidth: "30vw", minHeight: "60vh", m: 2 }}>
+      <Card
+        sx={{
+          maxWidth: "30vw",
+          display: "flex",
+          flexDirection: "column",
+          m: 2,
+        }}
+      >
         <CardMedia
-          sx={{position:"cover"}}
+          sx={{}}
           component="img"
           alt={FoodItem.Food}
           width="100%"
-          height="200vh"
           image={FoodItem.image}
           loading="lazy"
         />
@@ -78,9 +70,15 @@ export default function FoodCard(props) {
             {FoodItem.Food}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-          Category : <strong>{FoodItem.category}</strong><br></br>
-            Calories per Gram: <strong>{FoodItem.cal_per_gram}</strong> kcal/g<br></br>
-            Medical Conditions:<strong> {getMedConditions(FoodItem)}</strong> <br></br>
+            Category : <strong>{FoodItem.category}</strong>
+            <br></br>
+            Calories per Gram: <strong>{FoodItem.cal_per_gram}</strong> kcal/g
+            <br></br>
+            Medical Conditions:<strong>
+              {" "}
+              {getMedConditions(FoodItem)}
+            </strong>{" "}
+            <br></br>
             Nutrients :{" "}
             <Button
               disableElevation
