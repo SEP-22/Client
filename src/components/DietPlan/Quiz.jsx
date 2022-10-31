@@ -15,10 +15,14 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import MenuItem from "@mui/material/MenuItem";
+import Checkbox from "@mui/material/Checkbox";
 import { getInputs } from "../../utils/api/dietPlan";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import { haveActiveDietPlan, updateActiveDietPlan } from "../../utils/api/user";
 
 function getStyles(name, medicalConditions, theme) {
   return {
@@ -53,10 +57,25 @@ export default function Quiz() {
   const [height, setHeight] = React.useState("");
   const [weight, setWeight] = React.useState("");
   const [medConditions, setMedConditions] = React.useState([]);
+  const [activePlan, setActivePlan] = React.useState(null);
+  const [makeActive, setMakeActive] = React.useState(false);
 
-  // const _id = JSON.parse(localStorage.getItem("user"));
-  const _id = JSON.parse(localStorage.getItem("user")).id;
-  // console.log((JSON.parse(localStorage.getItem("user"))).id)
+  // const _id = JSON.parse(localStorage.getItem("user")).id;
+  const _id = "633601573507a646fb339d94"
+
+  React.useEffect(() => {
+    const getData = async () => {
+      const res = await haveActiveDietPlan({ user_Id: _id });
+      if (res.status === 200) {
+        const data = res.data;
+        setActivePlan(data.active);
+      } else {
+        console.log(res);
+      }
+    };
+
+    getData();
+  }, []);
 
   function getSteps(id) {
     let temp = [];
@@ -95,7 +114,7 @@ export default function Quiz() {
       default:
         break;
     }
-    return temp;       
+    return temp;
   }
 
   const handleGenderChange = (event) => {
@@ -118,6 +137,10 @@ export default function Quiz() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+  };
+
+  const handleChange = (event) => {
+    setMakeActive(event.target.checked);
   };
 
   const handleSubmit = (event) => {
@@ -159,26 +182,39 @@ export default function Quiz() {
     const res = await getInputs(data);
     if (res.status === 200) {
       console.log(res.data._id);
-      let id = 0;
-      if (data.bloodpressure || (data.bloodpressure && data.diabetics)) {
-        id = 1;
-      } else if (data.diabetics) {
-        id = 2;
-      } else if (data.cholesterol) {
-        id = 3;
-      } else if (
-        (data.bloodpressure && data.cholesterol) ||
-        (data.diabetics && data.cholesterol) ||
-        (data.bloodpressure && data.diabetics && data.cholesterol)
-      ) {
-        id = 4;
+
+      if (!activePlan || makeActive) {
+        const res1 = await updateActiveDietPlan({
+          user_Id: _id,
+          activePlan_Id: res.data._id,
+        });
+        if (res1.status === 200) {
+          if (!activePlan) {
+            let id = 0;
+            if (data.bloodpressure || (data.bloodpressure && data.diabetics)) {
+              id = 1;
+            } else if (data.diabetics) {
+              id = 2;
+            } else if (data.cholesterol) {
+              id = 3;
+            } else if (
+              (data.bloodpressure && data.cholesterol) ||
+              (data.diabetics && data.cholesterol) ||
+              (data.bloodpressure && data.diabetics && data.cholesterol)
+            ) {
+              id = 4;
+            }
+            navigate("/eatsmart/foodselection", {
+              state: {
+                steps: getSteps(id),
+                _id: res.data._id,
+              },
+            });
+          } else {
+            navigate("/eatsmart/dietplans");
+          }
+        }
       }
-      navigate("/eatsmart/foodselection", {
-        state: {
-          steps: getSteps(id),
-          _id: res.data._id,
-        },
-      });
     } else {
       console.log(res.status);
     }
@@ -556,6 +592,36 @@ export default function Quiz() {
               </Grid>
             </Paper>
           </Grid>
+
+          {activePlan && (
+            <Grid>
+              <Grid item xs={12} align="center">
+                <Paper
+                  sx={{
+                    mt: 1,
+                    mb: 1,
+                    p: 4,
+                    alignItems: "center",
+                    minWidth: { md: 400 },
+                  }}
+                >
+                  <FormControlLabel
+                    label="save as ACTIVE Diet Plan"
+                    control={
+                      <Checkbox
+                        checked={makeActive}
+                        icon={<CheckBoxOutlineBlankRoundedIcon />}
+                        checkedIcon={<VerifiedIcon />}
+                        onChange={handleChange}
+                        inputProps={{ "aria-label": "controlled" }}
+                      />
+                    }
+                  />
+                  <br></br>
+                </Paper>
+              </Grid>
+            </Grid>
+          )}
 
           <Grid>
             <Grid item xs={12} align="center">

@@ -16,9 +16,12 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
+import { useNavigate } from "react-router-dom";
+import { setPreferedFoods } from "../../utils/api/user";
 
 function FoodSelection() {
   const location = useLocation();
+  const navigate = useNavigate();
   const steps = location.state.steps;
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -78,16 +81,33 @@ function FoodSelection() {
     });
   };
 
+  const _id = JSON.parse(localStorage.getItem("user")).id;
+
   const handleSubmit = (event) => {
     event.preventDefault()
-    let data = []
+    let foods = []
     for (const s in state) {
       if (state[s]) {
-          data.push(s);
+          foods.push(s);
       }
    }
-    console.log(data)
+    const data = {
+      user_Id: _id,
+      foods: foods,
+    };
+
+    sendData(data);
   }
+
+  const sendData = async (data) => {
+    const res = await setPreferedFoods(data);
+    if (res.status === 200) {
+      console.log(res.data);
+      navigate("/eatsmart/dietplans")
+    } else {
+      console.log(res.status);
+    }
+  };
 
   const getError = (name) => {
     let c = 0;
@@ -104,6 +124,7 @@ function FoodSelection() {
     }
   };
 
+  
   //   const error = getError(steps[activeStep]).filter((v) => v).length !== 2;
 
   function getArray(name) {

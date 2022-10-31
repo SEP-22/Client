@@ -21,4 +21,43 @@ const signIn = async (body) => {
   }
 };
 
-export { signUp, signIn };
+const setPreferedFoods = async (body) => {
+  try {
+    const res = await baseApi.post("user/preferedfoods", body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    //TODO: add custom error
+    console.log(error);
+  }
+};
+
+const haveActiveDietPlan = async (body) => {
+  try {
+    const res = await baseApi.post("user/activeplan", body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    //TODO: add custom error
+    console.log(error);
+  }
+};
+
+const updateActiveDietPlan = async (body) => {
+  try {
+    const res = await baseApi.post("user/updateactiveplan", body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    //TODO: add custom error
+    console.log(error);
+  }
+};
+
+export { signUp, signIn, setPreferedFoods ,haveActiveDietPlan,updateActiveDietPlan};
