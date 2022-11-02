@@ -21,6 +21,7 @@ const signIn = async (body) => {
   }
 };
 
+
 const setPreferedFoods = async (body) => {
   try {
     const res = await baseApi.post("user/preferedfoods", body);
@@ -30,6 +31,18 @@ const setPreferedFoods = async (body) => {
     return res;
   } catch (error) {
     //TODO: add custom error
+  }
+};
+
+const getUserByID = async (params) => {
+  try {
+    const res = await baseApi.get("user/single/" + params);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    console.log(res);
+    return res;
+  } catch (error) {
     console.log(error);
   }
 };
@@ -73,4 +86,5 @@ const updateActiveDietPlan = async (body) => {
   }
 };
 
-export { signUp, signIn, setPreferedFoods ,haveActiveDietPlan,updateActiveDietPlan,getPreferedFoods};
+export { signUp, signIn, setPreferedFoods , haveActiveDietPlan,updateActiveDietPlan,getPreferedFoods, getUserByID};
+

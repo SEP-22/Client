@@ -3,7 +3,7 @@ import { useState } from 'react';
 import LogInPage from '../pages/LoginPage/LoginPage';
 import useAuth from '../utils/providers/AuthProvider'
 
-function UserPrivateRoute({children}) {
+function AdminPrivateRoute({children}) {
 
     const {user} = useAuth();
 
@@ -14,13 +14,13 @@ function UserPrivateRoute({children}) {
  
     }, [])
 
-    if (user && !isFirst && user.role == "user") {
-      return children;
-    } else if (isFirst) {
-      return <div style={{ height: "100vh" }}></div>;
-    } else {
-      return <LogInPage></LogInPage>;
+    if(user && !isFirst && user.role=="admin"){
+        return children;
+    }else if(isFirst){
+        return <div style={{height:"100vh"}}></div>
+    }else{
+        return <LogInPage></LogInPage>
     }
 }
 
-export default UserPrivateRoute
+export default AdminPrivateRoute;

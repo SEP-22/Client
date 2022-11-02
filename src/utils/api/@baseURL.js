@@ -6,6 +6,8 @@ const refreshToken = localStorage.getItem("_RT");
 const accessToken = sessionStorage.getItem("_AT");
 
 if (url) {
+  console.log("url")
+  console.log(refreshToken)
   baseApi = axios.create({
     baseURL: url,
     headers: {
