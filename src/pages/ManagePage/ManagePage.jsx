@@ -4,6 +4,13 @@ import Footer from "../../components/Footer/Footer";
 import Button from "@mui/material/Button";
 import loginImg from "../../assets/images/loginImg.png";
 import TextField from "@mui/material/TextField";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import "./managePage.css";
 import { signUp, getUserByID } from "../../utils/api/user";
 import useAuth from "../../utils/providers/AuthProvider";
@@ -42,6 +49,7 @@ export default function ManagePage() {
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
   const [medConditions, setMedConditions] = useState([]);
+  const [gender, setGender] = useState("male");
   const [workingHours, setWorkingHours] = useState(WorkingHours[0]);
   const [dietaryIntention, setDietaryIntention] = useState(DietaryIntention[0]);
   const nav = useNavigate();
@@ -67,33 +75,10 @@ export default function ManagePage() {
     );
   };
 
-  const submitForm = async (event) => {
-    event.preventDefault();
-    if (
-      name != "" &&
-      email != "" &&
-      phone != "" &&
-      password != "" &&
-      repassword != ""
-    ) {
-      const res = await signUp({ name, email, phone, password, role: "user" });
-      if (res.status == 201) {
-        signUser(res.data.newUser);
-        // console.log(user)
-        nav("/login");
-      } else {
-        console.log(res.status);
-      }
-    } else {
-      alert("Invalid inputs");
-    }
-  };
+
 
   useEffect(() => {
     const getActiveDietPlanDetails = async () => {
-      // const res = await getTutorGig(params["gigName"]);
-      // var areas = res.areas.filter((area) => !area.startsWith("all-"));
-      // res.areas = areas;
       console.log(user);
       const currentUser = await getUserByID(user.id);
       console.log(currentUser.data.activeDietPlan);
@@ -134,9 +119,9 @@ export default function ManagePage() {
         medConditions.push("Diabetics");
       }
       setMedConditions(medConditions);
+      setGender(currentUser.data.activeDietPlan.gender)
     };
     getActiveDietPlanDetails();
-    // console.log(params["gigName"]);
   }, []);
 
   return (
@@ -151,17 +136,21 @@ export default function ManagePage() {
                   <p>Birthday</p>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField
-                    style={{ marginBottom: "3vh" }}
-                    id="outlined-basic"
-                    variant="outlined"
-                    fullWidth
-                    required
-                    value={age}
-                    onChange={(event) => {
-                      setName(event.target.value);
-                    }}
-                  />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      disableFuture
+                      label="Birthday"
+                      openTo="year"
+                      views={["year", "month", "day"]}
+                      value={age}
+                      onChange={(newValue) => {
+                        setAge(newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} required />
+                      )}
+                    />
+                  </LocalizationProvider>
                 </Grid>
                 <Grid item xs={4}>
                   <p>Height</p>
@@ -178,6 +167,33 @@ export default function ManagePage() {
                       setName(event.target.value);
                     }}
                   />
+                </Grid>
+                <Grid item xs={4}>
+                  <p>Gender</p>
+                </Grid>
+                <Grid item xs={12} align="center">
+                  <FormControl>
+                    <RadioGroup
+                      aria-labelledby="gender-group-label"
+                      defaultValue="female"
+                      name="gender-group"
+                      value={gender}
+                      onChange={(event) => {
+                        setGender(event.target.value);
+                      }}
+                    >
+                      <FormControlLabel
+                        value="female"
+                        control={<Radio />}
+                        label="Female"
+                      />
+                      <FormControlLabel
+                        value="male"
+                        control={<Radio />}
+                        label="Male"
+                      />
+                    </RadioGroup>
+                  </FormControl>
                 </Grid>
                 <Grid item xs={4}>
                   <p>Weight</p>
@@ -278,7 +294,9 @@ export default function ManagePage() {
               variant="contained"
               type="submit"
               fullWidth
-              onClick={submitForm}
+              onClick={()=>{
+
+              }}
             >
               Update Diet Plan
             </Button>
