@@ -13,6 +13,7 @@ import { styled } from "@mui/material/styles";
 import { getFoods } from "../../utils/api/food";
 import FoodCard from "../FoodCard/FoodCardUser";
 import FoodListUser from "./FoodListUser";
+import { getPreferedFoods } from "../../utils/api/user";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -52,10 +53,16 @@ function getStyles(name, foodCategory, theme) {
 
 export default function GuideUserFoodList() {
   const theme = useTheme();
+  const StateContext = React.createContext()
+
   const [foodCategory, setFoodCategory] = React.useState([]);
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState("");
   const [FoodList, setFoodList] = React.useState([]);
+  const [state, setState] = React.useState({});
+
+  // const _id = JSON.parse(localStorage.getItem("user")).id;
+  const _id = "633601573507a646fb339d94"
 
   const handleChange = (event) => {
     const {
@@ -67,12 +74,39 @@ export default function GuideUserFoodList() {
     );
   };
 
+  const handleStateChange = (f_id,checked) => {
+    setState({
+      ...state,
+      [f_id]: checked,
+    });
+  };
+
+  // const handleStateChange = (event) => {
+  //   setState({
+  //     ...state,
+  //     [event.target.name]: event.target.checked,
+  //   });
+  // };
+
   React.useEffect(() => {
     const getData = async () => {
       const res = await getFoods();
       if (res.status === 200) {
+        let states = {}; 
         const data = res.data;
         setFoodList(data);
+        data.map((f) => (states[f._id] = false));
+        const res1 = await getPreferedFoods({ user_Id : _id});
+        if (res1.status === 200) {
+          console.log(res1.data)
+          const prefered = res1.data.preferedFoods;
+          prefered.map((p) => (states[p] = true))
+          setState(states);
+          console.log(states)
+        }else{
+          console.log(res)   
+        }
+
       } else {
       }
     };
@@ -165,15 +199,15 @@ export default function GuideUserFoodList() {
       {value && (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Box sx={{ maxWidth: 300 }}>
-          {console.log(value)}
-            <FoodCard foodItem={value} />
+          {/* {console.log((value._id))} */}
+            <FoodCard foodItem={value} checked = {state[(value._id)]} handleStateChange={handleStateChange}/>
           </Box>
         </Box>
       )}
       {foodCategory.length === 0 ? (
-        <FoodListUser Category={Category} />
+        <FoodListUser Category={Category} state={state} handleStateChange={handleStateChange}/>
       ) : (
-        <FoodListUser Category={foodCategory} />
+        <FoodListUser Category={foodCategory} state={state} handleStateChange={handleStateChange}/>
       )}
       {/* {console.log(foodCategory)} */}
     </>

@@ -12,8 +12,9 @@ import Switch from "@mui/material/Switch";
 
 export default function FoodCard(props) {
   const FoodItem = props.foodItem;
+  const handleStateChange = props.handleStateChange;
 
-  const [checked, setChecked] = React.useState(FoodItem.Selected);
+  const [checked, setChecked] = React.useState(props.checked);
   const [Flipped, setFlipped] = useState(false);
 
   const setFlippedTrue = () => {
@@ -26,7 +27,9 @@ export default function FoodCard(props) {
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
+    handleStateChange(FoodItem._id,event.target.checked);
   };
+
 
   const getMedConditions = (food) => {
     let med_con = "";

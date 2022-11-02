@@ -69,6 +69,7 @@ export default function Quiz() {
       if (res.status === 200) {
         const data = res.data;
         setActivePlan(data.active);
+        console.log(activePlan)
       } else {
         console.log(res);
       }
