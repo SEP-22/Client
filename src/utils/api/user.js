@@ -21,4 +21,17 @@ const signIn = async (body) => {
   }
 };
 
-export { signUp, signIn };
+const getUserByID = async (params) => {
+  try {
+    const res = await baseApi.get("user/single/" + params);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { signUp, signIn, getUserByID };

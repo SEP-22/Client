@@ -30,10 +30,6 @@ export function AuthProvider({ children }) {
     signUser,
   };
 
-  // useEffect(()=>{
-  //   console.log("updated user")
-  //   console.log(user)
-  // },[user])
 
   return <authContext.Provider value={values}>{children}</authContext.Provider>;
 }
