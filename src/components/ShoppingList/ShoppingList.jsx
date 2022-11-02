@@ -14,6 +14,7 @@ import Select from '@mui/material/Select';
 //import Avatar from '@mui/material/Avatar';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import { getShoppingList } from '../../utils/api/shoppingList';
 
 
 
@@ -29,10 +30,26 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function ShoppingList() {
 
   const [dietPlan, setDietPlan] = React.useState('');
+  const [shoppingListj, setShoppingListj] = React.useState([]);
+  const id = "63613940a8722b99ececed77"
 
   const handleChange = (event) => {
     setDietPlan(event.target.value);
   };
+
+  React.useEffect(() => {
+    const getData = async () => {
+      const res = await getShoppingList();
+      if(res.status === 200) {
+        console.log("jimmy")
+        const data = res.data;
+        setShoppingListj(data.foodList)
+      }else{
+        console.log("jimmy")
+      }
+    };
+    getData();
+  },[]);
 
   return (
     <>
@@ -88,6 +105,7 @@ export default function ShoppingList() {
             <Item>xs=2</Item>
           </Grid>
         ))} */}
+        {/* {FoodList.map((food) => ( */}
         {FoodList.map((food) => (
           <Grid key={food.Food} item xs={2} sm={4} md={3}>
             {/* <FoodCard foodItem={food} /> */}
@@ -114,6 +132,45 @@ export default function ShoppingList() {
                 <br></br>
                 <Typography>
                 { food.Grams} grams
+                </Typography>
+              </div>
+              </Item>
+              {/* <Chip
+                sx={{minWidth:300, maxHeight:100 }}
+                avatar={<Avatar alt={food.Food} src={food.Image} />}
+                label={food.Food+`-`+food.Grams+`g`}
+                variant="contained"
+              /> */}
+            </div>
+            
+          </Grid>
+        ))}
+        {shoppingListj.map((food) => (
+          <Grid key={food.foodId} item xs={2} sm={4} md={3}>
+            {/* <FoodCard foodItem={food} /> */}
+            <div >
+              {/* <Item color="secondary"><Avatar alt="food image" src={food.Image} sx={{ width: 50, height: 50 }} 
+              />{food.Food} - { food.Grams} grams</Item> */}
+              <Item color="secondary"
+              sx={{
+                display:"flex",
+                flexDirection: "row",
+                alignContent: "center",
+              }}><Avatar alt="food image" src="/src/assets/images/foods/carrot.jpg" sx={{ width: 45, height: 45 ,m:3}} 
+              />
+              <div align='center' display="flex" alignContent="center">
+                <Typography 
+                  sx={{ fontWeight: "bold" }}
+                  variant="h6"
+                  component="h4"
+                  color="secondary"
+                  align="center"
+                >
+                  {food.foodId}
+                </Typography>
+                <br></br>
+                <Typography>
+                { food.amount} grams
                 </Typography>
               </div>
               </Item>
