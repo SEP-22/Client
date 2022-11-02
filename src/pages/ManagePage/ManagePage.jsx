@@ -41,11 +41,7 @@ export default function ManagePage() {
   const [age, setAge] = useState(0);
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
-  const [medConditions, setMedConditions] = useState([
-    "Diabetics",
-    "Cholesterol",
-    "High Blood Pressure",
-  ]);
+  const [medConditions, setMedConditions] = useState([]);
   const [workingHours, setWorkingHours] = useState(WorkingHours[0]);
   const [dietaryIntention, setDietaryIntention] = useState(DietaryIntention[0]);
   const nav = useNavigate();
@@ -128,17 +124,16 @@ export default function ManagePage() {
       );
 
       let medConditions = [];
-      if(currentUser.data.activeDietPlan.bloodpressure){
-        medCondition.push("High Blood Pressure");
+      if (currentUser.data.activeDietPlan.bloodpressure) {
+        medConditions.push("High Blood Pressure");
       }
       if (currentUser.data.activeDietPlan.cholesterol) {
-        medCondition.push("Cholesterol");
+        medConditions.push("Cholesterol");
       }
       if (currentUser.data.activeDietPlan.diabetics) {
-        medCondition.push("Diabetics");
+        medConditions.push("Diabetics");
       }
-      setMedConditions(medConditions)
-
+      setMedConditions(medConditions);
     };
     getActiveDietPlanDetails();
     // console.log(params["gigName"]);
