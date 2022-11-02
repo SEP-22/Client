@@ -20,12 +20,14 @@ import Quiz from "./components/DietPlan/Quiz";
 import MainUser from "./pages/User/MainUser";
 import Manage from "./components/DietPlan/Manage";
 import UserPrivateRoute from "./PrivateRoutes/UserPrivateRoute";
+import AdminPrivateRoute from "./PrivateRoutes/AdminPrivateRoute";
 import EditFood from "./components/FoodList/EditFood";
 import AddFood from "./components/FoodList/AddFood";
 import EditName from "./components/User/EditName";
 import EditPhone from "./components/User/EditPhone";
 import EditEmail from "./components/User/EditEmail";
 import ProfilePageMain from "./pages/Profile/ProfilePageMain";
+import ManagePage from "./pages/ManagePage/ManagePage"
 
 const theme = createTheme({
   palette: {
@@ -59,7 +61,15 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
 
-            <Route path="eatsmart" element={<UserPrivateRoute> <MainUser /> </UserPrivateRoute>}>
+            <Route
+              path="eatsmart"
+              element={
+                <UserPrivateRoute>
+                  {" "}
+                  <MainUser />{" "}
+                </UserPrivateRoute>
+              }
+            >
               <Route index element={<HomeUser />} />
               <Route path="home" element={<HomeUser />} />
               <Route path="foodlist" element={<FoodListUser />} />
@@ -72,16 +82,24 @@ function App() {
               </Route>
               <Route path="dietplans" element={<MultipleDietPlans />} />
               <Route path="quiz" element={<Quiz />} />
-              <Route path="manage" element={<Manage />} />
+              <Route path="manage" element={<ManagePage />} />
             </Route>
 
-            <Route path="admin" element={<UserPrivateRoute> <MainAdmin /> </UserPrivateRoute>}>
+            <Route
+              path="admin"
+              element={
+                <AdminPrivateRoute>
+                  {" "}
+                  <MainAdmin />{" "}
+                </AdminPrivateRoute>
+              }
+            >
               <Route index element={<HomeAdmin />} />
-              <Route path="home" element={ <HomeAdmin /> } />
-              <Route path="foodlist" element={ <FoodListMain /> }>
+              <Route path="home" element={<HomeAdmin />} />
+              <Route path="foodlist" element={<FoodListMain />}>
                 <Route index element={<FoodListAdmin />} />
-                <Route path="addfood" element={ <AddFood />} />
-                <Route path="editfood" element={ <EditFood />} />
+                <Route path="addfood" element={<AddFood />} />
+                <Route path="editfood" element={<EditFood />} />
               </Route>
             </Route>
           </Routes>
