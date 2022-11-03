@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 import React from 'react'
 import { redirect, useNavigate } from "react-router-dom";
 import { getASingleUser } from '../../utils/api/user';
-import { editUserProfile } from '../../utils/api/user';
+import { editUserName } from '../../utils/api/user';
 
 const EditName = () => {
 
@@ -55,7 +55,7 @@ const EditName = () => {
   };
 
   const sendData = async (data) => {
-    const res = await editUserProfile(data);
+    const res = await editUserName(data);
     if(res.status == 200 ){
       console.log(res.body);
     }else{

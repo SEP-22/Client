@@ -99,9 +99,9 @@ const getASingleUser = async (params) => {
   }
 };
 
-const editUserProfile = async (body) => {
+const editUserName = async (body) => {
   try{
-    const res = await baseApi.post("user/editProfile", body);
+    const res = await baseApi.post("user/editName", body);
     if (res.headers["x-access-token"]) {
       sessionStorage.setItem("_AT", res.headers["x-access-token"]);
     }
@@ -112,5 +112,18 @@ const editUserProfile = async (body) => {
   }
 };
 
-export { signUp, signIn, setPreferedFoods , haveActiveDietPlan,updateActiveDietPlan,getPreferedFoods, getUserByID, getASingleUser,editUserProfile};
+const editUserPhone = async (body) => {
+  try{
+    const res = await baseApi.post("user/editPhone", body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    //TODO: add custom error
+    console.log(error);
+  }
+};
+
+export { signUp, signIn, setPreferedFoods , haveActiveDietPlan,updateActiveDietPlan,getPreferedFoods, getUserByID, getASingleUser,editUserName,editUserPhone};
 
