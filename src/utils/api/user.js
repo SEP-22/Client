@@ -125,5 +125,18 @@ const editUserPhone = async (body) => {
   }
 };
 
-export { signUp, signIn, setPreferedFoods , haveActiveDietPlan,updateActiveDietPlan,getPreferedFoods, getUserByID, getASingleUser,editUserName,editUserPhone};
+const editUserEmail = async (body) => {
+  try{
+    const res = await baseApi.post("user/editEmail", body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    //TODO: add custom error
+    console.log(error);
+  }
+};
+
+export { signUp, signIn, setPreferedFoods , haveActiveDietPlan,updateActiveDietPlan,getPreferedFoods, getUserByID, getASingleUser,editUserName,editUserPhone,editUserEmail};
 

@@ -2,10 +2,66 @@ import { Button, FormControl, InputLabel, OutlinedInput, Paper, Typography } fro
 import { Box } from '@mui/system'
 import React from 'react'
 import { useNavigate } from "react-router-dom";
+import { getASingleUser } from '../../utils/api/user';
+import { editUserEmail } from '../../utils/api/user';
 
 const EditEmail = () => {
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const[profileDet , setProfileDet] = React.useState({});
+  const _id = "6335d3657e7aaea82d5e3650"
+  const[newEmail,setNewEmail] = React.useState('')
+  //const[newName,setNewName] = React.useState(profileDet.name)
+
+  React.useEffect(() =>{
+    const getData = async() => {
+      const res = await getASingleUser(_id);
+      if(res.status == 200) {
+        const data = res.data;
+        setProfileDet(data)
+      }else{
+        console.log("error")
+      }
+    };
+    getData();
+  },[]);
+
+  const handleChange = (event) => {
+    setNewEmail(event.target.value)
+    //console.log(event.target.value)
+  }
+
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+
+    // sendData({
+    //   userId : _id,
+    //   name: newName,
+    // });
+
+    console.log(newEmail)
+    if(newEmail.trim() != "") {
+      //update the name in db
+      //const data = ({userId:_id,name:newName});
+      //editUserProfile(data.json());
+      sendData({
+        userId : _id,
+        email: newEmail,
+      });
+    }
+    //notify that name cannot be empty
+  };
+
+  const sendData = async (data) => {
+    const res = await editUserEmail(data);
+    if(res.status == 200 ){
+      console.log(res.body);
+      navigate("/eatsmart/profile");
+    }else{
+      console.log(res.status);
+    }
+  };
 
   return (
     <>
@@ -40,7 +96,8 @@ const EditEmail = () => {
                     name='emailaddress'
                     label="Emailaddress"
                     required
-                    value={"jithmi.nawoda01@gmail.com"}
+                    defaultvalue={profileDet.email}
+                    onChange={handleChange}
                     />
                 </FormControl>
             </Box>
@@ -57,11 +114,11 @@ const EditEmail = () => {
               <Button
                 variant="outlined"
                 color="secondary"
-                onClick={() => navigate(-1)}
+                onClick={() => navigate("/eatsmart/profile")}
               >
                 Back
               </Button>
-              <Button variant="contained" type="submit" >
+              <Button variant="contained" type="submit" onClick={handleSubmit}>
                 Save
               </Button>
             </Box>
