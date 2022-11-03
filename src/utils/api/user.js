@@ -86,5 +86,18 @@ const updateActiveDietPlan = async (body) => {
   }
 };
 
-export { signUp, signIn, setPreferedFoods , haveActiveDietPlan,updateActiveDietPlan,getPreferedFoods, getUserByID};
+const getASingleUser = async (params) => {
+  try {
+    const res = await baseApi.get("user/profileDetails/" + params);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { signUp, signIn, setPreferedFoods , haveActiveDietPlan,updateActiveDietPlan,getPreferedFoods, getUserByID, getASingleUser};
 

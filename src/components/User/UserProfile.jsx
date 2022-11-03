@@ -9,14 +9,39 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import Modal from '@mui/material/Modal';
 import { Link, useNavigate } from "react-router-dom";
+import { getASingleUser } from '../../utils/api/user';
 //import SmileIcon from "@mui/icons/Mood";
 
 
 const UserProfile = () => {
-  const str = (Detail.Type.padEnd(20,' ')+Detail.Value).padEnd(60,' ');
-  const str1 = (Detail1.Type.padEnd(20,' ')+Detail1.Value).padEnd(60,' ');
-  const str2 = (Detail2.Type.padEnd(20,' ')+Detail2.Value).padEnd(60,' ');
-  const str3 = (Detail3.Type.padEnd(20,' ')+Detail3.Value).padEnd(60,' ');
+
+  const[profileDet , setProfileDet] = React.useState({});
+  const _id = "6335d3657e7aaea82d5e3650"
+
+  React.useEffect(() =>{
+    const getData = async() => {
+      const res = await getASingleUser(_id);
+      if(res.status == 200) {
+        const data = res.data;
+        setProfileDet(data)
+      }else{
+        console.log("error")
+      }
+    };
+    getData();
+  },[]);
+
+   const str = (Detail.Type.padEnd(20,' ')+profileDet.name).padEnd(60,' ');
+   const str1 = (Detail1.Type.padEnd(20,' ')+profileDet.email).padEnd(60,' ');
+   const str2 = (Detail2.Type.padEnd(20,' ')+profileDet.phone).padEnd(60,' ');
+  const str3 = (Detail3.Type.padEnd(20,' ')+profileDet.password).padEnd(60,' ');
+  
+
+
+  //const str = (Detail.Type.padEnd(20,' ')+Detail.Value).padEnd(60,' ');
+  //const str1 = (Detail1.Type.padEnd(20,' ')+Detail1.Value).padEnd(60,' ');
+  //const str2 = (Detail2.Type.padEnd(20,' ')+Detail2.Value).padEnd(60,' ');
+   //const str3 = (Detail3.Type.padEnd(20,' ')+Detail3.Value).padEnd(60,' ');
   //const str2 = str1.padEnd(15,' ');
 
   const navigate = useNavigate();
