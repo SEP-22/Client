@@ -3,6 +3,7 @@ import { Box } from '@mui/system'
 import React from 'react'
 import { redirect, useNavigate } from "react-router-dom";
 import { getASingleUser } from '../../utils/api/user';
+import { editUserProfile } from '../../utils/api/user';
 
 const EditName = () => {
 
@@ -26,19 +27,41 @@ const EditName = () => {
     getData();
   },[]);
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     setNewName(event.target.value)
     //console.log(event.target.value)
   }
 
-  function changeName(){
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+
+    // sendData({
+    //   userId : _id,
+    //   name: newName,
+    // });
+
     console.log(newName)
     if(newName.trim() != "") {
       //update the name in db
+      //const data = ({userId:_id,name:newName});
+      //editUserProfile(data.json());
+      sendData({
+        userId : _id,
+        name: newName,
+      });
       navigate("/eatsmart/profile");
     }
     //notify that name cannot be empty
-  }
+  };
+
+  const sendData = async (data) => {
+    const res = await editUserProfile(data);
+    if(res.status == 200 ){
+      console.log(res.body);
+    }else{
+      console.log(res.status);
+    }
+  };
 
   return (
     <>
@@ -98,7 +121,7 @@ const EditName = () => {
               >
                 Back
               </Button>
-              <Button variant="contained" type="submit" onClick={changeName}>
+              <Button variant="contained" type="submit" onClick={handleSubmit}>
                 Save
               </Button>
             </Box>
