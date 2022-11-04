@@ -106,6 +106,18 @@ const foodForDiabetics = async () => {
   }
 };
 
+const getFoodById = async (id) => {
+  try {
+    const res = await baseApi.get(`food/foodById/${id}`);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export {
   addFood,
   foodByCategory,
@@ -116,4 +128,5 @@ export {
   foodForHighBloodPressure,
   foodForDiabetics,
   foodForCholesterol,
+  getFoodById,
 };

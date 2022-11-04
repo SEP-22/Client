@@ -15,6 +15,7 @@ import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { getShoppingList } from '../../utils/api/shoppingList';
+import { getFoodById } from '../../utils/api/food';
 
 
 
@@ -31,6 +32,7 @@ export default function ShoppingList() {
 
   const [dietPlan, setDietPlan] = React.useState('');
   const [shoppingListj, setShoppingListj] = React.useState([]);
+  const [foodDetails, setFood] = React.useState([]);
   const id = "63613940a8722b99ececed77"
 
   const handleChange = (event) => {
@@ -41,15 +43,37 @@ export default function ShoppingList() {
     const getData = async () => {
       const res = await getShoppingList();
       if(res.status === 200) {
-        console.log("jimmy")
         const data = res.data;
-        setShoppingListj(data.foodList)
+        setShoppingListj(data)
+        for (let index = 0; index < shoppingListj.length; index++) {
+          console.log(shoppingListj[index].foodId);
+          //getFood(shoppingListj[index].foodId);
+          const foodDetailsss = await getFoodById(shoppingListj[index].foodId);
+          console.log(foodDetailsss.data.name);
+          //console.log(foodDetails.name);
+          //const food_id = shoppingListj[index]._id
+          //getFood() 
+        }
+
       }else{
         console.log("jimmy")
       }
     };
+
+    
+
     getData();
   },[]);
+
+  const getFood = async (id) => {
+    const res = await getFoodById(id);
+    if(res.status == 200) {
+      const data = res.data;
+      setFood(data)
+    }else{
+      console.log(res.status);
+    }
+  };
 
   return (
     <>
@@ -106,46 +130,7 @@ export default function ShoppingList() {
           </Grid>
         ))} */}
         {/* {FoodList.map((food) => ( */}
-        {FoodList.map((food) => (
-          <Grid key={food.Food} item xs={2} sm={4} md={3}>
-            {/* <FoodCard foodItem={food} /> */}
-            <div >
-              {/* <Item color="secondary"><Avatar alt="food image" src={food.Image} sx={{ width: 50, height: 50 }} 
-              />{food.Food} - { food.Grams} grams</Item> */}
-              <Item color="secondary"
-              sx={{
-                display:"flex",
-                flexDirection: "row",
-                alignContent: "center",
-              }}><Avatar alt="food image" src={food.Image} sx={{ width: 45, height: 45 ,m:3}} 
-              />
-              <div align='center' display="flex" alignContent="center">
-                <Typography 
-                  sx={{ fontWeight: "bold" }}
-                  variant="h6"
-                  component="h4"
-                  color="secondary"
-                  align="center"
-                >
-                  {food.Food}
-                </Typography>
-                <br></br>
-                <Typography>
-                { food.Grams} grams
-                </Typography>
-              </div>
-              </Item>
-              {/* <Chip
-                sx={{minWidth:300, maxHeight:100 }}
-                avatar={<Avatar alt={food.Food} src={food.Image} />}
-                label={food.Food+`-`+food.Grams+`g`}
-                variant="contained"
-              /> */}
-            </div>
-            
-          </Grid>
-        ))}
-        {shoppingListj.map((food) => (
+        {shoppingListj.map((food) => ( 
           <Grid key={food.foodId} item xs={2} sm={4} md={3}>
             {/* <FoodCard foodItem={food} /> */}
             <div >
@@ -166,7 +151,7 @@ export default function ShoppingList() {
                   color="secondary"
                   align="center"
                 >
-                  {food.foodId}
+                  {"meow"}
                 </Typography>
                 <br></br>
                 <Typography>
