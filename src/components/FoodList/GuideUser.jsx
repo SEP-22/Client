@@ -74,12 +74,12 @@ export default function GuideUserFoodList() {
     );
   };
 
-  const handleStateChange = (f_id,checked) => {
-    setState({
-      ...state,
-      [f_id]: checked,
-    });
-  };
+  // const handleStateChange = (f_id,checked) => {
+  //   setState({
+  //     ...state,
+  //     [f_id]: checked,
+  //   });
+  // };
 
   // const handleStateChange = (event) => {
   //   setState({
@@ -98,13 +98,13 @@ export default function GuideUserFoodList() {
         data.map((f) => (states[f._id] = false));
         const res1 = await getPreferedFoods({ user_Id : _id});
         if (res1.status === 200) {
-          console.log(res1.data)
+
           const prefered = res1.data.preferedFoods;
           prefered.map((p) => (states[p] = true))
           setState(states);
-          console.log(states)
+
         }else{
-          console.log(res)   
+
         }
 
       } else {
@@ -200,14 +200,14 @@ export default function GuideUserFoodList() {
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Box sx={{ maxWidth: 300 }}>
           {/* {console.log((value._id))} */}
-            <FoodCard foodItem={value} checked = {state[(value._id)]} handleStateChange={handleStateChange}/>
+            <FoodCard foodItem={value} checked = {state[(value._id)]} /* handleStateChange={handleStateChange} */ />
           </Box>
         </Box>
       )}
       {foodCategory.length === 0 ? (
-        <FoodListUser Category={Category} state={state} handleStateChange={handleStateChange}/>
+        <FoodListUser Category={Category} state={state} /* handleStateChange={handleStateChange} *//>
       ) : (
-        <FoodListUser Category={foodCategory} state={state} handleStateChange={handleStateChange}/>
+        <FoodListUser Category={foodCategory} state={state} /* handleStateChange={handleStateChange} */ />
       )}
       {/* {console.log(foodCategory)} */}
     </>

@@ -132,6 +132,7 @@ const ResponsiveAppBar = () => {
                 variant="contained"
                 color={btn[1]}
                 key={btn[0]}
+                id = {btn[0]}
                 onClick={() => navigate(btn[0])}
                 sx={{ m: 2, color: "black", display: "block" }}
               >

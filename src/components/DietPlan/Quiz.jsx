@@ -69,14 +69,12 @@ export default function Quiz() {
       if (res.status === 200) {
         const data = res.data;
         setActivePlan(data.active);
-        console.log(activePlan)
       } else {
-        console.log(res);
       }
-    };
+  };
 
     getData();
-  }, []);
+  }, [_id]);
 
   function getSteps(id) {
     let temp = [];
@@ -182,7 +180,6 @@ export default function Quiz() {
   const sendData = async (data) => {
     const res = await getInputs(data);
     if (res.status === 200) {
-      console.log(res.data._id);
 
       if (!activePlan || makeActive) {
         const res1 = await updateActiveDietPlan({
@@ -645,7 +642,7 @@ export default function Quiz() {
                   type="submit"
                   // onClick={handleSubmit}
                 >
-                  Generate Diet Plan
+                  Select Foods
                 </Button>
               </Paper>
             </Grid>

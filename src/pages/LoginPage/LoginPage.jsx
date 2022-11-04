@@ -104,6 +104,7 @@ export default function LogInPage() {
             />
             {!isMatch ? <p>Invalid email or password</p>:<p></p>}
             <Button
+              id = 'login'
               className="formItem"
               style={{ backgroundColor: "#4CAF50", marginBottom: "3vh" }}
               variant="contained"

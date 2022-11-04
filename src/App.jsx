@@ -28,6 +28,7 @@ import EditPassword from "./components/User/EditPassword";
 import ProfilePageMain from "./pages/Profile/ProfilePageMain";
 import FoodSelection from "./components/DietPlan/FoodSelection";
 import ManagePage from "./pages/ManagePage/ManagePage"
+import DietPlanSelection from "./components/DietPlan/DietPlanSelection";
 
 const theme = createTheme({
   palette: {
@@ -84,6 +85,7 @@ function App() {
               <Route path="dietplans" element={<MultipleDietPlans />} />
               <Route path="quiz" element={<Quiz />} />
               <Route path="foodselection" element={<FoodSelection />} />
+              <Route path="dietplanselection" element={<DietPlanSelection />} />
               <Route path="manage" element={<ManagePage />} />
             </Route>
 

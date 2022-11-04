@@ -8,13 +8,66 @@ import Typography from "@mui/material/Typography";
 import NutrientTable from "./NutrientTable";
 import ReactCardFlip from "react-card-flip";
 import Switch from "@mui/material/Switch";
+import { alpha, styled } from '@mui/material/styles';
+import { pink } from "@mui/material/colors";
+
+const IOSSwitch = styled((props) => (
+  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+))(({ theme }) => ({
+  width: 42,
+  height: 26,
+  padding: 0,
+  '& .MuiSwitch-switchBase': {
+    padding: 0,
+    margin: 2,
+    transitionDuration: '300ms',
+    '&.Mui-checked': {
+      transform: 'translateX(16px)',
+      color: '#fff',
+      '& + .MuiSwitch-track': {
+        backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#ec407a',
+        opacity: 1,
+        border: 0,
+      },
+      '&.Mui-disabled + .MuiSwitch-track': {
+        opacity: 1,
+      },
+    },
+    '&.Mui-focusVisible .MuiSwitch-thumb': {
+      color: '#33cf4d',
+      border: '6px solid #fff',
+    },
+    '&.Mui-disabled .MuiSwitch-thumb': {
+      color:
+        theme.palette.mode === 'light'
+          ? theme.palette.grey[100]
+          : theme.palette.grey[600],
+    },
+    '&.Mui-disabled + .MuiSwitch-track': {
+      opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
+    },
+  },
+  '& .MuiSwitch-thumb': {
+    boxSizing: 'border-box',
+    width: 22,
+    height: 22,
+  },
+  '& .MuiSwitch-track': {
+    borderRadius: 26 / 2,
+    backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
+    opacity: 1,
+    transition: theme.transitions.create(['background-color'], {
+      duration: 500,
+    }),
+  },
+}));
 
 
 export default function FoodCard(props) {
   const FoodItem = props.foodItem;
   const handleStateChange = props.handleStateChange;
 
-  const [checked, setChecked] = React.useState(props.checked);
+  // const [checked, setChecked] = React.useState(props.checked);
   const [Flipped, setFlipped] = useState(false);
 
   const setFlippedTrue = () => {
@@ -25,10 +78,10 @@ export default function FoodCard(props) {
     setFlipped(false);
   };
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-    handleStateChange(FoodItem._id,event.target.checked);
-  };
+  // const handleChange = (event) => {
+  //   setChecked(event.target.checked);
+  //   handleStateChange(FoodItem._id,event.target.checked);
+  // };
 
 
   const getMedConditions = (food) => {
@@ -95,10 +148,10 @@ export default function FoodCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Switch
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ "aria-label": "controlled" }}
+          <IOSSwitch
+            checked={props.checked}
+            // onChange={handleChange}
+            disabled
           />
         </CardActions>
       </Card>

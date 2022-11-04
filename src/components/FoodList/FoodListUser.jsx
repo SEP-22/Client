@@ -14,7 +14,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function FoodList({Category,state,handleStateChange}) {
+export default function FoodList({Category,state}) {
   const [Vegetables_Fruits, setVegetablesFruits] = React.useState([]);
   const [StarchyFood, setStartchyFood] = React.useState([]);
   const [Proteins, setProteins] = React.useState([]);
@@ -40,7 +40,6 @@ export default function FoodList({Category,state,handleStateChange}) {
         setSugar(data.Sugar);
         setIsLoading(false);
       } else {
-        console.log(res)
         setIsLoading(false);
       }
     };
@@ -103,7 +102,7 @@ export default function FoodList({Category,state,handleStateChange}) {
             </Grid>
             {getArray(type).map((food) => (
               <Grid key={food.Food} item xs={12} md={3}>
-                <FoodCardUser foodItem={food} checked = {state[(food._id)]} handleStateChange={handleStateChange}/>
+                <FoodCardUser foodItem={food} checked = {state[(food._id)]} /* handleStateChange={handleStateChange} *//>
               </Grid>
             ))}
           </>
