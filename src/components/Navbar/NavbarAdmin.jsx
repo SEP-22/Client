@@ -17,7 +17,11 @@ const pages = [
   ["HOME", "home"],
   ["FOOD LIST", "foodlist"],
 ];
-const settings = ["Profile", "Logout"];
+const settings = [
+  ["Profile", "profile"],
+  ["Logout", "/login"],
+];
+
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -34,7 +38,13 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (value) => {
+    if (value == "/login") {
+      sessionStorage.removeItem("_AT");
+      localStorage.removeItem("_RT");
+      localStorage.removeItem("user");
+      signUser(null);
+    }
     setAnchorElUser(null);
   };
 
@@ -173,10 +183,10 @@ const ResponsiveAppBar = () => {
               {settings.map((setting) => (
                 <MenuItem
                   key={setting[0]}
-                  to={setting[0]}
+                  to={setting[1]}
                   className="nav-link"
                   component={NavLink}
-                  onClick={handleCloseUserMenu}
+                  onClick={()=>{handleCloseUserMenu(setting[1]);}}
                 >
                   <Typography textAlign="center" variant="button">{setting[0]}</Typography>
                 </MenuItem>
