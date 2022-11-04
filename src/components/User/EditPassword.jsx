@@ -5,6 +5,7 @@ import { redirect, useNavigate } from "react-router-dom";
 import { getASingleUser } from '../../utils/api/user';
 import { editUserName } from '../../utils/api/user';
 import TextField from "@mui/material/TextField";
+import { editUserPassword } from '../../utils/api/user';
 
 const EditPassword = () => {
 
@@ -34,10 +35,14 @@ const EditPassword = () => {
         password != "" &&
         repassword != ""
       ) {
-        sendData({
-            userId:_id,
-            password: password,
-        });
+        if(password == repassword){
+            sendData({
+                userId:_id,
+                password: password,
+            });
+        }else{
+            alert("Passwords doesn't match!")
+        }
       } else {
         alert("Invalid inputs");
       }
@@ -45,9 +50,10 @@ const EditPassword = () => {
   };
 //navigate("/eatsmart/profile");
   const sendData = async (data) => {
-    const res = await editUserName(data);
+    const res = await editUserPassword(data);
     if(res.status == 200 ){
       console.log(res.body);
+      navigate("/eatsmart/profile");
     }else{
       console.log(res.status);
     }
@@ -87,6 +93,7 @@ const EditPassword = () => {
                     type="password"
                     fullWidth
                     required
+                    onChange={handleChange}
                     />
                     <TextField
                     style={{marginBottom: "3vh"}}
@@ -96,6 +103,7 @@ const EditPassword = () => {
                     type="password"
                     fullWidth
                     required
+                    onChange={handleReChange}
                     />
                 </FormControl>
             </Box>
