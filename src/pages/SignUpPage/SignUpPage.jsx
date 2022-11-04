@@ -14,29 +14,36 @@ export default function SignUpPage() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
+  const [error, setError] = useState("");
   const nav = useNavigate();
-  
+
   const { user, signUser } = useAuth();
 
   const submitForm = async (event) => {
     event.preventDefault();
     if (
-      name != "" &&
-      email != "" &&
-      phone != "" &&
-      password != "" &&
-      repassword != ""
+      name == "" ||
+      email == "" ||
+      phone == "" ||
+      password == "" ||
+      repassword == ""
     ) {
+      setError("All fields should be filled!");
+    } else if (phone.length != 10) {
+      setError("Please enter a valid phone number!");
+    } else if (password !== repassword) {
+      setError("Passwords do not match!");
+    } else if (password.length < 8) {
+      setError("Password length should be more than 8!");
+    } else {
       const res = await signUp({ name, email, phone, password, role: "user" });
-      if (res.status===201) {
+      if (res.status === 201) {
         signUser(res.data.newUser);
         // console.log(user)
         nav("/login");
       } else {
         console.log(res.status);
       }
-    } else {
-      alert("Invalid inputs");
     }
   };
 
@@ -107,6 +114,7 @@ export default function SignUpPage() {
                 setRepassword(event.target.value);
               }}
             />
+            {error !== "" ? <p style={{ color: "red" }}>{error}</p> : <p></p>}
             <Button
               className="formItem"
               style={{ backgroundColor: "#F178B6", marginBottom: "3vh" }}
