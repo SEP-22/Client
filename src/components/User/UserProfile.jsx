@@ -16,7 +16,8 @@ import { getASingleUser } from '../../utils/api/user';
 const UserProfile = () => {
 
   const[profileDet , setProfileDet] = React.useState({});
-  const _id = "6335d3657e7aaea82d5e3650"
+  //const _id = "6335d3657e7aaea82d5e3650"
+  const _id = JSON.parse(localStorage.getItem("user")).id;
 
   React.useEffect(() =>{
     const getData = async() => {

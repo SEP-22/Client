@@ -9,7 +9,8 @@ import TextField from "@mui/material/TextField";
 const EditPassword = () => {
 
   //const[profileDet , setProfileDet] = React.useState({});
-  const _id = "6335d3657e7aaea82d5e3650"
+  //const _id = "6335d3657e7aaea82d5e3650"
+  const _id = JSON.parse(localStorage.getItem("user")).id;
   const [password, setPassword] = React.useState("");
   const [repassword, setRepassword] = React.useState("");
   const navigate = useNavigate();
