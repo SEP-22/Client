@@ -86,5 +86,70 @@ const updateActiveDietPlan = async (body) => {
   }
 };
 
-export { signUp, signIn, setPreferedFoods , haveActiveDietPlan,updateActiveDietPlan,getPreferedFoods, getUserByID};
+const getASingleUser = async (params) => {
+  try {
+    const res = await baseApi.get("user/profileDetails/" + params);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const editUserName = async (body) => {
+  try{
+    const res = await baseApi.post("user/editName", body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    //TODO: add custom error
+    console.log(error);
+  }
+};
+
+const editUserPhone = async (body) => {
+  try{
+    const res = await baseApi.post("user/editPhone", body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    //TODO: add custom error
+    console.log(error);
+  }
+};
+
+const editUserEmail = async (body) => {
+  try{
+    const res = await baseApi.post("user/editEmail", body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    //TODO: add custom error
+    console.log(error);
+  }
+};
+
+const editUserPassword = async (body) => {
+  try{
+    const res = await baseApi.post("user/editPassword", body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    //TODO: add custom error
+    console.log(error);
+  }
+};
+
+export { signUp, signIn, setPreferedFoods , haveActiveDietPlan,updateActiveDietPlan,getPreferedFoods, getUserByID, getASingleUser,editUserName,editUserPhone,editUserEmail,editUserPassword};
 

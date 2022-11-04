@@ -24,6 +24,7 @@ import AddFood from "./components/FoodList/AddFood";
 import EditName from "./components/User/EditName";
 import EditPhone from "./components/User/EditPhone";
 import EditEmail from "./components/User/EditEmail";
+import EditPassword from "./components/User/EditPassword";
 import ProfilePageMain from "./pages/Profile/ProfilePageMain";
 import FoodSelection from "./components/DietPlan/FoodSelection";
 import ManagePage from "./pages/ManagePage/ManagePage"
@@ -78,6 +79,7 @@ function App() {
                 <Route path="editname" element={<EditName />} />
                 <Route path="editemail" element={<EditEmail />} />
                 <Route path="editphone" element={<EditPhone />} />
+                <Route path="editpassword" element={<EditPassword />} />
               </Route>
               <Route path="dietplans" element={<MultipleDietPlans />} />
               <Route path="quiz" element={<Quiz />} />

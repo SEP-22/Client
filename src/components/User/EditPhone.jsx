@@ -2,10 +2,68 @@ import { Button, FormControl, InputLabel, OutlinedInput, Paper, Typography } fro
 import { Box } from '@mui/system'
 import React from 'react'
 import { useNavigate } from "react-router-dom";
+import { getASingleUser } from '../../utils/api/user';
+import { editUserPhone } from '../../utils/api/user';
 
 const EditPhone = () => {
 
     const navigate = useNavigate();
+
+    const[profileDet , setProfileDet] = React.useState({});
+    //const _id = "6335d3657e7aaea82d5e3650"
+    const _id = JSON.parse(localStorage.getItem("user")).id;
+    const[newPhone,setNewPhone] = React.useState('')
+    //const[newName,setNewName] = React.useState(profileDet.name)
+  
+    React.useEffect(() =>{
+      const getData = async() => {
+        const res = await getASingleUser(_id);
+        if(res.status == 200) {
+          const data = res.data;
+          setProfileDet(data)
+        }else{
+          console.log("error")
+        }
+      };
+      getData();
+    },[]);
+  
+    const handleChange = (event) => {
+      setNewPhone(event.target.value)
+      //console.log(event.target.value)
+    }
+  
+    const handleSubmit = (event) =>{
+      event.preventDefault();
+  
+      // sendData({
+      //   userId : _id,
+      //   name: newName,
+      // });
+  
+      console.log(newPhone)
+      if(newPhone.trim() != "") {
+        //update the name in db
+        //const data = ({userId:_id,name:newName});
+        //editUserProfile(data.json());
+        sendData({
+          userId : _id,
+          phone: newPhone,
+        });
+        navigate("/eatsmart/profile");
+      }
+      //notify that name cannot be empty
+    };
+  
+    const sendData = async (data) => {
+      const res = await editUserPhone(data);
+      if(res.status == 200 ){
+        console.log(res.body);
+      }else{
+        console.log(res.status);
+      }
+    };
+
   return (
     <>
       <Box
@@ -39,7 +97,10 @@ const EditPhone = () => {
                     name='phonenumber'
                     label="Phonenumber"
                     required
-                    value={"0762878555"}
+                    //value={"0762878555"}
+                    defaultValue={profileDet.phone}
+                    //value={profileDet.name}
+                    onChange={handleChange}
                     />
                 </FormControl>
             </Box>
@@ -56,11 +117,11 @@ const EditPhone = () => {
               <Button
                 variant="outlined"
                 color="secondary"
-                onClick={() => navigate(-1)}
+                onClick={() => navigate("/eatsmart/profile")}
               >
                 Back
               </Button>
-              <Button variant="contained" type="submit" >
+              <Button variant="contained" type="submit" onClick={handleSubmit}>
                 Save
               </Button>
             </Box>
