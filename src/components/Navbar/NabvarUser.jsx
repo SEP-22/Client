@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { NavLink } from "react-router-dom";
+import useAuth from "../../utils/providers/AuthProvider";
+
 
 const pages = [
   ["HOME", "home"],
@@ -20,11 +22,14 @@ const pages = [
   ["FOOD LIST", "foodlist"],
   ["SHOPPING LIST", "shoppinglist"],
 ];
-const settings = [["Profile", "profile"], ["Logout", "logout"]];
+const settings = [["Profile", "profile"], ["Logout", "/login"]];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const { user, signUser } = useAuth();
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -37,7 +42,13 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (value) => {
+    if (value == "/login") {
+      sessionStorage.removeItem("_AT");
+      localStorage.removeItem("_RT");
+      localStorage.removeItem("user");
+      signUser(null)
+    }
     setAnchorElUser(null);
   };
 
@@ -177,10 +188,10 @@ const ResponsiveAppBar = () => {
                 {settings.map((setting) => (
                   <MenuItem
                     key={setting[0]}
-                    to={setting[0]}
+                    to={setting[1]}
                     className="nav-link"
                     component={NavLink}
-                    onClick={handleCloseUserMenu}
+                    onClick={()=>{handleCloseUserMenu(setting[1]);}}
                   >
                     <Typography textAlign="center" variant="button">{setting[0]}</Typography>
                   </MenuItem>
