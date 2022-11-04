@@ -128,25 +128,41 @@ const UserProfile = () => {
             </IconButton>
           </CardActions>
         </div>
-        <div style={{
-          display: 'flex',
-          alignItems: 'space-between',
-          borderBottom: '1px solid grey',
-          marginBottom: '50px'
-        }}>
-          <CardContent>
-            <Typography variant="body2" color="text.Secondary">
-            <pre>{str3}</pre>
-            </Typography>
-          </CardContent>
-          <CardActions>
+        {/* <div style={{ */}
+          {/* display: 'flex', */}
+          {/* alignItems: 'space-between', */}
+          {/* borderBottom: '1px solid grey', */}
+          {/* marginBottom: '50px' */}
+        {/* }}> */}
+          {/* <CardContent> */}
+            {/* <Typography variant="body2" color="text.Secondary"> */}
+            {/* <pre>{str3}</pre> */}
+            {/* </Typography> */}
+          {/* </CardContent> */}
+          {/* <CardActions> */}
             {/* <Button variant="contained" endIcon={<EditIcon />}>
           </Button> */}
-            <IconButton size='small' color='primary'>
-              <EditIcon fontSize='small'/>
-            </IconButton>
+            {/* <IconButton size='small' color='primary'> */}
+              {/* <EditIcon fontSize='small'/> */}
+            {/* </IconButton> */}
+          {/* </CardActions> */}
+        {/* </div> */}
+        <br />
+        <br />
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+        }}>
+          <CardActions>
+            <Button variant="contained" component={Link} to="editpassword" endIcon={<EditIcon />}> Edit Password
+          </Button>
+            {/* <IconButton size='small' color='primary' component={Link} to="editphone" variant = 'contained'> 
+              Change Password<EditIcon fontSize='small'/>
+            </IconButton> */}
           </CardActions>
         </div>
+        <br />
+        <br />
       </Card>
     </Box>
     
