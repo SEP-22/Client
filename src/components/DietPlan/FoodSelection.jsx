@@ -23,6 +23,7 @@ function FoodSelection() {
   const location = useLocation();
   const navigate = useNavigate();
   const steps = location.state.steps;
+  const dietPlan_Id = location.state._id;
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [Vegetables_Fruits, setVegetablesFruits] = React.useState([]);
@@ -84,26 +85,30 @@ function FoodSelection() {
   const _id = JSON.parse(localStorage.getItem("user")).id;
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    let foods = []
+    event.preventDefault();
+    let foods = [];
     for (const s in state) {
       if (state[s]) {
-          foods.push(s);
+        foods.push(s);
       }
-   }
+    }
     const data = {
       user_Id: _id,
       foods: foods,
     };
 
     sendData(data);
-  }
+  };
 
   const sendData = async (data) => {
     const res = await setPreferedFoods(data);
     if (res.status === 200) {
       console.log(res.data);
-      navigate("/eatsmart/dietplans")
+      navigate("/eatsmart/dietplanselection", {
+        state: {
+          dietPlan_Id: res.data._id,
+        },
+      });
     } else {
       console.log(res.status);
     }
@@ -124,7 +129,6 @@ function FoodSelection() {
     }
   };
 
-  
   //   const error = getError(steps[activeStep]).filter((v) => v).length !== 2;
 
   function getArray(name) {
