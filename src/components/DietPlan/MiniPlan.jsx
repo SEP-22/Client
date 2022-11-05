@@ -22,18 +22,19 @@ const MiniPlan = ({ meals , m}) => {
           align="center"
           sx={{
             fontSize: 12,
-            writingMode: { xs: "none", md: "vertical-lr" },
-            textOrientation: { xs: "none", md: "upright" },
+            writingMode: "vertical-lr",
+            textOrientation:  "upright",
+            fontWeight: "bold"
           }}
         >
           {m === "breakfast" ? "BKFST" :  m.toUpperCase()}
         </Typography>
         {meals.map((food) => (
-          <ListItem divider disablePadding>
+          <ListItem divider key={food[0]} dense={true}>
             <ListItemAvatar>
-              <Avatar alt={food[0]} src={food[1]} />
+              <Avatar alt={food[4]} src={food[3]} />
             </ListItemAvatar>
-            <ListItemText primary={food[0]} secondary={food[2]} />
+            <ListItemText primary={food[4]} secondary={food[2]} />
           </ListItem>
         ))}
       </Stack>

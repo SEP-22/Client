@@ -164,7 +164,7 @@ export default function ManagePage() {
                     required
                     value={height}
                     onChange={(event) => {
-                      setName(event.target.value);
+                      setHeight(event.target.value);
                     }}
                   />
                 </Grid>
@@ -207,7 +207,7 @@ export default function ManagePage() {
                     required
                     value={weight}
                     onChange={(event) => {
-                      setName(event.target.value);
+                      setWeight(event.target.value);
                     }}
                   />
                 </Grid>

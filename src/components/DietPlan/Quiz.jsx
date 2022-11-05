@@ -71,7 +71,7 @@ export default function Quiz() {
         setActivePlan(data.active);
       } else {
       }
-  };
+    };
 
     getData();
   }, [_id]);
@@ -180,7 +180,6 @@ export default function Quiz() {
   const sendData = async (data) => {
     const res = await getInputs(data);
     if (res.status === 200) {
-
       if (!activePlan || makeActive) {
         const res1 = await updateActiveDietPlan({
           user_Id: _id,
@@ -209,7 +208,11 @@ export default function Quiz() {
               },
             });
           } else {
-            navigate("/eatsmart/dietplans");
+            navigate("/eatsmart/dietplanselection", {
+              state: {
+                dietPlan_Id: res.data._id,
+              },
+            });
           }
         }
       }
