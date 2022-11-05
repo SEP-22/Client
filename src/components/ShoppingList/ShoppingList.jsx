@@ -34,6 +34,7 @@ export default function ShoppingList() {
   const [shoppingListj, setShoppingListj] = React.useState([]);
   const [foodDetails, setFood] = React.useState([]);
   const id = "63613940a8722b99ececed77"
+  const [completeDetailedList,setCompleteDetailedList] = React.useState([])
 
   const handleChange = (event) => {
     setDietPlan(event.target.value);
@@ -45,17 +46,21 @@ export default function ShoppingList() {
       if(res.status === 200) {
         const data = res.data;
         setShoppingListj(data)
-        for (let index = 0; index < shoppingListj.length; index++) {
-          console.log(shoppingListj[index].foodId);
-          //getFood(shoppingListj[index].foodId);
-          const foodDetailsss = await getFoodById(shoppingListj[index].foodId);
-          console.log(foodDetailsss.data.name);
-          //console.log(foodDetails.name);
-          //const food_id = shoppingListj[index]._id
-          //getFood() 
-        }
+        // for (let index = 0; index < shoppingListj.length; index++) {
+        //   console.log(shoppingListj[index].foodId);
+        //   //getFood(shoppingListj[index].foodId);
+        //   const foodDetailsss = await getFoodById(shoppingListj[index].foodId);
+        //   //console.log(foodDetailsss.data.name);
+        //   const listItem = [{name:foodDetailsss.data.name,image:foodDetailsss.data.image,amount:shoppingListj[index].amount}];
+        //   console.log(listItem);
+        //   setCompleteDetailedList(completeDetailedList => [...completeDetailedList, listItem]);
+        //   //console.log(foodDetails.name);
+        //   //const food_id = shoppingListj[index]._id
+        //   //getFood()   
+        // }
+        console.log(shoppingListj)
 
-      }else{
+      }else{ 
         console.log("jimmy")
       }
     };
@@ -131,7 +136,7 @@ export default function ShoppingList() {
         ))} */}
         {/* {FoodList.map((food) => ( */}
         {shoppingListj.map((food) => ( 
-          <Grid key={food.foodId} item xs={2} sm={4} md={3}>
+          <Grid key={food.foodId.name} item xs={2} sm={4} md={3}>
             {/* <FoodCard foodItem={food} /> */}
             <div >
               {/* <Item color="secondary"><Avatar alt="food image" src={food.Image} sx={{ width: 50, height: 50 }} 
@@ -141,7 +146,7 @@ export default function ShoppingList() {
                 display:"flex",
                 flexDirection: "row",
                 alignContent: "center",
-              }}><Avatar alt="food image" src="/src/assets/images/foods/carrot.jpg" sx={{ width: 45, height: 45 ,m:3}} 
+              }}><Avatar alt="food image" src={food.foodId.image} sx={{ width: 45, height: 45 ,m:3}} 
               />
               <div align='center' display="flex" alignContent="center">
                 <Typography 
@@ -151,7 +156,7 @@ export default function ShoppingList() {
                   color="secondary"
                   align="center"
                 >
-                  {"meow"}
+                  {food.foodId.name}
                 </Typography>
                 <br></br>
                 <Typography>
