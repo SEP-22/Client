@@ -23,12 +23,14 @@ export default function LogInPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isMatch, setIsMatch] = useState(true);
+  const [isSet, setIsSet] = useState(false);
   const [showPassword, setShowPassword] = useState(false)
   const { user, signUser } = useAuth();
 
   const login = async (event) => {
     event.preventDefault();
     if (username !== "" && password !== "") {
+      setIsSet(false);
       const res = await signIn({ username, password });
       if (res.data.message ==="success") {
         signUser(res.data.user);
@@ -38,12 +40,12 @@ export default function LogInPage() {
         }else{
           nav("/admin")
         }
-      }else if (res.data.message == "invalid email or password") {
+      }else if (res.data.message === "invalid email or password") {
         setIsMatch(false);
         console.log(res.data.message);
       }
     } else {
-      alert("Invalid inputs");
+      setIsSet(true);
     }
   };
 
@@ -103,6 +105,7 @@ export default function LogInPage() {
               }
             />
             {!isMatch ? <p>Invalid email or password</p>:<p></p>}
+            {isSet ? <p>Please enter email and password</p>:<p></p>}
             <Button
               id = 'login'
               className="formItem"

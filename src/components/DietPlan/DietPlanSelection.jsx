@@ -34,8 +34,8 @@ const meals = ["breakfast", "lunch", "dinner"];
 export default function DietPlanSelection() {
   const location = useLocation();
   const navigate = useNavigate();
-  // const dietPlan_Id = location.state.dietPlan_Id;
-  const dietPlanId = "63526d0b8dceb61e22b1da5e";
+  const dietPlanId = location.state.dietPlan_Id;
+  // const dietPlanId = "63526d0b8dceb61e22b1da5e";
 
   const [checked, setChecked] = React.useState({
     0: false,
