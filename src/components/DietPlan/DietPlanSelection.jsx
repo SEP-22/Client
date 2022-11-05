@@ -207,123 +207,41 @@ const DietPlan = [
 ];
 
 export default function DietPlanSelection() {
-  const [checked, setChecked] = React.useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
-  const[error,setError] = React.useState(true)
+  const [checked, setChecked] = React.useState({
+    0: false,
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false,
+  });
+  const [error, setError] = React.useState(true);
 
-  const handleChange0 = (event) => {
-    setChecked([
-      event.target.checked,
-      checked[1],
-      checked[2],
-      checked[3],
-      checked[4],
-      checked[5],
-      checked[6],
-    ]);
-  };
-
-  const handleChange1 = (event) => {
-    setChecked([
-      checked[0],
-      event.target.checked,
-      checked[2],
-      checked[3],
-      checked[4],
-      checked[5],
-      checked[6],
-    ]);
-  };
-
-  const handleChange2 = (event) => {
-    setChecked([
-      checked[0],
-      checked[1],
-      event.target.checked,
-      checked[3],
-      checked[4],
-      checked[5],
-      checked[6],
-    ]);
-  };
-
-  const handleChange3 = (event) => {
-    setChecked([
-      checked[0],
-      checked[1],
-      checked[2],
-      event.target.checked,
-      checked[4],
-      checked[5],
-      checked[6],
-    ]);
-  };
-
-  const handleChange4 = (event) => {
-    setChecked([
-      checked[0],
-      checked[1],
-      checked[2],
-      checked[3],
-      event.target.checked,
-      checked[5],
-      checked[6],
-    ]);
-  };
-
-  const handleChange5 = (event) => {
-    setChecked([
-      checked[0],
-      checked[1],
-      checked[2],
-      checked[3],
-      checked[4],
-      event.target.checked,
-      checked[6],
-    ]);
-  };
-
-  const handleChange6 = (event) => {
-    setChecked([
-      checked[0],
-      checked[1],
-      checked[2],
-      checked[3],
-      checked[4],
-      checked[5],
-      event.target.checked,
-    ]);
+  const handleChange = (event) => {
+    setChecked({
+      ...checked,
+      [event.target.name]: event.target.checked,
+    });
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     if (getError) {
-      console.log(checked)
+      console.log(checked);
     } else {
       console.log("Invalid inputs");
     }
-
-  }
+  };
 
   const getError = () => {
     let c = 0;
-    for (let index = 0; index < checked.length; index++) {
+    for (let index = 0; index < 7; index++) {
       if (checked[index] === true) {
         c = c + 1;
       }
-      
     }
-    console.log(c)
-    console.log(checked)
-
-    if (c >= 1) {
+    if (c >= 2) {
       return false;
     } else {
       return true;
@@ -359,146 +277,29 @@ export default function DietPlanSelection() {
             alignContent="center"
             sx={{ justifyContent: "center" }}
           >
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
-                <Typography variant="h6"></Typography>
+            {DietPlan.map((arr) => (
+              <Grid item xs={12} md={6} key={arr.id}>
+                <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+                  <Typography variant="h6"></Typography>
 
-                <FormControlLabel
-                  value={"Diet Plan - ".concat(DietPlan[0].id, " ", null)}
-                  control={
-                    <Checkbox
-                      checked={checked[DietPlan[0].id]}
-                      icon={<CheckBoxOutlineBlankRoundedIcon />}
-                      checkedIcon={<FactCheckIcon />}
-                      onChange={handleChange0}
-                    />
-                  }
-                  label={"Diet Plan - ".concat(DietPlan[0].id + 1, " ")}
-                  labelPlacement="top"
-                />
-                <DisplayPlans id={DietPlan[0].id} />
-              </Item>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
-                <Typography variant="h6"></Typography>
-
-                <FormControlLabel
-                  value={"Diet Plan - ".concat(DietPlan[1].id, " ", null)}
-                  control={
-                    <Checkbox
-                      checked={checked[DietPlan[1].id]}
-                      onChange={handleChange1}
-                      icon={<CheckBoxOutlineBlankRoundedIcon />}
-                      checkedIcon={<FactCheckIcon />}
-                    />
-                  }
-                  label={"Diet Plan - ".concat(DietPlan[1].id + 1, " ")}
-                  labelPlacement="top"
-                />
-                <DisplayPlans id={DietPlan[1].id} />
-              </Item>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
-                <Typography variant="h6"></Typography>
-
-                <FormControlLabel
-                  value={"Diet Plan - ".concat(DietPlan[2].id, " ", null)}
-                  control={
-                    <Checkbox
-                      checked={checked[DietPlan[2].id]}
-                      onChange={handleChange2}
-                      icon={<CheckBoxOutlineBlankRoundedIcon />}
-                      checkedIcon={<FactCheckIcon />}
-                    />
-                  }
-                  label={"Diet Plan - ".concat(DietPlan[2].id + 1, " ")}
-                  labelPlacement="top"
-                />
-                <DisplayPlans id={DietPlan[2].id} />
-              </Item>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
-                <Typography variant="h6"></Typography>
-
-                <FormControlLabel
-                  value={"Diet Plan - ".concat(DietPlan[3].id, " ", null)}
-                  control={
-                    <Checkbox
-                      checked={checked[DietPlan[3].id]}
-                      onChange={handleChange3}
-                      icon={<CheckBoxOutlineBlankRoundedIcon />}
-                      checkedIcon={<FactCheckIcon />}
-                    />
-                  }
-                  label={"Diet Plan - ".concat(DietPlan[3].id + 1, " ")}
-                  labelPlacement="top"
-                />
-                <DisplayPlans id={DietPlan[3].id} />
-              </Item>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
-                <Typography variant="h6"></Typography>
-
-                <FormControlLabel
-                  value={"Diet Plan - ".concat(DietPlan[4].id, " ", null)}
-                  control={
-                    <Checkbox
-                      checked={checked[DietPlan[4].id]}
-                      onChange={handleChange4}
-                      icon={<CheckBoxOutlineBlankRoundedIcon />}
-                      checkedIcon={<FactCheckIcon />}
-                    />
-                  }
-                  label={"Diet Plan - ".concat(DietPlan[4].id + 1, " ")}
-                  labelPlacement="top"
-                />
-                <DisplayPlans id={DietPlan[4].id} />
-              </Item>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
-                <Typography variant="h6"></Typography>
-
-                <FormControlLabel
-                  value={"Diet Plan - ".concat(DietPlan[5].id, " ", null)}
-                  control={
-                    <Checkbox
-                      checked={checked[DietPlan[5].id]}
-                      onChange={handleChange5}
-                      icon={<CheckBoxOutlineBlankRoundedIcon />}
-                      checkedIcon={<FactCheckIcon />}
-                    />
-                  }
-                  label={"Diet Plan - ".concat(DietPlan[5].id + 1, " ")}
-                  labelPlacement="top"
-                />
-                <DisplayPlans id={DietPlan[5].id} />
-              </Item>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
-                <Typography variant="h6"></Typography>
-
-                <FormControlLabel
-                  value={"Diet Plan - ".concat(DietPlan[6].id, " ", null)}
-                  control={
-                    <Checkbox
-                      checked={checked[DietPlan[6].id]}
-                      onChange={handleChange6}
-                      icon={<CheckBoxOutlineBlankRoundedIcon />}
-                      checkedIcon={<FactCheckIcon />}
-                    />
-                  }
-                  label={"Diet Plan - ".concat(DietPlan[6].id + 1, " ")}
-                  labelPlacement="top"
-                />
-                <DisplayPlans id={DietPlan[6].id} />
-              </Item>
-            </Grid>
+                  <FormControlLabel
+                    value={"Diet Plan - ".concat(arr.id, " ", null)}
+                    control={
+                      <Checkbox
+                        checked={checked[arr.id]}
+                        name={arr.id}
+                        icon={<CheckBoxOutlineBlankRoundedIcon />}
+                        checkedIcon={<FactCheckIcon />}
+                        onChange={handleChange}
+                      />
+                    }
+                    label={"Diet Plan - ".concat(arr.id + 1, " ")}
+                    labelPlacement="top"
+                  />
+                  <DisplayPlans id={arr.id} />
+                </Item>
+              </Grid>
+            ))}
           </Grid>
           <Grid>
             <Grid item xs={12} align="center">
@@ -518,7 +319,7 @@ export default function DietPlanSelection() {
                 <Button
                   variant="contained"
                   color="secondary"
-                  // disabled = {error}
+                  disabled = {getError() === true}
                   onClick={handleSubmit}
                 >
                   Save your Diet Plan
