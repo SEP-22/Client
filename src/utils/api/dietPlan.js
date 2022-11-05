@@ -39,4 +39,18 @@ const generateDietPlan = async (body) => {
   }
 };
 
-export { getInputs, getActiveDietPlanDetails, generateDietPlan };
+const saveDietPlans = async (body) => {
+  try {
+    const res = await baseApi.post("dietPlan/savedietplan" , body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    console.log(res)
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export { getInputs, getActiveDietPlanDetails, generateDietPlan, saveDietPlans };

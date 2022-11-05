@@ -18,7 +18,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import MiniPlan from "./MiniPlan";
 import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
-import { generateDietPlan } from "../../utils/api/dietPlan";
+import { generateDietPlan, saveDietPlans } from "../../utils/api/dietPlan";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -64,7 +64,7 @@ export default function DietPlanSelection() {
           let i2 = element.indexOf(":", i1 + 1);
           let i3 = element.indexOf("breakfast") + 12;
           let i4 = element.indexOf("lunch") + 8;
-          let i5 = element.indexOf("dinner");
+          let i5 = element.indexOf("dinner")+10;
           console.log(i1, i2, i3, i4, i5);
           let dp = element.slice(i1, i2);
           let i = element.slice(i2, i3);
@@ -143,10 +143,26 @@ export default function DietPlanSelection() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (getError) {
-      console.log(checked);
+    let plans = [];
+    for (const s in checked) {
+      if (checked[s]) {
+        plans.push(DietPlan[s]);
+      }
+    }
+    sendData({plans: plans});
+  };
+
+  const sendData = async (data) => {
+    const res = await saveDietPlans(data);
+    if (res.status === 200) {
+      console.log(res.data);
+      navigate("/eatsmart/dietplans", {
+        state: {
+          dietPlan_Id: res.data._id,
+        },
+      });
     } else {
-      console.log("Invalid inputs");
+      console.log(res.status);
     }
   };
 
