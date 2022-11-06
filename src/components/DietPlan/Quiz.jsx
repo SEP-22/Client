@@ -23,6 +23,7 @@ import { useTheme } from "@mui/material/styles";
 import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { haveActiveDietPlan, updateActiveDietPlan } from "../../utils/api/user";
+import FoodBankRoundedIcon from '@mui/icons-material/FoodBankRounded';
 
 function getStyles(name, medicalConditions, theme) {
   return {
@@ -59,6 +60,8 @@ export default function Quiz() {
   const [medConditions, setMedConditions] = React.useState([]);
   const [activePlan, setActivePlan] = React.useState(null);
   const [makeActive, setMakeActive] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [selectFoods, setSelectFoods] = React.useState(false);
 
   const _id = JSON.parse(localStorage.getItem("user")).id;
   // const _id = "633601573507a646fb339d94"
@@ -116,6 +119,14 @@ export default function Quiz() {
     return temp;
   }
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleGenderChange = (event) => {
     setGender(event.target.value);
   };
@@ -142,6 +153,9 @@ export default function Quiz() {
     setMakeActive(event.target.checked);
   };
 
+  const handleSelectFoods = (event) => {
+    setSelectFoods(event.target.checked);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -207,10 +221,31 @@ export default function Quiz() {
                 _id: res.data._id,
               },
             });
-          } else {
+          } else if (activePlan && !selectFoods) {
             navigate("/eatsmart/dietplanselection", {
               state: {
                 dietPlan_Id: res.data._id,
+              },
+            });
+          } else if (activePlan && selectFoods) {
+            let id = 0;
+            if (data.bloodpressure || (data.bloodpressure && data.diabetics)) {
+              id = 1;
+            } else if (data.diabetics) {
+              id = 2;
+            } else if (data.cholesterol) {
+              id = 3;
+            } else if (
+              (data.bloodpressure && data.cholesterol) ||
+              (data.diabetics && data.cholesterol) ||
+              (data.bloodpressure && data.diabetics && data.cholesterol)
+            ) {
+              id = 4;
+            }
+            navigate("/eatsmart/foodselection", {
+              state: {
+                steps: getSteps(id),
+                _id: res.data._id,
               },
             });
           }
@@ -624,6 +659,36 @@ export default function Quiz() {
             </Grid>
           )}
 
+          {activePlan && (
+            <Grid>
+              <Grid item xs={12} align="center">
+                <Paper
+                  sx={{
+                    mt: 1,
+                    mb: 1,
+                    p: 4,
+                    alignItems: "center",
+                    minWidth: { md: 400 },
+                  }}
+                >
+                  <FormControlLabel
+                    label="select food for Prefered Foods"
+                    control={
+                      <Checkbox
+                        checked={selectFoods}
+                        icon={<CheckBoxOutlineBlankRoundedIcon />}
+                        checkedIcon={<FoodBankRoundedIcon />}
+                        onChange={handleSelectFoods}
+                        inputProps={{ "aria-label": "controlled" }}
+                      />
+                    }
+                  />
+                  <br></br>
+                </Paper>
+              </Grid>
+            </Grid>
+          )}
+
           <Grid>
             <Grid item xs={12} align="center">
               <Paper
@@ -639,14 +704,20 @@ export default function Quiz() {
                   Make sure you entered the correct details
                 </Typography>
                 <br></br>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  type="submit"
-                  // onClick={handleSubmit}
-                >
-                  Select Foods
-                </Button>
+                {activePlan ? (
+                  <Button variant="contained" color="secondary" type="submit">
+                    Continue
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                    // onClick={handleSubmit}
+                  >
+                    Select Foods
+                  </Button>
+                )}
               </Paper>
             </Grid>
           </Grid>

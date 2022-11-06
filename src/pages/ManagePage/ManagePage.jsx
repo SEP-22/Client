@@ -86,24 +86,24 @@ export default function ManagePage() {
       setWeight(currentUser.data.activeDietPlan.weight);
       setHeight(currentUser.data.activeDietPlan.height);
       setWorkingHours(
-        currentUser.data.activeDietPlan.activity == "verylight"
+        currentUser.data.activeDietPlan.activity === "verylight"
           ? "Very Light"
-          : currentUser.data.activeDietPlan.activity == "light"
+          : currentUser.data.activeDietPlan.activity === "light"
           ? "Light"
-          : currentUser.data.activeDietPlan.activity == "moderate"
+          : currentUser.data.activeDietPlan.activity === "moderate"
           ? "Mderate"
-          : currentUser.data.activeDietPlan.activity == "heavy"
+          : currentUser.data.activeDietPlan.activity === "heavy"
           ? "Heavy"
-          : currentUser.data.activeDietPlan.activity == "veryheavy"
+          : currentUser.data.activeDietPlan.activity === "veryheavy"
           ? "Very Heavy"
           : ""
       );
       setDietaryIntention(
-        currentUser.data.activeDietPlan.intention == "loose"
+        currentUser.data.activeDietPlan.intention === "loose"
           ? "Loose Weight"
-          : currentUser.data.activeDietPlan.intention == "maintain"
+          : currentUser.data.activeDietPlan.intention === "maintain"
           ? "Maintain Weight"
-          : currentUser.data.activeDietPlan.intention == "gain"
+          : currentUser.data.activeDietPlan.intention === "gain"
           ? "Gain Weight"
           : ""
       );

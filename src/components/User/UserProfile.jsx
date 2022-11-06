@@ -22,7 +22,7 @@ const UserProfile = () => {
   React.useEffect(() =>{
     const getData = async() => {
       const res = await getASingleUser(_id);
-      if(res.status == 200) {
+      if(res.status === 200) {
         const data = res.data;
         setProfileDet(data)
       }else{
