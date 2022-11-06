@@ -123,7 +123,7 @@ export default function FoodCard(props) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {FoodItem.Food}
+            {FoodItem.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Category : <strong>{FoodItem.category}</strong>

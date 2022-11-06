@@ -7,22 +7,6 @@
 //         cy.get('#signup').as('signup')
 //         cy.get('#login').as('login')
 //         cy.get('@login').click()
-//         cy.contains('Log in to your account')
-//         cy.get('#login-email').type('piu')
-//         cy.get('#login').click()
-//         cy.contains('Please enter email and password')
-//         cy.get('#login-email').clear()
-//         cy.get('#login-password').type('12')
-//         cy.get('#login').click()
-//         cy.contains('Please enter email and password')
-//         cy.get('#login-email').clear()
-//         cy.get('#login-password').clear()
-//         cy.get('#login-email').type('piu')
-//         cy.get('#login-password').type('128')
-//         cy.get('#login').click()
-//         cy.contains('Invalid email or password')
-//         cy.get('#login-email').clear()
-//         cy.get('#login-password').clear()
 //         cy.get('#login-email').type('piumini95kaveesha@gmail.com')
 //         cy.get('#login-password').type('12345678')
 //         cy.get('#login').click()
@@ -31,7 +15,7 @@
 //     })
 // })
 
-describe("Renders home page", () => {
+describe("Renders landing page", () => {
     it("renders correctly", () => {
         cy.visit('/')
     })
@@ -162,6 +146,77 @@ describe("Login Page works correctly", () => {
         cy.get('#login-email').type('piumini95kaveesha@gmail.com')
         cy.get('#login-password').type('12345678')
         cy.get('#login').click()
+        cy.contains('EatSmart')
+    })
+
+})
+
+describe("Renders home page", () => {
+    it('user home page is rendered',() => {
+        cy.get('.css-1axt67w-MuiAvatar-root > .MuiAvatar-img')
+    })
+    it('has navigation to home',() => {
+        cy.get('.css-8eu3pw > [href="/eatsmart/home"]')
+
+    })
+    it('has navigation to diet plans',() => {
+        cy.get('.css-8eu3pw > [href="/eatsmart/dietplans"]')
+    })
+    it('has navigation to manage',() => {
+        cy.get('.css-8eu3pw > [href="/eatsmart/manage"]')
+    })
+    it('has navigation to foodlist',() => {
+        cy.get('.css-8eu3pw > [href="/eatsmart/foodlist"]')
+    })
+    it('has navigation to shopping list',() => {
+        cy.get('.css-8eu3pw > [href="/eatsmart/shoppinglist"]')
+    })
+    // it('has navigation to profile',() => {
+    //     cy.get('.MuiButtonBase-root > .MuiAvatar-root').click()
+    //     cy.get('.css-1t3k1b1-MuiModal-root-MuiPopover-root-MuiMenu-root > .MuiPaper-root > .MuiList-root > [tabindex="0"]')
+    //     cy.get('.App').click()
+
+    // })
+    it('navigates to dietplans',() => {
+        cy.get('.css-8eu3pw > [href="/eatsmart/dietplans"]').click()
+        cy.get('.MuiGrid-root > .MuiButtonBase-root')
+    })
+    it('navigates to foodlist',() => {
+        cy.get('.css-8eu3pw > [href="/eatsmart/foodlist"]').click()
+        
+        
+        
+        cy.contains('Dairy and Fats')
+        
+        cy.contains('Starchy food')
+        
+    })
+    it('has fruits and vegetables foods',() => {
+        cy.contains('Fruits and Vegetables')
+        cy.contains('Beet')
+    })
+    it('has Starchy food',() => {
+        cy.contains('Starchy food')
+        cy.contains('Rice')
+    })
+    it('has Proteins food',() => {
+        cy.contains('Proteins')
+        cy.contains('Chicken')
+    })
+    it('has Dairy and Fats food',() => {
+        cy.contains('Dairy and Fats')
+        cy.contains('Egg')
+    })
+    it('has Sugar food',() => {
+        cy.contains('Sugar')
+        cy.contains('Chocolate')
+    })
+    it('has filter food by category',() => {
+        cy.get('#demo-multiple-chip')
+    })
+    it('has search food',() => {
+        cy.get('.MuiAutocomplete-root > .MuiFormControl-root > .MuiInputBase-root')
+        cy.get('.MuiAutocomplete-root > .MuiFormControl-root > .MuiInputBase-root').type('Apple')
     })
 
 })
