@@ -23,7 +23,7 @@ import { useTheme } from "@mui/material/styles";
 import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { haveActiveDietPlan, updateActiveDietPlan } from "../../utils/api/user";
-import FoodBankRoundedIcon from '@mui/icons-material/FoodBankRounded';
+import FoodBankRoundedIcon from "@mui/icons-material/FoodBankRounded";
 
 function getStyles(name, medicalConditions, theme) {
   return {
@@ -221,13 +221,13 @@ export default function Quiz() {
                 _id: res.data._id,
               },
             });
-          } else if (activePlan && !selectFoods) {
+          } else if (!selectFoods) {
             navigate("/eatsmart/dietplanselection", {
               state: {
                 dietPlan_Id: res.data._id,
               },
             });
-          } else if (activePlan && selectFoods) {
+          } else {
             let id = 0;
             if (data.bloodpressure || (data.bloodpressure && data.diabetics)) {
               id = 1;
@@ -250,6 +250,33 @@ export default function Quiz() {
             });
           }
         }
+      } else if (selectFoods) {
+        let id = 0;
+        if (data.bloodpressure || (data.bloodpressure && data.diabetics)) {
+          id = 1;
+        } else if (data.diabetics) {
+          id = 2;
+        } else if (data.cholesterol) {
+          id = 3;
+        } else if (
+          (data.bloodpressure && data.cholesterol) ||
+          (data.diabetics && data.cholesterol) ||
+          (data.bloodpressure && data.diabetics && data.cholesterol)
+        ) {
+          id = 4;
+        }
+        navigate("/eatsmart/foodselection", {
+          state: {
+            steps: getSteps(id),
+            _id: res.data._id,
+          },
+        });
+      } else {
+        navigate("/eatsmart/dietplanselection", {
+          state: {
+            dietPlan_Id: res.data._id,
+          },
+        });
       }
     } else {
       console.log(res.status);

@@ -172,7 +172,7 @@ function FoodSelection() {
               }}
             >
               <Typography align="center">
-                Select at least 3 foods !!!
+                Select at least 2 foods !!!
               </Typography>
               <MobileStepper
                 variant="progress"
