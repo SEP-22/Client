@@ -95,7 +95,7 @@ export default function FoodList() {
           </Item>
           
         </Grid>
-          <Meal/>
+          <Meal breakfast="BREAKFASTkk"/>
           <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
           <Button variant="contained" color="primary">Deactivate</Button>
         </div>
@@ -116,7 +116,7 @@ export default function FoodList() {
           </Item>
           
         </Grid>
-          <Meal/>
+          <Meal breakfast="BREAKFASTss"/>
           <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
           <Button variant="contained" color="primary">Activate</Button>
         </div>

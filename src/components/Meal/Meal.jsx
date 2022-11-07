@@ -4,8 +4,6 @@ import ImageListItem from '@mui/material/ImageListItem';
 //import { Grid, Box, Paper, Typography } from '@mui/system';
 import { Grid, Box, Paper, Typography} from '@mui/material';
 import { styled } from "@mui/material/styles";
-//import Stack from '@mui/material';
-import Stack from '@mui/material/Stack';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -15,7 +13,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function Meal() {
+export default function Meal(props) {
   return (
     <>
     <Box
@@ -37,7 +35,7 @@ export default function Meal() {
       <Grid item>
         <Item>
           <Typography align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>
-            BREAKFAST
+            {props.breakfast}
           </Typography>
         </Item>
       </Grid>
