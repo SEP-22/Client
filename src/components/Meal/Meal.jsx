@@ -14,6 +14,14 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function Meal(props) {
+  const mealDetails = props.meal;
+  const breakfastDetails = mealDetails.breakfast
+  const lunchDetails = mealDetails.lunch
+  const dinnerDetails = mealDetails.dinner
+  console.log(breakfastDetails);
+  console.log(lunchDetails);
+  console.log(dinnerDetails);
+
   return (
     <>
     <Box
@@ -35,17 +43,17 @@ export default function Meal(props) {
       <Grid item>
         <Item>
           <Typography align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>
-            {props.breakfast}
+            BREAKFAST
           </Typography>
         </Item>
       </Grid>
       <ImageList sx={{ width: 338, height: 330 , marginRight: 2,}} cols={2} rowHeight={164} >
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+        {breakfastDetails.map((item) => (
+          <ImageListItem key={item[0]}>
             <img
-              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
+              src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              alt={item[4]}
               loading="lazy"
             />
           </ImageListItem>
@@ -62,12 +70,12 @@ export default function Meal(props) {
         </Item>
       </Grid>
       <ImageList sx={{ width: 338, height: 330, marginRight: 2,}} cols={2} rowHeight={164}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+      {lunchDetails.map((item) => (
+          <ImageListItem key={item[0]}>
             <img
-              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
+              src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              alt={item[4]}
               loading="lazy"
             />
           </ImageListItem>
@@ -84,12 +92,12 @@ export default function Meal(props) {
         </Item>
       </Grid>
       <ImageList sx={{ width: 338, height: 330 ,marginRight: 2,}} cols={2} rowHeight={164}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+      {dinnerDetails.map((item) => (
+          <ImageListItem key={item[0]}>
             <img
-              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
+              src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              alt={item[4]}
               loading="lazy"
             />
           </ImageListItem>

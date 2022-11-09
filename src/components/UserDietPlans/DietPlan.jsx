@@ -7,6 +7,7 @@ import "./UserDietPlans.css"
 import { width } from "@mui/system";
 import Chip from '@mui/material/Chip';
 import { Link, NavLink } from "react-router-dom";
+import { getAllDietPlans } from "../../utils/api/dietPlan";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -16,7 +17,27 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function FoodList() {
+const DietPlan = () => {
+  const[dietPlanDetails, setDietPlanDetails] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  
+  React.useEffect(() =>{
+    const getData = async() => {
+      setIsLoading(true);
+      const res = await getAllDietPlans();
+      if(res.status === 200) {
+        const data = res.data;
+        setDietPlanDetails(data)
+        setIsLoading(false);
+      }else{
+        console.log("error")
+        setIsLoading(false);
+      }
+    };
+    getData();
+    //console.log(dietPlanDetails);
+    //setIsLoading(false);
+  },[]);
   return (
     <>
     <Box
@@ -55,7 +76,8 @@ export default function FoodList() {
         </Paper>
           
       </Box>
-    <Box
+    {!isLoading && (
+      <Box
       sx={{
         m: 2,
         alignItems: "center",
@@ -95,7 +117,7 @@ export default function FoodList() {
           </Item>
           
         </Grid>
-          <Meal breakfast="BREAKFASTkk"/>
+          <Meal breakfast="BREAKFASTkk" meal={dietPlanDetails[0]}/>
           <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
           <Button variant="contained" color="primary">Deactivate</Button>
         </div>
@@ -116,7 +138,7 @@ export default function FoodList() {
           </Item>
           
         </Grid>
-          <Meal breakfast="BREAKFASTss"/>
+          <Meal breakfast="BREAKFASTss" meal={dietPlanDetails[1]}/>
           <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
           <Button variant="contained" color="primary">Activate</Button>
         </div>
@@ -124,6 +146,8 @@ export default function FoodList() {
         <Typography key={category}>{category}</Typography>
       ))} */}
     </Box>
+    )}
     </>
   );
 }
+export default DietPlan

@@ -52,5 +52,18 @@ const saveDietPlans = async (body) => {
   }
 };
 
+const getAllDietPlans = async() => {
+  try{
+    const res = await baseApi.get("dietPlan/getplans/getDietPlans");
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    console.log(res)
+    return res;
+  }catch (error) {
+    console.log(error);
+  }
+};
 
-export { getInputs, getActiveDietPlanDetails, generateDietPlan, saveDietPlans };
+
+export { getInputs, getActiveDietPlanDetails, generateDietPlan, saveDietPlans,getAllDietPlans };
