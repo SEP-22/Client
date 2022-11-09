@@ -8,6 +8,7 @@ import { width } from "@mui/system";
 import Chip from '@mui/material/Chip';
 import { Link, NavLink } from "react-router-dom";
 import { getAllDietPlans } from "../../utils/api/dietPlan";
+import SingleDietPlan from "./singleDiet";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -77,75 +78,10 @@ const DietPlan = () => {
           
       </Box>
     {!isLoading && (
-      <Box
-      sx={{
-        m: 2,
-        alignItems: "center",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      
-        {/* <Grid item xs={12} sx={{display:"flex", flexDirection:"row",alignItems:"center",justifyContent:"center",}}>
-          <Item>
-            <Typography
-              sx={{ fontWeight: "bold"}}
-              variant="h6"
-              component="h4"
-              color="secondary"
-            >
-              Diet Plan 1
-            </Typography>
-            <Button>Hi</Button>
-          </Item>
-          
-        </Grid> */}
-        <div className="scrollable">
-        <Grid item xs={12}>
-          <Item>
-            <Typography
-              sx={{ fontWeight: "bold"}}
-              variant="h6"
-              component="h4"
-              color="secondary"
-            >
-              Diet Plan 1
-            </Typography>
-            {/* <Button>Active</Button> */}
-            <Chip label="Active" color="primary" />
-          </Item>
-          
-        </Grid>
-          <Meal breakfast="BREAKFASTkk" meal={dietPlanDetails[0]}/>
-          <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
-          <Button variant="contained" color="primary">Deactivate</Button>
-        </div>
-        
-        <div className="scrollable">
-        <Grid item xs={12}>
-          <Item>
-            <Typography
-              sx={{ fontWeight: "bold"}}
-              variant="h6"
-              component="h4"
-              color="secondary"
-            >
-              Diet Plan 2
-            </Typography>
-            {/* <Button>Active</Button> */}
-            {/* <Chip label="Active" color="primary" /> */}
-          </Item>
-          
-        </Grid>
-          <Meal breakfast="BREAKFASTss" meal={dietPlanDetails[1]}/>
-          <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
-          <Button variant="contained" color="primary">Activate</Button>
-        </div>
-        {/* {category.map((category) => (
-        <Typography key={category}>{category}</Typography>
-      ))} */}
-    </Box>
+      <>
+      <SingleDietPlan planDetails = {dietPlanDetails[0]} title = "My Plan"/>
+      <SingleDietPlan planDetails = {dietPlanDetails[1]} title = "My Second Plan"/>
+      </>
     )}
     </>
   );
