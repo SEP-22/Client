@@ -9,6 +9,7 @@ import Chip from '@mui/material/Chip';
 import { Link, NavLink } from "react-router-dom";
 import { getAllDietPlans } from "../../utils/api/dietPlan";
 import SingleDietPlan from "./singleDiet";
+import { getDietPlansByUserId } from "../../utils/api/dietPlan";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -19,16 +20,25 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const DietPlan = () => {
+
+  const _id = JSON.parse(localStorage.getItem("user")).id;
   const[dietPlanDetails, setDietPlanDetails] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const[userDietPlans,setUserDietPlans] = React.useState([]);
+  const[activeDietPlanId,setActiveDietPlanId] = React.useState("None");
   
   React.useEffect(() =>{
     const getData = async() => {
       setIsLoading(true);
       const res = await getAllDietPlans();
+      const res2 = await getDietPlansByUserId(_id);
       if(res.status === 200) {
         const data = res.data;
         setDietPlanDetails(data)
+        if(res2.status === 200){
+          const data2 = res2.data;
+          setUserDietPlans(data2);
+        }
         setIsLoading(false);
       }else{
         console.log("error")
@@ -38,6 +48,9 @@ const DietPlan = () => {
     getData();
     //console.log(dietPlanDetails);
     //setIsLoading(false);
+   // console.log("I am happy")
+    //console.log(userDietPlans[0])
+    //console.log(dietPlanDetails)
   },[]);
   return (
     <>
@@ -79,8 +92,11 @@ const DietPlan = () => {
       </Box>
     {!isLoading && (
       <>
-      <SingleDietPlan planDetails = {dietPlanDetails[0]} title = "My Plan"/>
-      <SingleDietPlan planDetails = {dietPlanDetails[1]} title = "My Second Plan"/>
+      {userDietPlans.map((onePlan) => (
+        <SingleDietPlan planDetails = {dietPlanDetails[0]} title = "My Plan" completeDet = {onePlan}/>
+      ))}
+      {/* <SingleDietPlan planDetails = {dietPlanDetails[0]} title = "My Plan" completeDet = {userDietPlans[0]}/> */}
+      {/* <SingleDietPlan planDetails = {dietPlanDetails[1]} title = "My Second Plan"/> */}
       </>
     )}
     </>

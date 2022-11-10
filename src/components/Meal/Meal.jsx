@@ -19,9 +19,9 @@ export default function Meal(props) {
   const breakfastDetails = mealDetails.breakfast
   const lunchDetails = mealDetails.lunch
   const dinnerDetails = mealDetails.dinner
-  console.log(breakfastDetails);
-  console.log(lunchDetails);
-  console.log(dinnerDetails);
+  // console.log(breakfastDetails);
+  // console.log(lunchDetails);
+  // console.log(dinnerDetails);
 
   return (
     <>

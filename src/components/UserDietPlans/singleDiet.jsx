@@ -18,6 +18,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const SingleDietPlan = (props) => {
+  const completeDetails = props.completeDet.dietIDs;
+  console.log("here i log");
+  console.log(completeDetails)
   return (
     <>
       <Box
@@ -60,7 +63,10 @@ const SingleDietPlan = (props) => {
             </Item>
           </Grid>
           <div className="scrollable">
-            <Meal meal={props.planDetails}/>
+            {completeDetails.map((eachDiet) =>(
+              <Meal meal={eachDiet}/>
+            ))}
+            {/* <Meal meal={props.planDetails}/> */}
           </div>
           <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
           <Button variant="contained" color="primary">Deactivate</Button>
