@@ -50,8 +50,10 @@ export default function Meal(props) {
               borderTop={4} 
               borderBottom={4}>
                 <img
-                  src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
-                  srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                  // src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
+                  // srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                  src={item[3]}
+                  srcSet={item[3]}
                   alt={item[4]}
                   loading="lazy"
                 />
@@ -73,8 +75,8 @@ export default function Meal(props) {
             borderTop={4} 
             borderBottom={4}>
               <img
-                src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                src={item[3]}
+                srcSet={item[3]}
                 alt={item[4]}
                 loading="lazy"
               />
@@ -96,8 +98,8 @@ export default function Meal(props) {
             borderTop={4} 
             borderBottom={4}>
               <img
-                src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                src={item[3]}
+                srcSet={item[3]}
                 alt={item[4]}
                 loading="lazy"
               />
