@@ -19,8 +19,9 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const SingleDietPlan = (props) => {
   const completeDetails = props.completeDet.dietIDs;
-  console.log("here i log");
-  console.log(completeDetails)
+  const status = props.active;
+   //console.log("here i log",status);
+  // console.log(completeDetails)
   return (
     <>
       <Box
@@ -59,7 +60,12 @@ const SingleDietPlan = (props) => {
                 {props.title}
               </Typography>
               {/* <Button>Active</Button> */}
-              <Chip label="Active" color="primary" />
+              {status && (
+                <>
+                <Chip label="Active" color="primary" />
+                </>
+              )}
+              {/* <Chip label="Active" color="primary" /> */}
             </Item>
           </Grid>
           <div className="scrollable">
@@ -69,7 +75,12 @@ const SingleDietPlan = (props) => {
             {/* <Meal meal={props.planDetails}/> */}
           </div>
           <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
-          <Button variant="contained" color="primary">Deactivate</Button>
+          {!status && (
+            <>
+            <Button variant="contained" color="primary">Activate</Button>
+            </>
+          )}
+          {/* <Button variant="contained" color="primary">Activate</Button> */}
         </div>
         {/* {category.map((category) => (
         <Typography key={category}>{category}</Typography>
