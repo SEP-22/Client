@@ -6,8 +6,10 @@ import Meal from "../Meal/Meal"
 import "./UserDietPlans.css"
 import { width } from "@mui/system";
 import Chip from '@mui/material/Chip';
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getAllDietPlans } from "../../utils/api/dietPlan";
+import { ConnectedTvOutlined } from "@mui/icons-material";
+import { updateActiveDietPlan } from "../../utils/api/user";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -18,7 +20,11 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const SingleDietPlan = (props) => {
+
+  const navigate = useNavigate();
+
   const [open, setOpen] = React.useState(false);
+  const _id = JSON.parse(localStorage.getItem("user")).id;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,11 +32,26 @@ const SingleDietPlan = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleChange = () => {
+    sendData({user_Id:_id,activePlan_Id:props.completeDet._id});
+    handleClose();
+    window.location.reload(false);
+  }
 
   const completeDetails = props.completeDet.dietIDs;
   const status = props.active;
    //console.log("here i log",status);
   // console.log(completeDetails)
+  //console.log("id is here",props.completeDet._id);
+  const sendData = async (data) => {
+    //const data = {user_Id:_id,activePlan_Id:props.completeDet._id};
+    const res = await updateActiveDietPlan(data);
+    if(res.status == 200 ){
+      console.log(res.body);
+    }else{
+      console.log(res.status);
+    }
+  };
   return (
     <>
       <Box
@@ -103,7 +124,7 @@ const SingleDietPlan = (props) => {
               </DialogContent>
               <DialogActions>
                 <Button onClick={handleClose} color="primary">No</Button>
-                <Button onClick={handleClose} color="secondary" autoFocus>
+                <Button onClick={handleChange} color="secondary" autoFocus>
                   Yes
                 </Button>
               </DialogActions>
