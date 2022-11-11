@@ -1,13 +1,15 @@
 import React from "react";
-import { Grid, Box, Paper, Typography, Button } from "@mui/material";
+import { Grid, Box, Paper, Typography, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import FoodCardAdmin from "../FoodCard/FoodCardAdmin";
 import Meal from "../Meal/Meal"
 import "./UserDietPlans.css"
 import { width } from "@mui/system";
 import Chip from '@mui/material/Chip';
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getAllDietPlans } from "../../utils/api/dietPlan";
+import { ConnectedTvOutlined } from "@mui/icons-material";
+import { updateActiveDietPlan } from "../../utils/api/user";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -18,10 +20,38 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const SingleDietPlan = (props) => {
+
+  const navigate = useNavigate();
+
+  const [open, setOpen] = React.useState(false);
+  const _id = JSON.parse(localStorage.getItem("user")).id;
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleChange = () => {
+    sendData({user_Id:_id,activePlan_Id:props.completeDet._id});
+    handleClose();
+    window.location.reload(false);
+  }
+
   const completeDetails = props.completeDet.dietIDs;
   const status = props.active;
    //console.log("here i log",status);
   // console.log(completeDetails)
+  //console.log("id is here",props.completeDet._id);
+  const sendData = async (data) => {
+    //const data = {user_Id:_id,activePlan_Id:props.completeDet._id};
+    const res = await updateActiveDietPlan(data);
+    if(res.status == 200 ){
+      console.log(res.body);
+    }else{
+      console.log(res.status);
+    }
+  };
   return (
     <>
       <Box
@@ -77,7 +107,28 @@ const SingleDietPlan = (props) => {
           <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
           {!status && (
             <>
-            <Button variant="contained" color="primary">Activate</Button>
+            <Button variant="contained" color="primary" onClick={handleClickOpen}>Activate</Button>
+            <Dialog 
+              open = {open}
+              onClose = {handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id = "alert-dialog-title">
+                {"Change Active Diet Plan?"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Are you sure you want to set this as your active diet plan?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">No</Button>
+                <Button onClick={handleChange} color="secondary" autoFocus>
+                  Yes
+                </Button>
+              </DialogActions>
+            </Dialog>
             </>
           )}
           {/* <Button variant="contained" color="primary">Activate</Button> */}
