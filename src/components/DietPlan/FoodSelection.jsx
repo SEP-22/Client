@@ -106,7 +106,7 @@ function FoodSelection() {
       console.log(res.data);
       navigate("/eatsmart/dietplanselection", {
         state: {
-          dietPlan_Id: res.data._id,
+          dietPlan_Id: dietPlan_Id
         },
       });
     } else {
