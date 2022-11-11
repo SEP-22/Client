@@ -50,7 +50,24 @@ export default function ViewDiet() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   //const  data  = props.location
-  console.log("data",details)
+  console.log("data",details.dietIDs.length)
+  const allDiets = details.dietIDs
+  const planCount = details.dietIDs.length
+  const quotient = Math.floor(7/planCount)
+  const remainder = 7%planCount
+  console.log(quotient,remainder)
+  //creating seven day array
+  var arr = [];
+  var sevenDayArr = [];
+  allDiets.forEach(element => {
+    arr.push([element.breakfast,element.lunch,element.dinner])
+  });
+  //console.log(arr)
+  for (let i = 0; i < quotient; i++) {
+    sevenDayArr = sevenDayArr.concat(arr);
+  }
+  sevenDayArr = sevenDayArr.concat(arr.slice(0,remainder))
+  //console.log(sevenDayArr.length)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -111,25 +128,25 @@ export default function ViewDiet() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[0]}/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[1]}/>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[2]}/>
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[3]}/>
         </TabPanel>
         <TabPanel value={value} index={4} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[4]}/>
         </TabPanel>
         <TabPanel value={value} index={5} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[5]}/>
         </TabPanel>
         <TabPanel value={value} index={6} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[6]}/>
         </TabPanel>
       </SwipeableViews>
     </Box>
