@@ -20,6 +20,7 @@ import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutline
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import { generateDietPlan, saveDietPlans } from "../../utils/api/dietPlan";
 import CircularProgress from "@mui/material/CircularProgress";
+import { createAndSaveShoppingList } from "../../utils/api/shoppingList";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -155,13 +156,18 @@ export default function DietPlanSelection() {
   const sendData = async (data) => {
     console.log(data)
     const res = await saveDietPlans(data);
+    const res2 = await createAndSaveShoppingList(data);
     if (res.status === 200) {
       console.log(res.data);
-      navigate("/eatsmart/dietplans", {
-        state: {
-          dietPlan_Id: res.data._id,
-        },
-      });
+      if(res2.status === 200){
+        navigate("/eatsmart/dietplans", {
+          state: {
+            dietPlan_Id: res.data._id,
+          },
+        });
+      }else{
+        console.log(res2.data);
+      }
     } else {
       console.log(res.status);
     }
