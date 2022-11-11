@@ -19,7 +19,7 @@ export default function ReminderDialog(props) {
     const reminders = props.reminders;
     const [checked, setChecked] = React.useState(reminders[1]);
 
-    const [value, setValue] = React.useState(reminders[1]== false ? null : dayjs(reminders[2], "HH:mm", 'es'));
+    const [value, setValue] = React.useState(reminders[1]=== false ? null : dayjs(reminders[2], "HH:mm", 'es'));
   
     const handleChange = (event) => {
       setChecked(event.target.checked);

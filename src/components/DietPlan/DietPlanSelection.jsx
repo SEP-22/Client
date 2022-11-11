@@ -153,6 +153,7 @@ export default function DietPlanSelection() {
   };
 
   const sendData = async (data) => {
+    console.log(data)
     const res = await saveDietPlans(data);
     if (res.status === 200) {
       console.log(res.data);
