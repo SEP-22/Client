@@ -110,7 +110,7 @@ const SingleDietPlan = (props) => {
           </div>
           {/* <Button variant="outlined" color="secondary" component={Link} to={{pathname: "viewPlan",data: "jimi"}} sx={{m:2}}>View</Button> */}
           {/* <Button variant="outlined" color="secondary" onClick={handleView} sx={{m:2}}>View</Button> */}  
-          <Button variant="outlined" color="secondary" component={Link} to="viewPlan" state={{ from: "occupation" }} sx={{m:2}}>View</Button>
+          <Button variant="outlined" color="secondary" component={Link} to="viewPlan" state={{ details: props.completeDet }} sx={{m:2}}>View</Button>
           {!status && (
             <>
             <Button variant="contained" color="primary" onClick={handleClickOpen}>Activate</Button>

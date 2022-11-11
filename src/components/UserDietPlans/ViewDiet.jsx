@@ -46,11 +46,11 @@ function a11yProps(index) {
 
 export default function ViewDiet() {
   const location =useLocation()
-  const { from } = location.state
+  const { details } = location.state
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   //const  data  = props.location
-  console.log("data",from)
+  console.log("data",details)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
