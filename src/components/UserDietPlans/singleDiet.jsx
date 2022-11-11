@@ -38,6 +38,9 @@ const SingleDietPlan = (props) => {
     handleClose();
     window.location.reload(false);
   }
+  const handleView = () => {
+    navigate("viewPlan")
+  }
 
   const completeDetails = props.completeDet.dietIDs;
   const status = props.active;
@@ -105,7 +108,9 @@ const SingleDietPlan = (props) => {
             ))}
             {/* <Meal meal={props.planDetails}/> */}
           </div>
-          <Button variant="outlined" color="secondary" component={Link} to="viewPlan" sx={{m:2}}>View</Button>
+          {/* <Button variant="outlined" color="secondary" component={Link} to={{pathname: "viewPlan",data: "jimi"}} sx={{m:2}}>View</Button> */}
+          {/* <Button variant="outlined" color="secondary" onClick={handleView} sx={{m:2}}>View</Button> */}  
+          <Button variant="outlined" color="secondary" component={Link} to="viewPlan" state={{ from: "occupation" }} sx={{m:2}}>View</Button>
           {!status && (
             <>
             <Button variant="contained" color="primary" onClick={handleClickOpen}>Activate</Button>
