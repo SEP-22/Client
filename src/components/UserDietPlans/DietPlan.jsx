@@ -9,6 +9,10 @@ import Chip from '@mui/material/Chip';
 import { Link, NavLink } from "react-router-dom";
 import { getAllDietPlans } from "../../utils/api/dietPlan";
 import SingleDietPlan from "./singleDiet";
+import { getDietPlansByUserId } from "../../utils/api/dietPlan";
+import { haveActiveDietPlan } from "../../utils/api/user";
+import { getNonActivePlans } from "../../utils/api/dietPlan";
+import { getActivePlans } from "../../utils/api/dietPlan";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -19,25 +23,46 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const DietPlan = () => {
+
+  const _id = JSON.parse(localStorage.getItem("user")).id;
   const[dietPlanDetails, setDietPlanDetails] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const[userDietPlans,setUserDietPlans] = React.useState([]);
+  const[activePlanDetails, setactivePlanDetails] = React.useState([]);
+  const[nonActiveDetails,setNoneActive] = React.useState([]);
+
   
   React.useEffect(() =>{
     const getData = async() => {
       setIsLoading(true);
-      const res = await getAllDietPlans();
-      if(res.status === 200) {
-        const data = res.data;
-        setDietPlanDetails(data)
-        setIsLoading(false);
-      }else{
+      // const res = await getAllDietPlans();
+      // const res2 = await getDietPlansByUserId(_id);
+      const res3 = await getActivePlans(_id);
+      const res4 = await getNonActivePlans(_id);
+      
+      
+      if(res3.status === 200){
+        const data3 = res3.data;
+        setactivePlanDetails(data3);
+        console.log("active",activePlanDetails);
+        if(res4.status === 200){
+          const data4 = res4.data;
+          setNoneActive(data4);
+          console.log("nonActive",nonActiveDetails);
+          setIsLoading(false);
+        }
+      }
+      
+        //setIsLoading(false);
+      else{
         console.log("error")
         setIsLoading(false);
       }
     };
     getData();
-    //console.log(dietPlanDetails);
-    //setIsLoading(false);
+    //console.log("active",activePlanDetails);
+    //console.log("nonActive",nonActiveDetails);
+
   },[]);
   return (
     <>
@@ -79,8 +104,17 @@ const DietPlan = () => {
       </Box>
     {!isLoading && (
       <>
-      <SingleDietPlan planDetails = {dietPlanDetails[0]} title = "My Plan"/>
-      <SingleDietPlan planDetails = {dietPlanDetails[1]} title = "My Second Plan"/>
+      {activePlanDetails.map((onePlan1) => (
+        <SingleDietPlan title = "My Plan" completeDet = {onePlan1} active={true}/>
+      ))}
+      {nonActiveDetails.map((onePlan2) => (
+        <SingleDietPlan title = "My Plan" completeDet = {onePlan2} active = {false}/>
+      ))}
+      {/* {userDietPlans.map((onePlan) => (
+        <SingleDietPlan planDetails = {dietPlanDetails[0]} title = "My Plan" completeDet = {onePlan}/>
+      ))} */}
+      {/* <SingleDietPlan planDetails = {dietPlanDetails[0]} title = "My Plan" completeDet = {userDietPlans[0]}/> */}
+      {/* <SingleDietPlan planDetails = {dietPlanDetails[1]} title = "My Second Plan"/> */}
       </>
     )}
     </>

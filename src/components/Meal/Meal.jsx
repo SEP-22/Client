@@ -4,6 +4,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 //import { Grid, Box, Paper, Typography } from '@mui/system';
 import { Grid, Box, Paper, Typography} from '@mui/material';
 import { styled } from "@mui/material/styles";
+import "./meal.css"
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -18,9 +19,9 @@ export default function Meal(props) {
   const breakfastDetails = mealDetails.breakfast
   const lunchDetails = mealDetails.lunch
   const dinnerDetails = mealDetails.dinner
-  console.log(breakfastDetails);
-  console.log(lunchDetails);
-  console.log(dinnerDetails);
+  // console.log(breakfastDetails);
+  // console.log(lunchDetails);
+  // console.log(dinnerDetails);
 
   return (
     <>
@@ -34,42 +35,89 @@ export default function Meal(props) {
       {/* <Stack direction="row" alignItems="center" gap={1}>
         <Typography variant="body1" align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>BREAKFAST</Typography>
       </Stack> */}
-      <Grid container spacing={2}>
-      <Grid item xs={12} sx ={{m: 2,
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "center",
-        flexGrow: 1,}}>
-      <Grid item>
-        <Item>
-          <Typography align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>
-            BREAKFAST
-          </Typography>
-        </Item>
-      </Grid>
-      <ImageList sx={{ width: 338, height: 330 , marginRight: 2,}} cols={2} rowHeight={164} >
-        {breakfastDetails.map((item) => (
-          <ImageListItem key={item[0]}>
-            <img
-              src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={item[4]}
-              loading="lazy"
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
+      <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
+        <Grid item xs={4} sm={6} md={4}>
+          <Grid item>
+            <Item>
+              <Typography align="center" sx={{ fontSize: 21}}>
+                BREAKFAST
+              </Typography>
+            </Item>
+          </Grid>
+          <ImageList sx={{ width: 338, height: 330 , marginRight: 2,}} cols={2} rowHeight={164} >
+            {breakfastDetails.map((item) => (
+              <ImageListItem key={item[0]} borderColor="primary.main" 
+              borderTop={4} 
+              borderBottom={4}>
+                <img
+                  // src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
+                  // srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                  src={item[3]}
+                  srcSet={item[3]}
+                  alt={item[4]}
+                  loading="lazy"
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </Grid>   
+        <Grid item xs={4} sm={4} md={4}>
+          <Grid item>
+            <Item>
+              <Typography align="center" sx={{ fontSize: 21 }}>
+                LUNCH
+              </Typography>
+            </Item>
+          </Grid>
+          <ImageList sx={{ width: 338, height: 330 , marginRight: 2,}} cols={2} rowHeight={164} >
+          {lunchDetails.map((item) => (
+            <ImageListItem key={item[0]} borderColor="primary.main" 
+            borderTop={4} 
+            borderBottom={4}>
+              <img
+                src={item[3]}
+                srcSet={item[3]}
+                alt={item[4]}
+                loading="lazy"
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
+        </Grid>   
+        <Grid item xs={4} sm={4} md={4}>
+          <Grid item>
+            <Item>
+              <Typography align="center" sx={{ fontSize: 21}}>
+                DINNER
+              </Typography>
+            </Item>
+          </Grid>
+          <ImageList sx={{ width: 338, height: 330 , marginRight: 2,}} cols={2} rowHeight={164} >
+          {dinnerDetails.map((item) => (
+            <ImageListItem key={item[0]} borderColor="primary.main" 
+            borderTop={4} 
+            borderBottom={4}>
+              <img
+                src={item[3]}
+                srcSet={item[3]}
+                alt={item[4]}
+                loading="lazy"
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
+        </Grid>   
       {/* <Stack direction="row" alignItems="center" gap={1}>
         <Typography variant="body1" align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>LUNCH</Typography>
       </Stack> */}
-      <Grid item >
+      {/* <Grid item >
         <Item>
           <Typography align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>
             LUNCH
           </Typography>
         </Item>
-      </Grid>
-      <ImageList sx={{ width: 338, height: 330, marginRight: 2,}} cols={2} rowHeight={164}>
+      </Grid> */}
+      {/* <ImageList sx={{ width: 338, height: 330, marginRight: 2,}} cols={2} rowHeight={164}>
       {lunchDetails.map((item) => (
           <ImageListItem key={item[0]}>
             <img
@@ -80,18 +128,18 @@ export default function Meal(props) {
             />
           </ImageListItem>
         ))}
-      </ImageList>
+      </ImageList> */}
       {/* <Stack direction="row" alignItems="center" gap={1}>
         <Typography variant="body1" align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>DINNER</Typography>
       </Stack> */}
-      <Grid item >
+      {/* <Grid item >
         <Item>
           <Typography align="center" sx={{ fontSize: 21 , writingMode: {xs: "vertical-lr", md:"vertical-lr"}, textOrientation: {xs: "upright", md:"upright"},}}>
             DINNER
           </Typography>
         </Item>
-      </Grid>
-      <ImageList sx={{ width: 338, height: 330 ,marginRight: 2,}} cols={2} rowHeight={164}>
+      </Grid> */}
+      {/* <ImageList sx={{ width: 338, height: 330 ,marginRight: 2,}} cols={2} rowHeight={164}>
       {dinnerDetails.map((item) => (
           <ImageListItem key={item[0]}>
             <img
@@ -102,8 +150,7 @@ export default function Meal(props) {
             />
           </ImageListItem>
         ))}
-      </ImageList>
-      </Grid>
+      </ImageList> */}
       </Grid>
       
       {/* </div> */}

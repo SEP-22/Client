@@ -65,5 +65,42 @@ const getAllDietPlans = async() => {
   }
 };
 
+const getDietPlansByUserId = async(id) => {
+  try{
+    const res = await baseApi.get(`dietPlan/getUserDietPlans/${id}`);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    console.log(res)
+    return res;
+  }catch (error) {
+    console.log(error);
+  }
+};
+const getNonActivePlans = async(id) => {
+  try{
+    const res = await baseApi.get(`dietPlan/getuserplans/nonactive/${id}`);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    console.log(res)
+    return res;
+  }catch (error) {
+    console.log(error);
+  }
+};
+const getActivePlans = async(id) => {
+  try{
+    const res = await baseApi.get(`dietPlan/getuserplans/active/${id}`);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    console.log(res)
+    return res;
+  }catch (error) {
+    console.log(error);
+  }
+};
 
-export { getInputs, getActiveDietPlanDetails, generateDietPlan, saveDietPlans,getAllDietPlans };
+
+export { getInputs, getActiveDietPlanDetails, generateDietPlan, saveDietPlans,getAllDietPlans,getDietPlansByUserId,getNonActivePlans,getActivePlans };
