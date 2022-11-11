@@ -22,8 +22,21 @@ const createAndSaveShoppingList = async (body) => {
     console.log(error);
   }
 };
+const getShoppingListsByUserId = async(id)=>{
+  try{
+    const res = await baseApi.get(`shoppingList/getShoppingListsFromUserId/${id}`);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    //console.log(res.data)
+    return res;
+  }catch(error){
+    console.log(error);
+  }
+};
 
 export {
     getShoppingList,
     createAndSaveShoppingList,
+    getShoppingListsByUserId,
 };

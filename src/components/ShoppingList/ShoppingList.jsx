@@ -16,7 +16,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { getShoppingList } from '../../utils/api/shoppingList';
 import { getFoodById } from '../../utils/api/food';
-
+import { getShoppingListsByUserId } from '../../utils/api/shoppingList';
 
 
 
@@ -28,61 +28,55 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function ShoppingList() {
+const ShoppingList = () => {
 
   const [dietPlan, setDietPlan] = React.useState('');
   const [shoppingListj, setShoppingListj] = React.useState([]);
   const [foodDetails, setFood] = React.useState([]);
   const id = "63613940a8722b99ececed77"
-  const [completeDetailedList,setCompleteDetailedList] = React.useState([])
+  const userId = JSON.parse(localStorage.getItem("user")).id;
+  const [completeDetailedList,setCompleteDetailedList] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const handleChange = (event) => {
-    setDietPlan(event.target.value);
+    setDietPlan(event.target.value);  
   };
 
   React.useEffect(() => {
     const getData = async () => {
+      setIsLoading(true);
+
       const res = await getShoppingList();
-      if(res.status === 200) {
+      const res2 = await getShoppingListsByUserId(userId);
+
+      if(res.status === 200 && res2.status == 200) {
         const data = res.data;
         setShoppingListj(data)
-        // for (let index = 0; index < shoppingListj.length; index++) {
-        //   console.log(shoppingListj[index].foodId);
-        //   //getFood(shoppingListj[index].foodId);
-        //   const foodDetailsss = await getFoodById(shoppingListj[index].foodId);
-        //   //console.log(foodDetailsss.data.name);
-        //   const listItem = [{name:foodDetailsss.data.name,image:foodDetailsss.data.image,amount:shoppingListj[index].amount}];
-        //   console.log(listItem);
-        //   setCompleteDetailedList(completeDetailedList => [...completeDetailedList, listItem]);
-        //   //console.log(foodDetails.name);
-        //   //const food_id = shoppingListj[index]._id
-        //   //getFood()   
+        //console.log(shoppingListj)
+        const data2 = res2.data;
+        setCompleteDetailedList(data2);
+        //console.log(completeDetailedList)
+        setIsLoading(false);
+        // if(res2.status === 200){
+        //   const data2 = res2.data;
+        //   setCompleteDetailedList(data2);
+        //   setIsLoading(false);
         // }
-        console.log(shoppingListj)
 
       }else{ 
-        console.log("jimmy")
+        //console.log("jimmy");
+        setIsLoading(false);
       }
     };
-
-    
 
     getData();
   },[]);
 
-  const getFood = async (id) => {
-    const res = await getFoodById(id);
-    if(res.status == 200) {
-      const data = res.data;
-      setFood(data)
-    }else{
-      console.log(res.status);
-    }
-  };
-
   return (
     <>
-    <Box
+    {!isLoading && (
+      <>
+      <Box
         sx={{
             m: 2,
             alignItems: "center",
@@ -137,10 +131,7 @@ export default function ShoppingList() {
         {/* {FoodList.map((food) => ( */}
         {shoppingListj.map((food) => ( 
           <Grid key={food.foodId.name} item xs={2} sm={4} md={3}>
-            {/* <FoodCard foodItem={food} /> */}
             <div >
-              {/* <Item color="secondary"><Avatar alt="food image" src={food.Image} sx={{ width: 50, height: 50 }} 
-              />{food.Food} - { food.Grams} grams</Item> */}
               <Item color="secondary"
               sx={{
                 display:"flex",
@@ -164,201 +155,14 @@ export default function ShoppingList() {
                 </Typography>
               </div>
               </Item>
-              {/* <Chip
-                sx={{minWidth:300, maxHeight:100 }}
-                avatar={<Avatar alt={food.Food} src={food.Image} />}
-                label={food.Food+`-`+food.Grams+`g`}
-                variant="contained"
-              /> */}
             </div>
-            
           </Grid>
         ))}
       </Grid>
     </Box>
+      </>
+    )}
     </>
   );
 }
-
-const FoodList = [
-  {
-    Food: "Broccoli",
-    Measure: "1 cup",
-    Grams: 150,
-    Calories: 45,
-    Protein: 5,
-    Fat: 0,
-    Fiber: 0,
-    Carbs: 8,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/broccoli.jpg",
-  },
-  {
-    Food: "Carrots",
-    Measure: "1 cup",
-    Grams: 150,
-    Calories: 45,
-    Protein: 1,
-    Fat: 0,
-    Fiber: 9,
-    Carbs: 10,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/carrot.jpg",
-  },
-  {
-    Food: "Corn",
-    Measure: "1 ear",
-    Grams: 100,
-    Calories: 92,
-    Protein: 3,
-    Fat: 1,
-    Fiber: 0.8,
-    Carbs: 21,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/corn.jpg",
-  },
-  {
-    Food: "Potato",
-    Measure: "1 medium",
-    Grams: 110,
-    Calories: 155,
-    Protein: 2,
-    Fat: 1,
-    Fiber: 1,
-    Carbs: 36,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/potato.jpg",
-  },
-  {
-    Food: "Tomato",
-    Measure: "1 medium",
-    Grams: 120,
-    Calories: 25,
-    Protein: 1,
-    Fat: 0,
-    Fiber: 1,
-    Carbs: 4.5,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/tomato.jpg",
-  },
-  {
-    Food: "Broccoli",
-    Measure: "1 cup",
-    Grams: 150,
-    Calories: 45,
-    Protein: 5,
-    Fat: 0,
-    Fiber: 0,
-    Carbs: 8,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/broccoli.jpg",
-  },
-  {
-    Food: "Carrots",
-    Measure: "1 cup",
-    Grams: 150,
-    Calories: 45,
-    Protein: 1,
-    Fat: 0,
-    Fiber: 9,
-    Carbs: 10,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/carrot.jpg",
-  },
-  {
-    Food: "Corn",
-    Measure: "1 ear",
-    Grams: 100,
-    Calories: 92,
-    Protein: 3,
-    Fat: 1,
-    Fiber: 0.8,
-    Carbs: 21,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/corn.jpg",
-  },
-  {
-    Food: "Potato",
-    Measure: "1 medium",
-    Grams: 110,
-    Calories: 155,
-    Protein: 2,
-    Fat: 1,
-    Fiber: 1,
-    Carbs: 36,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/potato.jpg",
-  },
-  {
-    Food: "Tomato",
-    Measure: "1 medium",
-    Grams: 120,
-    Calories: 25,
-    Protein: 1,
-    Fat: 0,
-    Fiber: 1,
-    Carbs: 4.5,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/tomato.jpg",
-  },
-  {
-    Food: "Broccoli",
-    Measure: "1 cup",
-    Grams: 150,
-    Calories: 45,
-    Protein: 5,
-    Fat: 0,
-    Fiber: 0,
-    Carbs: 8,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/broccoli.jpg",
-  },
-  {
-    Food: "Carrots",
-    Measure: "1 cup",
-    Grams: 150,
-    Calories: 45,
-    Protein: 1,
-    Fat: 0,
-    Fiber: 9,
-    Carbs: 10,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/carrot.jpg",
-  },
-  {
-    Food: "Corn",
-    Measure: "1 ear",
-    Grams: 100,
-    Calories: 92,
-    Protein: 3,
-    Fat: 1,
-    Fiber: 0.8,
-    Carbs: 21,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/corn.jpg",
-  },
-  {
-    Food: "Potato",
-    Measure: "1 medium",
-    Grams: 110,
-    Calories: 155,
-    Protein: 2,
-    Fat: 1,
-    Fiber: 1,
-    Carbs: 36,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/potato.jpg",
-  },
-  {
-    Food: "Tomato",
-    Measure: "1 medium",
-    Grams: 120,
-    Calories: 25,
-    Protein: 1,
-    Fat: 0,
-    Fiber: 1,
-    Carbs: 4.5,
-    Category: "Vegetables",
-    Image: "/src/assets/images/foods/tomato.jpg",
-  },
-];
+export default ShoppingList
