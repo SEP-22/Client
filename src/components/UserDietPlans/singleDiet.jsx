@@ -10,6 +10,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { getAllDietPlans } from "../../utils/api/dietPlan";
 import { ConnectedTvOutlined } from "@mui/icons-material";
 import { updateActiveDietPlan } from "../../utils/api/user";
+import ViewDiet from "./ViewDiet";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -104,7 +105,7 @@ const SingleDietPlan = (props) => {
             ))}
             {/* <Meal meal={props.planDetails}/> */}
           </div>
-          <Button variant="outlined" color="secondary" sx={{m:2}}>View</Button>
+          <Button variant="outlined" color="secondary" component={Link} to="viewPlan" sx={{m:2}}>View</Button>
           {!status && (
             <>
             <Button variant="contained" color="primary" onClick={handleClickOpen}>Activate</Button>
