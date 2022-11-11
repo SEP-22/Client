@@ -51,8 +51,8 @@ const DietPerDay = (props) => {
                   <Grid item xs={12} md={2}>
                     <Item elevation={0} sx={{pt:0}}>
                       <FoodCard foodItem={{Food: food[4],
-                                            Consume: food[2],
-                                            Calories: food[1],
+                                            Consume: food[2].substring(0,food[2].length - 4),
+                                            Calories: food[1].substring(0,food[1].length - 4),
                                             Image: food[3],}} />
                     </Item>
                   </Grid>
@@ -84,8 +84,8 @@ const DietPerDay = (props) => {
                   <Grid item xs={12} md={2}>
                     <Item elevation={0} sx={{pt:0}}>
                       <FoodCard foodItem={{Food: food[4],
-                                            Consume: food[2],
-                                            Calories: food[1],
+                                            Consume: food[2].substring(0,food[2].length - 4),
+                                            Calories: food[1].substring(0,food[1].length - 4),
                                             Image: food[3],}} />
                     </Item>
                   </Grid>
@@ -117,8 +117,8 @@ const DietPerDay = (props) => {
                   <Grid item xs={12} md={2}>
                     <Item elevation={0} sx={{pt:0}}>
                       <FoodCard foodItem={{Food: food[4],
-                                            Consume: food[2],
-                                            Calories: food[1],
+                                            Consume: food[2].substring(0,food[2].length - 4),
+                                            Calories: food[1].substring(0,food[1].length - 4),
                                             Image: food[3],}} />
                     </Item>
                   </Grid>
