@@ -30,14 +30,14 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const ShoppingList = () => {
 
-  const [dietPlan, setDietPlan] = React.useState(null);
+  const [dietPlan, setDietPlan] = React.useState([]);
   const [shoppingListj, setShoppingListj] = React.useState([]);
   const [foodDetails, setFood] = React.useState([]);
   //const id = "63613940a8722b99ececed77"
   const userId = JSON.parse(localStorage.getItem("user")).id;
   const [completeDetailedList,setCompleteDetailedList] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [currentShoppingList, setCurrentShoppingList] = React.useState(null);
+  const [currentShoppingList, setCurrentShoppingList] = React.useState([]);
 
   const handleChange = (event) => {
     setDietPlan(event.target.value);  
@@ -60,6 +60,8 @@ const ShoppingList = () => {
         //console.log(shoppingListj)
         const data2 = res2.data;
         setCompleteDetailedList(data2);
+        setDietPlan(data2[0][0])
+        setCurrentShoppingList(data2[0][1])
         //setCurrentShoppingList(completeDetailedList[0]);
         //console.log(currentShoppingList)
         //console.log(completeDetailedList)
@@ -93,9 +95,7 @@ const ShoppingList = () => {
   }
   return (
     <>
-    {!isLoading && (
-      <>
-      <Box
+    <Box
         sx={{
             m: 2,
             alignItems: "center",
@@ -131,6 +131,8 @@ const ShoppingList = () => {
         </Paper>
           
       </Box>
+    {(!isLoading && currentShoppingList) &&(
+      <>
       <Box sx={{ flexGrow: 1 }} margin="25px" alignItems="center">
       {/* <Grid item xs={12}>
         <Item elevation={0}>
@@ -146,15 +148,15 @@ const ShoppingList = () => {
           </Grid>
         ))} */}
         {/* {FoodList.map((food) => ( */}
-        {shoppingListj.map((food) => ( 
-          <Grid key={food.foodId.name} item xs={2} sm={4} md={3}>
+        {currentShoppingList.map((food) => ( 
+          <Grid key={food[0]} item xs={2} sm={4} md={3}>
             <div >
               <Item color="secondary"
               sx={{
                 display:"flex",
                 flexDirection: "row",
                 alignContent: "center",
-              }}><Avatar alt="food image" src={food.foodId.image} sx={{ width: 45, height: 45 ,m:3}} 
+              }}><Avatar alt="food image" src={food[3]} sx={{ width: 45, height: 45 ,m:3}} 
               />
               <div align='center' display="flex" alignContent="center">
                 <Typography 
@@ -164,11 +166,11 @@ const ShoppingList = () => {
                   color="secondary"
                   align="center"
                 >
-                  {food.foodId.name}
+                  {food[0]}
                 </Typography>
                 <br></br>
                 <Typography>
-                { food.amount} grams
+                { food[1]} grams
                 </Typography>
               </div>
               </Item>
