@@ -31,7 +31,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const ShoppingList = () => {
 
   const [dietPlan, setDietPlan] = React.useState([]);
-  const [shoppingListj, setShoppingListj] = React.useState([]);
+  //const [shoppingListj, setShoppingListj] = React.useState([]);
   const [foodDetails, setFood] = React.useState([]);
   //const id = "63613940a8722b99ececed77"
   const userId = JSON.parse(localStorage.getItem("user")).id;
@@ -51,12 +51,12 @@ const ShoppingList = () => {
     const getData = async () => {
       setIsLoading(true);
 
-      const res = await getShoppingList();
+      //const res = await getShoppingList();
       const res2 = await getShoppingListsByUserId(userId);
 
-      if(res.status === 200 && res2.status == 200) {
-        const data = res.data;
-        setShoppingListj(data)
+      if(res2.status == 200) {
+        //const data = res.data;
+        //setShoppingListj(data)
         //console.log(shoppingListj)
         const data2 = res2.data;
         setCompleteDetailedList(data2);
