@@ -12,7 +12,7 @@ export const options = {
   colors:['#ba68c8','#ef5350', "#4fc3f7", "#9ccc65","#ffc107" ,],
 };
 
-const CategoryChart = () => {
+const MealsChart = () => {
   return (
     <Chart
       chartType="PieChart"
@@ -24,4 +24,4 @@ const CategoryChart = () => {
   );
 };
 
-export default CategoryChart;
+export default MealsChart;
