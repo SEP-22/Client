@@ -30,16 +30,21 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const ShoppingList = () => {
 
-  const [dietPlan, setDietPlan] = React.useState('');
+  const [dietPlan, setDietPlan] = React.useState(null);
   const [shoppingListj, setShoppingListj] = React.useState([]);
   const [foodDetails, setFood] = React.useState([]);
-  const id = "63613940a8722b99ececed77"
+  //const id = "63613940a8722b99ececed77"
   const userId = JSON.parse(localStorage.getItem("user")).id;
   const [completeDetailedList,setCompleteDetailedList] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [currentShoppingList, setCurrentShoppingList] = React.useState(null);
 
   const handleChange = (event) => {
     setDietPlan(event.target.value);  
+    setCurrentShoppingList(options[dietPlan])
+    //console.log("here",dietPlan)
+    //console.log(options[dietPlan])
+    console.log(currentShoppingList) 
   };
 
   React.useEffect(() => {
@@ -55,6 +60,8 @@ const ShoppingList = () => {
         //console.log(shoppingListj)
         const data2 = res2.data;
         setCompleteDetailedList(data2);
+        //setCurrentShoppingList(completeDetailedList[0]);
+        //console.log(currentShoppingList)
         //console.log(completeDetailedList)
         setIsLoading(false);
         // if(res2.status === 200){
@@ -72,6 +79,18 @@ const ShoppingList = () => {
     getData();
   },[]);
 
+  const options = {};
+  for(let i = 0; i<completeDetailedList.length;i++){
+    options[completeDetailedList[i][0]] = completeDetailedList[i][1]
+    // options.push({key:completeDetailedList[i][0],value:completeDetailedList[i][1]})
+  }
+  //console.log(options)
+  const rows = [];
+  for (let i = 0; i < completeDetailedList.length; i++) {
+      // note: we are adding a key prop here to allow react to uniquely identify each
+      // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
+      rows.push(<MenuItem value={completeDetailedList[i][0]}>{`Diet Plan ${i+1}`}</MenuItem>);
+  }
   return (
     <>
     {!isLoading && (
@@ -102,13 +121,11 @@ const ShoppingList = () => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={dietPlan}
               label="DietPlan"
               onChange={handleChange}
+              defaultValue = ""
             >
-              <MenuItem value={'Diet Plan 1'}>Diet Plan 1</MenuItem>
-              <MenuItem value={'Diet Plan 2'}>Diet Plan 2</MenuItem>
-              <MenuItem value={'Diet Plan 3'}>Diet Plan 3</MenuItem>
+              {rows}
             </Select>
         </FormControl>
         </Paper>
@@ -129,15 +146,15 @@ const ShoppingList = () => {
           </Grid>
         ))} */}
         {/* {FoodList.map((food) => ( */}
-        {shoppingListj.map((food) => ( 
-          <Grid key={food.foodId.name} item xs={2} sm={4} md={3}>
+        {currentShoppingList.map((food) => ( 
+          <Grid key={food[0]} item xs={2} sm={4} md={3}>
             <div >
               <Item color="secondary"
               sx={{
                 display:"flex",
                 flexDirection: "row",
                 alignContent: "center",
-              }}><Avatar alt="food image" src={food.foodId.image} sx={{ width: 45, height: 45 ,m:3}} 
+              }}><Avatar alt="food image" src={food[3]} sx={{ width: 45, height: 45 ,m:3}} 
               />
               <div align='center' display="flex" alignContent="center">
                 <Typography 
@@ -147,11 +164,11 @@ const ShoppingList = () => {
                   color="secondary"
                   align="center"
                 >
-                  {food.foodId.name}
+                  {food[0]}
                 </Typography>
                 <br></br>
                 <Typography>
-                { food.amount} grams
+                { food[1]} grams
                 </Typography>
               </div>
               </Item>
