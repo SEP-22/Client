@@ -41,7 +41,8 @@ const ShoppingList = () => {
 
   const handleChange = (event) => {
     setDietPlan(event.target.value);  
-    setCurrentShoppingList(options[dietPlan])
+    //setCurrentShoppingList(options[dietPlan])
+    setCurrentShoppingList(completeDetailedList[event.target.value][1])
     //console.log("here",dietPlan)
     //console.log(options[dietPlan])
     console.log(currentShoppingList) 
@@ -91,7 +92,7 @@ const ShoppingList = () => {
   for (let i = 0; i < completeDetailedList.length; i++) {
       // note: we are adding a key prop here to allow react to uniquely identify each
       // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
-      rows.push(<MenuItem value={completeDetailedList[i][0]}>{`Diet Plan ${i+1}`}</MenuItem>);
+      rows.push(<MenuItem value={i}>{`Diet Plan ${i+1}`}</MenuItem>);
   }
   return (
     <>
