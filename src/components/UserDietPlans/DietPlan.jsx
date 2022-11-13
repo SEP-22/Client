@@ -105,10 +105,10 @@ const DietPlan = () => {
     {!isLoading && (
       <>
       {activePlanDetails.map((onePlan1) => (
-        <SingleDietPlan title = "My Plan" completeDet = {onePlan1} active={true}/>
+        <SingleDietPlan title = {onePlan1.name} completeDet = {onePlan1} active={true}/>
       ))}
       {nonActiveDetails.map((onePlan2) => (
-        <SingleDietPlan title = "My Plan" completeDet = {onePlan2} active = {false}/>
+        <SingleDietPlan title = {onePlan2.name} completeDet = {onePlan2} active = {false}/>
       ))}
       {/* {userDietPlans.map((onePlan) => (
         <SingleDietPlan planDetails = {dietPlanDetails[0]} title = "My Plan" completeDet = {onePlan}/>

@@ -62,6 +62,7 @@ export default function Quiz() {
   const [makeActive, setMakeActive] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [selectFoods, setSelectFoods] = React.useState(false);
+  const [name,setName] = React.useState("");
 
   const _id = JSON.parse(localStorage.getItem("user")).id;
   // const _id = "633601573507a646fb339d94"
@@ -186,8 +187,10 @@ export default function Quiz() {
         diabetics: diabetics,
         cholesterol: cholesterol,
         bloodpressure: bloodpressure,
+        name:name,
       };
       sendData(data);
+      console.log("Name",name)
     }
   };
 
@@ -651,6 +654,44 @@ export default function Quiz() {
                       </MenuItem>
                     ))}
                   </Select>
+                </FormControl>
+              </Grid>
+            </Paper>
+          </Grid>
+          <Grid>
+            <Paper
+              sx={{
+                mt: 1,
+                mb: 1,
+                p: 4,
+                minWidth: { md: 400 },
+                borderRadius: 10,
+              }}
+            >
+              <Grid item xs={12}>
+                <Typography
+                  align="center"
+                  component="h4"
+                  variant="h6"
+                  gutterBottom
+                >
+                  Enter a name for your diet plan
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} align="center">
+                <FormControl>
+                <InputLabel htmlFor="component-outlined" required>
+                    Name
+                  </InputLabel>
+                  <OutlinedInput
+                    name="name"
+                    onChange={(event) => {
+                      setName(event.target.value);
+                    }}
+                    label="name"
+                    required
+                  />
                 </FormControl>
               </Grid>
             </Paper>
