@@ -255,7 +255,6 @@ function FoodSelection() {
                 {isLoading && (
                   <Box
                     sx={{
-                      m: 2,
                       alignItems: "center",
                       display: "flex",
                       justifyContent: "center",
@@ -267,6 +266,7 @@ function FoodSelection() {
                     </Typography>
                   </Box>
                 )}
+
                 <FormControl
                   required
                   error={getError(steps[activeStep])}
@@ -277,29 +277,40 @@ function FoodSelection() {
                     Pick at least TWO
                   </FormLabel>
                   <FormGroup>
-                    {getArray(steps[activeStep]).map((food) => (
-                      <Stack direction="row" spacing={2} key={food._id} mb={2}>
-                        <Avatar
-                          alt={food.name}
-                          src={food.image}
-                          sx={{ width: 56, height: 56, boxShadow: 3 }}
-                          variant="rounded"
-                        />
-
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={state[food._id]}
-                              onChange={handleChange}
-                              name={food._id}
+                    <Grid container spacing={2} m={2}>
+                      {" "}
+                      {getArray(steps[activeStep]).map((food) => (
+                        <Grid item xs={12} md={4}>
+                          <Stack
+                            direction="row"
+                            spacing={2}
+                            key={food._id}
+                            mb={2}
+                            mr={1}
+                          >
+                            <Avatar
+                              alt={food.name}
+                              src={food.image}
+                              sx={{ width: 56, height: 56, boxShadow: 3 }}
+                              variant="rounded"
                             />
-                          }
-                          label={food.name}
-                        />
-                      </Stack>
-                    ))}
+
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={state[food._id]}
+                                  onChange={handleChange}
+                                  name={food._id}
+                                />
+                              }
+                              label={food.name}
+                            />
+                          </Stack>
+                        </Grid>
+                      ))}
+                    </Grid>
                   </FormGroup>
-                  <FormHelperText>You can display an error</FormHelperText>
+                  <FormHelperText sx={{alignSelf:"center"}}>You must select at least 2 foods</FormHelperText>
                 </FormControl>
               </Grid>
             </Paper>

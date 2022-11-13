@@ -61,8 +61,8 @@ export default function GuideUserFoodList() {
   const [FoodList, setFoodList] = React.useState([]);
   const [state, setState] = React.useState({});
 
-  // const _id = JSON.parse(localStorage.getItem("user")).id;
-  const _id = "633601573507a646fb339d94"
+  const _id = JSON.parse(localStorage.getItem("user")).id;
+  // const _id = "633601573507a646fb339d94"
 
   const handleChange = (event) => {
     const {
