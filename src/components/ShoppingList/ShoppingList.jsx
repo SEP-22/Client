@@ -157,7 +157,7 @@ const ShoppingList = () => {
                 display:"flex",
                 flexDirection: "row",
                 alignContent: "center",
-              }}><Avatar alt="food image" src={food[3]} sx={{ width: 45, height: 45 ,m:3}} 
+              }}><Avatar alt="food image" src={food[3]} sx={{ width: 75, height: 75 ,mt:2,mb:2,ml:2,mr:6}} 
               />
               <div align='center' display="flex" alignContent="center">
                 <Typography 

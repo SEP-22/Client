@@ -2,9 +2,11 @@ import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 //import { Grid, Box, Paper, Typography } from '@mui/system';
-import { Grid, Box, Paper, Typography} from '@mui/material';
+import { Grid, Box, Paper, Typography, ImageListItemBar} from '@mui/material';
 import { styled } from "@mui/material/styles";
 import "./meal.css"
+import IconButton from '@mui/material/IconButton';
+import InfoIcon from '@mui/icons-material/Info';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -39,7 +41,7 @@ export default function Meal(props) {
         <Grid item xs={4} sm={6} md={4}>
           <Grid item>
             <Item>
-              <Typography align="center" sx={{ fontSize: 21}}>
+              <Typography align="center" sx={{ fontSize: 21 }}>
                 BREAKFAST
               </Typography>
             </Item>
@@ -57,6 +59,29 @@ export default function Meal(props) {
                   alt={item[4]}
                   loading="lazy"
                 />
+                <div className="imageListItemBar">
+                <ImageListItemBar
+                sx={{
+                  background:
+                    'linear-gradient(to bottom, rgba(76, 175, 80, 0.6) 0%, ' +
+                    'rgba(76, 175, 80, 0.6) 70%, rgba(76, 175, 80, 0.6) 100%)',
+                    
+                }}
+                // sx={{
+                //   background:
+                //     'linear-gradient(to bottom, rgba(255, 170, 232, 0.6) 0%, ' +
+                //     'rgba(255, 170, 232, 0.6) 70%, rgba(255, 170, 232,0.6) 100%)',
+                    
+                // }} 
+                // style: {
+                //   maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                //   width: 250,
+                // },
+                  title={item[4]}
+                  subtitle={item[2]}
+                />
+                </div>
+                
               </ImageListItem>
             ))}
           </ImageList>
@@ -80,6 +105,18 @@ export default function Meal(props) {
                 alt={item[4]}
                 loading="lazy"
               />
+              <div className="imageListItemBar">
+                <ImageListItemBar
+                sx={{
+                  background:
+                    'linear-gradient(to bottom, rgba(76, 175, 80, 0.6) 0%, ' +
+                    'rgba(76, 175, 80, 0.6) 70%, rgba(76, 175, 80, 0.6) 100%)',
+                    
+                }}
+                  title={item[4]}
+                  subtitle={item[2]}
+                />
+                </div>
             </ImageListItem>
           ))}
         </ImageList>
@@ -103,6 +140,22 @@ export default function Meal(props) {
                 alt={item[4]}
                 loading="lazy"
               />
+              <div className="imageListItemBar">
+                <ImageListItemBar
+                sx={{
+                  background:
+                    'linear-gradient(to bottom, rgba(76, 175, 80, 0.6) 0%, ' +
+                    'rgba(76, 175, 80, 0.6) 70%, rgba(76, 175, 80, 0.6) 100%)',
+                    
+                }}
+                // style: {
+                //   maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                //   width: 250,
+                // },
+                  title={item[4]}
+                  subtitle={item[2]}
+                />
+                </div>
             </ImageListItem>
           ))}
         </ImageList>
