@@ -1,7 +1,4 @@
-import React from "react";
-import Navbar from "../../components/Navbar/NavbarAdmin";
-import Footer from "../../components/Footer/Footer";
-import { Outlet } from "react-router-dom";
+import * as React from "react";
 import { Grid, Box, Paper, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Container } from "@mui/system";
@@ -11,6 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import CategoryChart from "../../components/Admin/CategoryChart";
+import { countFoodsbyCategory, getCountADPUsers, getCountofDietPlans, getCountofDiets, getCountofFoods, getCountofMDPUsers, getCountofUsers, getMostPrefferedFood } from "../../utils/api/stats";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -28,7 +26,82 @@ const FavoriteFoods = [
   ["Ice cream", "/src/assets/images/foods/icecream.jpg", 250],
 ];
 
+
+
 const HomeAdmin = () => {
+  const [totalUsers, setTotalUsers] = React.useState(0);
+  const [totalFoods, setTotalFoods] = React.useState(0);
+  const [totalUsersWithADP, setTotalUsersWithADP] = React.useState(0);
+  const [totalUsersWithMDP, setTotalUsersWithMDP] = React.useState(0);
+  const [totalDiets, setTotalDiets] = React.useState(0);
+  const [totalQuizes, setTotalQuizes] = React.useState(0);
+  const [foodsByCategory, setFoodsByCategory] = React.useState([]);
+  const [preferedFoods, setPreferedFoods] = React.useState([]);
+
+  React.useEffect(() => {
+    const getData = async () => {
+      const res1 = await (getCountofUsers());
+      const res2 = await (getCountofFoods());
+      const res3 = await (getCountADPUsers());
+      const res4 = await (getCountofMDPUsers());
+      const res5 = await (getCountofDiets());
+      const res6 = await (getCountofDietPlans());
+      const res7 = await (countFoodsbyCategory());
+      const res8 = await (getMostPrefferedFood());
+      if (res1 && res1.status === 200) {
+        const data = res1.data;
+        setTotalUsers(data.count);
+      }else{
+        setTotalUsers("..~error encounted~..");
+      }
+      if (res2 && res2.status === 200) {
+        const data = res2.data;
+        setTotalFoods(data.count);
+      }else{
+        setTotalFoods("..~error encounted~..");
+      }
+      if (res3 && res3.status === 200) {
+        const data = res3.data;
+        setTotalUsersWithADP(data.count);
+      }else{
+        setTotalUsersWithADP("..~error encounted~..");
+      }
+      if (res4 && res4.status === 200) {
+        const data = res4.data;
+        setTotalUsersWithMDP(data.count);
+      }else{
+        setTotalUsersWithMDP("..~error encounted~..");
+      }
+      if (res5 && res5.status === 200) {
+        const data = res5.data;
+        setTotalDiets(data.count);
+      }else{
+        setTotalDiets("..~error encounted~..");
+      }
+      if (res6 && res6.status === 200) {
+        const data = res6.data;
+        setTotalQuizes(data.count);
+      }else{
+        setTotalQuizes("..~error encounted~..");
+      }
+      if (res7 && res7.status === 200) {
+        const data = res7.data;
+        console.log(data)
+        setFoodsByCategory(data);
+      }else{
+        setFoodsByCategory("..~error encounted~..");
+      }
+      if (res8 && res8.status === 200) {
+        const data = res8.data;
+        setPreferedFoods(data);
+      }else{
+        setPreferedFoods("..~error encounted~..");
+      }
+    };
+  
+    getData();
+  }, []);
+
   return (
     <>
       <Box sx={{ m: 5 }}>
@@ -38,7 +111,23 @@ const HomeAdmin = () => {
               <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">Total Number of Users</Typography>
                 <Typography color="primary" variant="h4" sx={{ m: 2 }}>
-                  {users}
+                  {totalUsers}
+                </Typography>
+              </Item>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+                <Typography variant="h6">Total Number of Foods</Typography>
+                <Typography color="primary" variant="h4" sx={{ m: 2 }}>
+                  {totalFoods}
+                </Typography>
+              </Item>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+                <Typography variant="h6">Total Number of Quizes taken</Typography>
+                <Typography color="primary" variant="h4" sx={{ m: 2 }}>
+                  {totalQuizes}
                 </Typography>
               </Item>
             </Grid>
@@ -48,7 +137,17 @@ const HomeAdmin = () => {
                   Total Number of Diet Plans created
                 </Typography>
                 <Typography color="primary" variant="h4" sx={{ m: 2 }}>
-                  {dietplans}
+                  {totalDiets}
+                </Typography>
+              </Item>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+                <Typography variant="h6">
+                  Total Number of Users with a Active Diet Plan
+                </Typography>
+                <Typography color="primary" variant="h4" sx={{ m: 2 }}>
+                  {totalUsersWithADP}
                 </Typography>
               </Item>
             </Grid>
@@ -58,15 +157,7 @@ const HomeAdmin = () => {
                   Total Number of Users with Multiple Diet Plans
                 </Typography>
                 <Typography color="primary" variant="h4" sx={{ m: 2 }}>
-                  {usersMultiplePlans}
-                </Typography>
-              </Item>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
-                <Typography variant="h6">Total Number of Foods</Typography>
-                <Typography color="primary" variant="h4" sx={{ m: 2 }}>
-                  {foods}
+                  {totalUsersWithMDP}
                 </Typography>
               </Item>
             </Grid>
