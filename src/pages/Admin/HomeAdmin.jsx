@@ -86,8 +86,12 @@ const HomeAdmin = () => {
       }
       if (res7 && res7.status === 200) {
         const data = res7.data;
-        console.log(data)
-        setFoodsByCategory(data);
+        let arr = [["Category", "Total number of Foods"]]
+        data.forEach(ele => {
+          arr.push([ele._id, ele.count])
+        });
+        console.log(arr)
+        setFoodsByCategory(arr);
       }else{
         setFoodsByCategory("..~error encounted~..");
       }
@@ -181,7 +185,7 @@ const HomeAdmin = () => {
             <Grid item xs={12} md={6}>
               <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">Total Number of Foods in each Category</Typography>
-                <CategoryChart />
+                <CategoryChart data={foodsByCategory}/>
               </Item>
             </Grid>
           </Grid>
