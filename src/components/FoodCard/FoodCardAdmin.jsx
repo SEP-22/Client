@@ -78,7 +78,6 @@ export default function FoodCardAdmin(props) {
           }}
         >
           <CardMedia
-            sx={{}}
             component="img"
             alt={FoodItem.name}
             width="100%"

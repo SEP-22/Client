@@ -8,6 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import CategoryChart from "../../components/Admin/CategoryChart";
+import TableContainer from "@mui/material/TableContainer";
 import {
   countFoodsbyCategory,
   getCountADPUsers,
@@ -27,13 +28,6 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const [users, dietplans, foods, usersMultiplePlans] = [100, 80, 100, 5];
-const FavoriteFoods = [
-  ["Banana", "/src/assets/images/foods/banana.jpg", 300],
-  ["Apple", "/src/assets/images/foods/apple.jpg", 267],
-  ["Carrot", "/src/assets/images/foods/carrot.jpg", 250],
-  ["Ice cream", "/src/assets/images/foods/icecream.jpg", 250],
-];
 
 const HomeAdmin = () => {
   const [totalUsers, setTotalUsers] = React.useState(0);
@@ -143,24 +137,24 @@ const HomeAdmin = () => {
       <Box sx={{ m: 5 }}>
         <Container>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+            <Grid item xs={12} md={4}>
+              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">Total Number of Users</Typography>
                 <Typography color="primary" variant="h4" sx={{ m: 2 }}>
                   {totalUsers}
                 </Typography>
               </Item>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+            <Grid item xs={12} md={4}>
+              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">Total Number of Foods</Typography>
                 <Typography color="primary" variant="h4" sx={{ m: 2 }}>
                   {totalFoods}
                 </Typography>
               </Item>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+            <Grid item xs={12} md={4}>
+              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Total Number of Quizes taken
                 </Typography>
@@ -169,8 +163,8 @@ const HomeAdmin = () => {
                 </Typography>
               </Item>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+            <Grid item xs={12} md={4}>
+              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Total Number of Diet Plans created
                 </Typography>
@@ -179,8 +173,8 @@ const HomeAdmin = () => {
                 </Typography>
               </Item>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+            <Grid item xs={12} md={4}>
+              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Total Number of Users with a Active Diet Plan
                 </Typography>
@@ -189,8 +183,8 @@ const HomeAdmin = () => {
                 </Typography>
               </Item>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+            <Grid item xs={12} md={4}>
+              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Total Number of Users with Multiple Diet Plans
                 </Typography>
@@ -200,7 +194,7 @@ const HomeAdmin = () => {
               </Item>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+              <Item sx={{ height: 320, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Total Number of Foods in each Category
                 </Typography>
@@ -208,13 +202,14 @@ const HomeAdmin = () => {
               </Item>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
+              <Item sx={{ height: 320, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Most Favorite Foods by all users{" "}
                 </Typography>
                 {typeof preferedFoods === "string" ? (
                   <Typography> {preferedFoods} </Typography>
                 ) : (
+                  <TableContainer>
                   <List sx={{ paddingLeft: 10 }}>
                     {preferedFoods.map((food) => (
                       <ListItem key={food[0]} sx={{ paddingLeft: 10 }}>
@@ -225,6 +220,7 @@ const HomeAdmin = () => {
                       </ListItem>
                     ))}
                   </List>
+                  </TableContainer>
                 )}
               </Item>
             </Grid>

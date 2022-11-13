@@ -38,7 +38,7 @@ const ResponsiveAppBar = () => {
   };
 
   const handleCloseUserMenu = (value) => {
-    if (value === "/login") {
+    if (value == "/login") {
       sessionStorage.removeItem("_AT");
       localStorage.removeItem("_RT");
       localStorage.removeItem("user");

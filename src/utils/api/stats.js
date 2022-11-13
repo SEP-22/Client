@@ -1,8 +1,8 @@
 import baseApi from "./@baseURL";
 
-const gountofUsers = async (body) => {
+const getMaxCountsFoods = async (body) => {
   try {
-    const res = await baseApi.post("food/newFood", body);
+    const res = await baseApi.post("stats/maxcountfoodsinDP", body);
     if (res.headers["x-access-token"]) {
       sessionStorage.setItem("_AT", res.headers["x-access-token"]);
     }
@@ -11,6 +11,18 @@ const gountofUsers = async (body) => {
     console.log(error);
   }
 };
+
+const getCaloryPercentagebyCategory = async (body) => {
+    try {
+      const res = await baseApi.post("stats/calorypercentagebycateory", body);
+      if (res.headers["x-access-token"]) {
+        sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+      }
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 //get total count of users - Admin
 const getCountofUsers = async () => {
@@ -116,6 +128,8 @@ const getMostPrefferedFood = async () => {
   }
 };
 
+
+
 export {
   getCountofUsers,
   getCountofDiets,
@@ -125,4 +139,6 @@ export {
   countFoodsbyCategory,
   getMostPrefferedFood,
   getCountofDietPlans,
+  getMaxCountsFoods,
+  getCaloryPercentagebyCategory
 };
