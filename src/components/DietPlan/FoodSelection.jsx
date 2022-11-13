@@ -22,7 +22,13 @@ import { setPreferedFoods } from "../../utils/api/user";
 function FoodSelection() {
   const location = useLocation();
   const navigate = useNavigate();
-  const steps = location.state.steps;
+  const steps = [
+    "Fruits and Vegetables",
+    "Starchy food",
+    "Proteins",
+    "Dairy and Fats",
+    "Sugar",
+  ];
   const dietPlan_Id = location.state._id;
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -106,7 +112,7 @@ function FoodSelection() {
       console.log(res.data);
       navigate("/eatsmart/dietplanselection", {
         state: {
-          dietPlan_Id: dietPlan_Id
+          dietPlan_Id: dietPlan_Id,
         },
       });
     } else {

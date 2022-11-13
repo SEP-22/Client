@@ -20,7 +20,12 @@ import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import Checkbox from "@mui/material/Checkbox";
+import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded";
+import FoodBankRoundedIcon from "@mui/icons-material/FoodBankRounded";
+import { Typography } from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -52,7 +57,8 @@ export default function ManagePage() {
   const [gender, setGender] = useState("male");
   const [workingHours, setWorkingHours] = useState(WorkingHours[0]);
   const [dietaryIntention, setDietaryIntention] = useState(DietaryIntention[0]);
-  const nav = useNavigate();
+  const [selectFoods, setSelectFoods] = useState(false);
+  const navigate = useNavigate();
   const theme = useTheme();
 
   const { user, signUser } = useAuth();
@@ -75,7 +81,9 @@ export default function ManagePage() {
     );
   };
 
-
+  const handleSelectFoods = (event) => {
+    setSelectFoods(event.target.checked);
+  };
 
   useEffect(() => {
     const getActiveDietPlanDetails = async () => {
@@ -119,7 +127,7 @@ export default function ManagePage() {
         medConditions.push("Diabetics");
       }
       setMedConditions(medConditions);
-      setGender(currentUser.data.activeDietPlan.gender)
+      setGender(currentUser.data.activeDietPlan.gender);
     };
     getActiveDietPlanDetails();
   }, []);
@@ -214,96 +222,139 @@ export default function ManagePage() {
                 <Grid item xs={4}>
                   <p>Working Hours</p>
                 </Grid>
+
                 <Grid item xs={12}>
-                  <Select
-                    name="category"
-                    label="Category"
-                    value={workingHours}
-                    fullWidth
-                    onChange={handleworkingHoursChange}
-                    required
-                  >
-                    {WorkingHours.map((type) => (
-                      <MenuItem value={type} key={type}>
-                        {type}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  <FormControl sx={{ width: "100%" }}>
+                    {" "}
+                    <InputLabel id="demo-multiple-chip-label">
+                      Working Hours
+                    </InputLabel>
+                    <Select
+                      name="WorkingHours"
+                      label="Working Hours"
+                      value={workingHours}
+                      fullWidth
+                      input={
+                        <OutlinedInput
+                          id="select-multiple-chip"
+                          label="Working Hours"
+                          name="WorkingHours"
+                        />
+                      }
+                      onChange={handleworkingHoursChange}
+                      required
+                    >
+                      {WorkingHours.map((type) => (
+                        <MenuItem value={type} key={type}>
+                          {type}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
                 <Grid item xs={4}>
                   <p>Dietary Intention</p>
                 </Grid>
                 <Grid item xs={12}>
-                  <Select
-                    name="category"
-                    label="Select Dietary Intention"
-                    value={dietaryIntention}
-                    onChange={handleDietaryIntentionChange}
-                    fullWidth
-                    required
-                  >
-                    {DietaryIntention.map((type) => (
-                      <MenuItem value={type} key={type}>
-                        {type}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  <FormControl sx={{ width: "100%" }}>
+                    {" "}
+                    <InputLabel id="demo-multiple-chip-label">
+                      Dietary Intention
+                    </InputLabel>
+                    <Select
+                      name="category"
+                      label="Select Dietary Intention"
+                      value={dietaryIntention}
+                      onChange={handleDietaryIntentionChange}
+                      fullWidth
+                      required
+                    >
+                      {DietaryIntention.map((type) => (
+                        <MenuItem value={type} key={type}>
+                          {type}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
                 <Grid item xs={4}>
                   <p>Medical Conditions</p>
                 </Grid>
                 <Grid item xs={12}>
-                  <Select
-                    name="medConditions"
-                    multiple
-                    value={medConditions}
-                    fullWidth
-                    onChange={handleMedConditionChange}
-                    input={
-                      <OutlinedInput
-                        id="select-multiple-chip"
-                        label="Medical Conditions"
-                      />
-                    }
-                    renderValue={(selected) => (
-                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                        {selected.map((value) => (
-                          <Chip key={value} label={value} />
-                        ))}
-                      </Box>
-                    )}
-                    MenuProps={MenuProps}
-                  >
-                    {MedicalConditions.map((med) => (
-                      <MenuItem
-                        key={med}
-                        value={med}
-                        style={getStyles(med, MedicalConditions, theme)}
-                      >
-                        {med}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  <FormControl sx={{ width: "100%" }}>
+                    {" "}
+                    <InputLabel id="demo-multiple-chip-label">
+                      Medical Conditions
+                    </InputLabel>
+                    <Select
+                      name="medConditions"
+                      multiple
+                      value={medConditions}
+                      fullWidth
+                      onChange={handleMedConditionChange}
+                      input={
+                        <OutlinedInput
+                          id="select-multiple-chip"
+                          label="Medical Conditions"
+                        />
+                      }
+                      renderValue={(selected) => (
+                        <Box
+                          sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}
+                        >
+                          {selected.map((value) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
+                      MenuProps={MenuProps}
+                    >
+                      {MedicalConditions.map((med) => (
+                        <MenuItem
+                          key={med}
+                          value={med}
+                          style={getStyles(med, MedicalConditions, theme)}
+                        >
+                          {med}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
               </Grid>
             </Box>
-
+            <br></br>
+            <br></br>
+            <Grid>
+              <Grid item xs={12} align="center">
+                <FormControlLabel
+                  label="select food for Prefered Foods"
+                  control={
+                    <Checkbox
+                      checked={selectFoods}
+                      icon={<CheckBoxOutlineBlankRoundedIcon />}
+                      checkedIcon={<FoodBankRoundedIcon />}
+                      onChange={handleSelectFoods}
+                      inputProps={{ "aria-label": "controlled" }}
+                    />
+                  }
+                />
+                <br></br>
+              </Grid>
+            </Grid>
             <Button
               className="formItem"
               style={{ backgroundColor: "#F178B6", marginBottom: "3vh" }}
               variant="contained"
               type="submit"
               fullWidth
-              onClick={()=>{
-
-              }}
+              onClick={() => {}}
             >
               Update Diet Plan
             </Button>
           </form>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

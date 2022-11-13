@@ -204,23 +204,8 @@ export default function Quiz() {
         });
         if (res1.status === 200) {
           if (!activePlan) {
-            let id = 0;
-            if (data.bloodpressure || (data.bloodpressure && data.diabetics)) {
-              id = 1;
-            } else if (data.diabetics) {
-              id = 2;
-            } else if (data.cholesterol) {
-              id = 3;
-            } else if (
-              (data.bloodpressure && data.cholesterol) ||
-              (data.diabetics && data.cholesterol) ||
-              (data.bloodpressure && data.diabetics && data.cholesterol)
-            ) {
-              id = 4;
-            }
             navigate("/eatsmart/foodselection", {
               state: {
-                steps: getSteps(id),
                 _id: res.data._id,
               },
             });
@@ -231,23 +216,8 @@ export default function Quiz() {
               },
             });
           } else {
-            let id = 0;
-            if (data.bloodpressure || (data.bloodpressure && data.diabetics)) {
-              id = 1;
-            } else if (data.diabetics) {
-              id = 2;
-            } else if (data.cholesterol) {
-              id = 3;
-            } else if (
-              (data.bloodpressure && data.cholesterol) ||
-              (data.diabetics && data.cholesterol) ||
-              (data.bloodpressure && data.diabetics && data.cholesterol)
-            ) {
-              id = 4;
-            }
             navigate("/eatsmart/foodselection", {
               state: {
-                steps: getSteps(id),
                 _id: res.data._id,
               },
             });
