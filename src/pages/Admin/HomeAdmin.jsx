@@ -8,7 +8,16 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import CategoryChart from "../../components/Admin/CategoryChart";
-import { countFoodsbyCategory, getCountADPUsers, getCountofDietPlans, getCountofDiets, getCountofFoods, getCountofMDPUsers, getCountofUsers, getMostPrefferedFood } from "../../utils/api/stats";
+import {
+  countFoodsbyCategory,
+  getCountADPUsers,
+  getCountofDietPlans,
+  getCountofDiets,
+  getCountofFoods,
+  getCountofMDPUsers,
+  getCountofUsers,
+  getMostPrefferedFood,
+} from "../../utils/api/stats";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -26,8 +35,6 @@ const FavoriteFoods = [
   ["Ice cream", "/src/assets/images/foods/icecream.jpg", 250],
 ];
 
-
-
 const HomeAdmin = () => {
   const [totalUsers, setTotalUsers] = React.useState(0);
   const [totalFoods, setTotalFoods] = React.useState(0);
@@ -40,69 +47,94 @@ const HomeAdmin = () => {
 
   React.useEffect(() => {
     const getData = async () => {
-      const res1 = await (getCountofUsers());
-      const res2 = await (getCountofFoods());
-      const res3 = await (getCountADPUsers());
-      const res4 = await (getCountofMDPUsers());
-      const res5 = await (getCountofDiets());
-      const res6 = await (getCountofDietPlans());
-      const res7 = await (countFoodsbyCategory());
-      const res8 = await (getMostPrefferedFood());
+      const res1 = await getCountofUsers();
+      const res2 = await getCountofFoods();
+      const res3 = await getCountADPUsers();
+      const res4 = await getCountofMDPUsers();
+      const res5 = await getCountofDiets();
+      const res6 = await getCountofDietPlans();
+      const res7 = await countFoodsbyCategory();
+      const res8 = await getMostPrefferedFood();
       if (res1 && res1.status === 200) {
         const data = res1.data;
         setTotalUsers(data.count);
-      }else{
+      } else {
         setTotalUsers("..~error encounted~..");
       }
       if (res2 && res2.status === 200) {
         const data = res2.data;
         setTotalFoods(data.count);
-      }else{
+      } else {
         setTotalFoods("..~error encounted~..");
       }
       if (res3 && res3.status === 200) {
         const data = res3.data;
         setTotalUsersWithADP(data.count);
-      }else{
+      } else {
         setTotalUsersWithADP("..~error encounted~..");
       }
       if (res4 && res4.status === 200) {
         const data = res4.data;
         setTotalUsersWithMDP(data.count);
-      }else{
+      } else {
         setTotalUsersWithMDP("..~error encounted~..");
       }
       if (res5 && res5.status === 200) {
         const data = res5.data;
         setTotalDiets(data.count);
-      }else{
+      } else {
         setTotalDiets("..~error encounted~..");
       }
       if (res6 && res6.status === 200) {
         const data = res6.data;
         setTotalQuizes(data.count);
-      }else{
+      } else {
         setTotalQuizes("..~error encounted~..");
       }
       if (res7 && res7.status === 200) {
         const data = res7.data;
-        let arr = [["Category", "Total number of Foods"]]
-        data.forEach(ele => {
-          arr.push([ele._id, ele.count])
+        let arr = [["Category", "Total number of Foods"]];
+        data.forEach((ele) => {
+          arr.push([ele._id, ele.count]);
         });
-        console.log(arr)
         setFoodsByCategory(arr);
-      }else{
+      } else {
         setFoodsByCategory("..~error encounted~..");
       }
       if (res8 && res8.status === 200) {
         const data = res8.data;
-        setPreferedFoods(data);
-      }else{
+        console.log(data);
+        if (data.message.includes("[[")) {
+          let arr = data.message.split(']')
+          arr.pop(-1)
+          arr.pop(-1)
+          let fd = []
+          for (let i = 0; i < arr.length; i++) {
+            let temp
+            if (i > 0) {
+               temp = arr[i].slice(arr[i].indexOf(',')+1).split(',');        
+            }else{
+              temp = arr[i].split(','); 
+            }
+
+            let t = []
+            console.log(temp)
+            temp.forEach(e => {
+              t.push(e.slice(e.indexOf("'")+1, e.lastIndexOf("'")))
+            });
+            console.log(t)
+            fd.push(t)
+          }
+          setPreferedFoods(fd)
+        } else {
+          setPreferedFoods(data.message);         
+        }
+
+      } else {
         setPreferedFoods("..~error encounted~..");
       }
     };
-  
+
     getData();
   }, []);
 
@@ -129,7 +161,9 @@ const HomeAdmin = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
-                <Typography variant="h6">Total Number of Quizes taken</Typography>
+                <Typography variant="h6">
+                  Total Number of Quizes taken
+                </Typography>
                 <Typography color="primary" variant="h4" sx={{ m: 2 }}>
                   {totalQuizes}
                 </Typography>
@@ -168,24 +202,30 @@ const HomeAdmin = () => {
             <Grid item xs={12} md={6}>
               <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
-                  Most Favorite Foods by all users{" "}
+                  Total Number of Foods in each Category
                 </Typography>
-                <List sx={{paddingLeft: 10}}>
-                  {FavoriteFoods.map((food) => (
-                    <ListItem key={food[0]} sx={{paddingLeft: 10}}>
-                      <ListItemAvatar>
-                        <Avatar alt={food[0]} src={food[1]} />
-                      </ListItemAvatar>
-                      <ListItemText primary={food[0]} secondary={food[2]} />
-                    </ListItem>
-                  ))}
-                </List>
+                <CategoryChart data={foodsByCategory} />
               </Item>
             </Grid>
             <Grid item xs={12} md={6}>
               <Item sx={{ minHeight: 100, padding: 2, borderRadius: 5 }}>
-                <Typography variant="h6">Total Number of Foods in each Category</Typography>
-                <CategoryChart data={foodsByCategory}/>
+                <Typography variant="h6">
+                  Most Favorite Foods by all users{" "}
+                </Typography>
+                {typeof preferedFoods === "string" ? (
+                  <Typography> {preferedFoods} </Typography>
+                ) : (
+                  <List sx={{ paddingLeft: 10 }}>
+                    {preferedFoods.map((food) => (
+                      <ListItem key={food[0]} sx={{ paddingLeft: 10 }}>
+                        <ListItemAvatar>
+                          <Avatar alt={food[1]} src={food[2]} />
+                        </ListItemAvatar>
+                        <ListItemText primary={food[1]}/>
+                      </ListItem>
+                    ))}
+                  </List>
+                )}
               </Item>
             </Grid>
           </Grid>
