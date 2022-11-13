@@ -92,7 +92,7 @@ const ShoppingList = () => {
   for (let i = 0; i < completeDetailedList.length; i++) {
       // note: we are adding a key prop here to allow react to uniquely identify each
       // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
-      rows.push(<MenuItem value={i}>{`Diet Plan ${i+1}`}</MenuItem>);
+      rows.push(<MenuItem value={i}>{completeDetailedList[i][2]}</MenuItem>);
   }
   return (
     <>
