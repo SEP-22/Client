@@ -17,7 +17,7 @@ const DietPerDay = (props) => {
     const breakfastArr = details[0];
     const lunchArr = details[1];
     const dinnerArr = details[2];
-    console.log(breakfastArr)
+    //console.log(breakfastArr)
   return (
     <Box
       sx={{

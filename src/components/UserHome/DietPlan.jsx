@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Diet from "./Diet";
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { getWeeklyDietPlanActiveForHome } from "../../utils/api/dietPlan";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,7 +47,28 @@ function a11yProps(index) {
 export default function DietPlan() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const userId = JSON.parse(localStorage.getItem("user")).id;
+  const [isLoading, setIsLoading] = React.useState(true);
+  const[sevenDayArr,setSevenDayArr] = React.useState([]);
+  const[hasActive,setHasActive] = React.useState(true);
 
+  React.useEffect(() => {
+    const getData = async () => {
+      setIsLoading(true);
+      const res = await getWeeklyDietPlanActiveForHome(userId);
+      const data = res.data;
+      if(res.status == 200){
+        setSevenDayArr(data[0][2]);
+        setIsLoading(false);
+        setHasActive(true)
+      }else{
+        setHasActive(false)
+        setIsLoading(false);
+      }
+    };
+    getData();
+  },[])
+  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -64,7 +86,49 @@ export default function DietPlan() {
         ml:{md:15},
       }}
     >
-      <AppBar position="static">
+      {(!hasActive && !isLoading) && (
+        <>
+        <Box
+        sx={{
+            m: 2,
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "center",
+            margin: "1px",
+          }}
+      >
+        <Paper 
+        sx={{ mt: 4, mb: 4, p: 4, 
+          alignItems: "center" , 
+          display: "flex",
+          flexDirection: "column",
+          width:"50%"}}
+        >
+        <Grid item xs={12}>
+          <Button variant="contained" sx={{mb:4}} component={Link} to="/eatsmart/quiz">
+            Create a Diet Plan
+          </Button>
+        </Grid>
+          
+          <Typography
+          sx={{ fontWeight: "light" }}
+          variant="h6"
+          component="h4"
+          color="dark"
+          align="center"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vitae vehicula dui. Etiam consectetur porta tellus, vel porta leo scelerisque semper. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean in dapibus metus, in ultrices libero. Nulla vel placerat lectus, a commodo elit.
+          </Typography>
+          <br></br>
+          <br></br>
+        </Paper>
+          
+      </Box>
+        </>
+      )}
+      {!isLoading && (
+        <>
+        <AppBar position="static">
         <Tabs
           value={value}
           onChange={handleChange}
@@ -106,27 +170,29 @@ export default function DietPlan() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[0]}/>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[1]}/>
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[2]}/>
         </TabPanel>
         <TabPanel value={value} index={3} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[3]}/>
         </TabPanel>
         <TabPanel value={value} index={4} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[4]}/>
         </TabPanel>
         <TabPanel value={value} index={5} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[5]}/>
         </TabPanel>
         <TabPanel value={value} index={6} dir={theme.direction}>
-          <Diet />
+          <Diet details ={sevenDayArr[6]}/>
         </TabPanel>
       </SwipeableViews>
+        </>
+      )}
     </Box>
   );
 }

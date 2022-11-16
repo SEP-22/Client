@@ -113,6 +113,18 @@ const deleteDietPlan = async(id) => {
     console.log(error);
   }
 };
+const getWeeklyDietPlanActiveForHome = async(id) => {
+  try{
+    const res = await baseApi.get(`dietPlan/getWeeklyDietPlan/active/${id}`);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    console.log(res)
+    return res;
+  }catch (error) {
+    console.log(error);
+  }
+}
 
 
-export { getInputs, getActiveDietPlanDetails, generateDietPlan, saveDietPlans,getAllDietPlans,getDietPlansByUserId,getNonActivePlans,getActivePlans,deleteDietPlan };
+export { getInputs, getActiveDietPlanDetails, generateDietPlan, saveDietPlans,getAllDietPlans,getDietPlansByUserId,getNonActivePlans,getActivePlans,deleteDietPlan,getWeeklyDietPlanActiveForHome };
