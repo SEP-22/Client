@@ -11,6 +11,7 @@ import { getAllDietPlans } from "../../utils/api/dietPlan";
 import { ConnectedTvOutlined, Delete } from "@mui/icons-material";
 import { updateActiveDietPlan } from "../../utils/api/user";
 import ViewDiet from "./ViewDiet";
+import {deleteDietPlan} from "../../utils/api/dietPlan";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -51,6 +52,7 @@ const SingleDietPlan = (props) => {
   };
   const handleDelWindowChange = () => {
     //sendData({user_Id:_id,activePlan_Id:props.completeDet._id});
+    deleteData(props.completeDet._id);
     handleDelWindowClose();
     console.log("delwindow closed")
     window.location.reload(false);
@@ -70,6 +72,14 @@ const SingleDietPlan = (props) => {
       console.log(res.status);
     }
   };
+  const deleteData = async(data) => {
+    const res = await deleteDietPlan(data);
+    if(res.status == 200){
+      console.log(res.body);
+    }else{
+      console.log(res.status);
+    }
+  }
   return (
     <>
       <Box
