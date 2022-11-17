@@ -14,7 +14,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function FoodList({ Category, state }) {
+export default function FoodList({ Category, state, id }) {
   const [Vegetables_Fruits, setVegetablesFruits] = React.useState([]);
   const [StarchyFood, setStartchyFood] = React.useState([]);
   const [Proteins, setProteins] = React.useState([]);

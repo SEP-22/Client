@@ -27,6 +27,7 @@ import ErrorSharpIcon from "@mui/icons-material/ErrorSharp";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import CircularProgress from "@mui/material/CircularProgress";
 import FormLabel from "@mui/material/FormLabel";
+import { updateActiveDietPlanDetails } from "../../utils/api/dietPlan";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -93,6 +94,7 @@ export default function ManagePage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
 
     let diabetics = 0;
     let cholesterol = 0;
@@ -110,11 +112,33 @@ export default function ManagePage() {
 
     if (age !== null && height !== "" && weight !== "") {
       let d = age.toDate();
+      let activity = 
+        workingHours === "Very Light"
+          ? "verylight"
+          : workingHours === "Light"
+          ? "light"
+          : workingHours === "Moderate"
+          ? "moderate"
+          : workingHours === "Heavy"
+          ? "heavy"
+          : workingHours === "Very Heavy"
+          ? "veryheavy"
+          : ""
+
+      let intention = 
+        dietaryIntention === "Loose Weight"
+          ? "loose"
+          : dietaryIntention === "Maintain Weight"
+          ? "maintain"
+          : dietaryIntention === "Gain Weight"
+          ? "gain"
+          : ""
+
       const data = {
         dob: d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(),
         gender: gender,
-        activity: workingHours,
-        intention: dietaryIntention,
+        activity: activity,
+        intention: intention,
         height: height,
         weight: weight,
         diabetics: diabetics,
@@ -122,8 +146,33 @@ export default function ManagePage() {
         bloodpressure: bloodpressure,
         name: name,
       };
-      // sendData(data);
+      sendData(data);
       console.log(data);
+      console.log(activePlanID);
+    }
+  };
+
+  const sendData = async (data) => {
+    const res = await updateActiveDietPlanDetails(activePlanID, data);
+    if (res && res.status === 200) {
+      if (!selectFoods) {
+        navigate("/eatsmart/dietplanselection", {
+          state: {
+            dietPlan_Id: res.data._id,
+          },
+        });
+      } else {
+        navigate("/eatsmart/foodselection", {
+          state: {
+            _id: res.data._id,
+          },
+        });
+      }
+      setLoading(false);
+    } else {
+      setLoading(false);
+      setError(true);
+      console.log(res.status);
     }
   };
 
@@ -145,14 +194,14 @@ export default function ManagePage() {
             setAge(currentUser.data.activeDietPlan.dob);
             setWeight(currentUser.data.activeDietPlan.weight);
             setHeight(currentUser.data.activeDietPlan.height);
-            setName(currentUser.data.activeDietPlan.name)
+            setName(currentUser.data.activeDietPlan.name);
             setWorkingHours(
               currentUser.data.activeDietPlan.activity === "verylight"
                 ? "Very Light"
                 : currentUser.data.activeDietPlan.activity === "light"
                 ? "Light"
                 : currentUser.data.activeDietPlan.activity === "moderate"
-                ? "Mderate"
+                ? "Moderate"
                 : currentUser.data.activeDietPlan.activity === "heavy"
                 ? "Heavy"
                 : currentUser.data.activeDietPlan.activity === "veryheavy"
@@ -204,11 +253,13 @@ export default function ManagePage() {
       {activePlan && !loading && !error && (
         <div className="signUpContainer">
           <div className="signUpFormContainer">
-          <Typography gutterBottom mt={4} mb={4} variant="h6">Active Diet Plan Details</Typography>
+            <Typography gutterBottom mt={4} mb={4} variant="h6">
+              Active Diet Plan Details
+            </Typography>
             <form onSubmit={handleSubmit}>
-              <Box sx={{ flexGrow: 1, alignContent:"center" }}>
-                <Grid container spacing={2}  align="center">
-                <Grid item xs={12} align="center">
+              <Box sx={{ flexGrow: 1, alignContent: "center" }}>
+                <Grid container spacing={2} align="center">
+                  <Grid item xs={12} align="center">
                     <FormControl sx={{ width: "100%" }}>
                       <InputLabel htmlFor="component-outlined" required>
                         Name
@@ -239,14 +290,18 @@ export default function ManagePage() {
                           setAge(newValue);
                         }}
                         renderInput={(params) => (
-                          <TextField {...params} required sx={{ width: "100%" }}/>
+                          <TextField
+                            {...params}
+                            required
+                            sx={{ width: "100%" }}
+                          />
                         )}
                       />
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={12} align="center">
-                    <FormControl >
-                      <FormLabel id="gender-group-label" >Gender</FormLabel>
+                    <FormControl>
+                      <FormLabel id="gender-group-label">Gender</FormLabel>
                       <RadioGroup
                         aria-labelledby="gender-group-label"
                         defaultValue="female"

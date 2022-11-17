@@ -74,6 +74,7 @@ export default function GuideUserFoodList() {
     );
   };
 
+
   // const handleStateChange = (f_id,checked) => {
   //   setState({
   //     ...state,
@@ -205,9 +206,9 @@ export default function GuideUserFoodList() {
         </Box>
       )}
       {foodCategory.length === 0 ? (
-        <FoodListUser Category={Category} state={state} /* handleStateChange={handleStateChange} *//>
+        <FoodListUser Category={Category} state={state} id = {0}/* handleStateChange={handleStateChange} *//>
       ) : (
-        <FoodListUser Category={foodCategory} state={state} /* handleStateChange={handleStateChange} */ />
+        <FoodListUser Category={foodCategory} state={state} id = {1} /* handleStateChange={handleStateChange} */ />
       )}
       {/* {console.log(foodCategory)} */}
     </>

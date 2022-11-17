@@ -126,5 +126,17 @@ const getWeeklyDietPlanActiveForHome = async(id) => {
   }
 }
 
+const updateActiveDietPlanDetails = async (id, body) => {
+  try {
+    const res = await baseApi.post(`dietPlan/updateactiveplan/${id}`, body);
+    if (res.headers["x-access-token"]) {
+      sessionStorage.setItem("_AT", res.headers["x-access-token"]);
+    }
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-export { getInputs, getActiveDietPlanDetails, generateDietPlan, saveDietPlans,getAllDietPlans,getDietPlansByUserId,getNonActivePlans,getActivePlans,deleteDietPlan,getWeeklyDietPlanActiveForHome };
+
+export { getInputs, getActiveDietPlanDetails, generateDietPlan, saveDietPlans,getAllDietPlans, updateActiveDietPlanDetails,getDietPlansByUserId,getNonActivePlans,getActivePlans,deleteDietPlan,getWeeklyDietPlanActiveForHome };
