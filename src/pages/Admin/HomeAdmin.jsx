@@ -9,6 +9,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import CategoryChart from "../../components/Admin/CategoryChart";
 import TableContainer from "@mui/material/TableContainer";
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   countFoodsbyCategory,
   getCountADPUsers,
@@ -30,14 +31,15 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const HomeAdmin = () => {
-  const [totalUsers, setTotalUsers] = React.useState(0);
-  const [totalFoods, setTotalFoods] = React.useState(0);
-  const [totalUsersWithADP, setTotalUsersWithADP] = React.useState(0);
-  const [totalUsersWithMDP, setTotalUsersWithMDP] = React.useState(0);
-  const [totalDiets, setTotalDiets] = React.useState(0);
-  const [totalQuizes, setTotalQuizes] = React.useState(0);
-  const [foodsByCategory, setFoodsByCategory] = React.useState([]);
-  const [preferedFoods, setPreferedFoods] = React.useState([]);
+  const [totalUsers, setTotalUsers] = React.useState('loading...');
+  const [totalFoods, setTotalFoods] = React.useState('loading...');
+  const [totalUsersWithADP, setTotalUsersWithADP] = React.useState('loading...');
+  const [totalUsersWithMDP, setTotalUsersWithMDP] = React.useState('loading...');
+  const [totalDiets, setTotalDiets] = React.useState('loading...');
+  const [totalQuizes, setTotalQuizes] = React.useState('loading...');
+  const [foodsByCategory, setFoodsByCategory] = React.useState('loading...');
+  const [preferedFoods, setPreferedFoods] = React.useState('loading...');
+
 
   React.useEffect(() => {
     const getData = async () => {
@@ -127,18 +129,19 @@ const HomeAdmin = () => {
       } else {
         setPreferedFoods("..~error encounted~..");
       }
+
     };
 
     getData();
   }, []);
-
+  
   return (
     <>
       <Box sx={{ m: 5 }}>
         <Container>
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
-              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
+              <Item sx={{ height: {xs:"unset", md:120}, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">Total Number of Users</Typography>
                 <Typography color="primary" variant="h4" sx={{ m: 2 }}>
                   {totalUsers}
@@ -146,7 +149,7 @@ const HomeAdmin = () => {
               </Item>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
+              <Item sx={{ height: {xs:"unset", md:120}, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">Total Number of Foods</Typography>
                 <Typography color="primary" variant="h4" sx={{ m: 2 }}>
                   {totalFoods}
@@ -154,7 +157,7 @@ const HomeAdmin = () => {
               </Item>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
+              <Item sx={{ height: {xs:"unset", md:120}, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Total Number of Quizes taken
                 </Typography>
@@ -164,7 +167,7 @@ const HomeAdmin = () => {
               </Item>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
+              <Item sx={{ height: {xs:"unset", md:120}, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Total Number of Diet Plans created
                 </Typography>
@@ -174,7 +177,7 @@ const HomeAdmin = () => {
               </Item>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
+              <Item sx={{ height: {xs:"unset", md:120}, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Total Number of Users with a Active Diet Plan
                 </Typography>
@@ -184,7 +187,7 @@ const HomeAdmin = () => {
               </Item>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Item sx={{ height: 120, padding: 2, borderRadius: 5 }}>
+              <Item sx={{ height: {xs:"unset", md:120}, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Total Number of Users with Multiple Diet Plans
                 </Typography>
@@ -194,15 +197,20 @@ const HomeAdmin = () => {
               </Item>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Item sx={{ height: 320, padding: 2, borderRadius: 5 }}>
+              <Item sx={{ height: {xs:"unset", md:340}, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Total Number of Foods in each Category
                 </Typography>
-                <CategoryChart data={foodsByCategory} />
+                {typeof foodsByCategory === "string" ? (
+                  <Typography> {foodsByCategory} </Typography>
+                ) : (
+                  <CategoryChart data={foodsByCategory} />
+                )}
+
               </Item>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Item sx={{ height: 320, padding: 2, borderRadius: 5 }}>
+              <Item sx={{ height: {xs:"unset", md:340}, padding: 2, borderRadius: 5 }}>
                 <Typography variant="h6">
                   Most Favorite Foods by all users{" "}
                 </Typography>
@@ -210,7 +218,7 @@ const HomeAdmin = () => {
                   <Typography> {preferedFoods} </Typography>
                 ) : (
                   <TableContainer>
-                  <List sx={{ paddingLeft: 10 }}>
+                  <List sx={{ paddingLeft: {xs:"unset", md:10} }}>
                     {preferedFoods.map((food) => (
                       <ListItem key={food[0]} sx={{ paddingLeft: 10 }}>
                         <ListItemAvatar>
@@ -228,6 +236,8 @@ const HomeAdmin = () => {
         </Container>
       </Box>
     </>
+
+    
   );
 };
 

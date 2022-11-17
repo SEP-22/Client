@@ -75,7 +75,7 @@ export default function FoodList({ Category, state }) {
         justifyContent: "center",
       }}
     >
-      {!isLoading && (
+      {!isLoading && !error && (
         <Grid container spacing={2}>
           {Category.map((type) => (
             <>
