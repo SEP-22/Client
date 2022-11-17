@@ -12,7 +12,12 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const Diet = () => {
+const Diet = (props) => {
+  const details = props.details
+  console.log(details[0]);
+  const breakfastArr = details[0];
+  const lunchArr = details[1];
+  const dinnerArr = details[2];
   return (
     <Box
       sx={{
@@ -42,10 +47,13 @@ const Diet = () => {
           <Grid item xs={12} md={11}>
             <Item elevation={0} sx={{pt:0}}>
               <Grid container>
-                {Breakfast.map((food) => (
+                {breakfastArr.map((food) => (
                   <Grid item xs={12} md={2}>
                     <Item elevation={0} sx={{pt:0}}>
-                      <FoodCard foodItem={food} />
+                    <FoodCard foodItem={{Food: food[4],
+                                            Consume: food[2].substring(0,food[2].length - 4),
+                                            Calories: food[1].substring(0,food[1].length - 4),
+                                            Image: food[3],}} />
                     </Item>
                   </Grid>
                 ))}
@@ -72,10 +80,13 @@ const Diet = () => {
           <Grid item xs={12} md={11}>
             <Item elevation={0} sx={{pt:0}}>
               <Grid container>
-                {Lunch.map((food) => (
+                {lunchArr.map((food) => (
                   <Grid item xs={12} md={2}>
                     <Item elevation={0} sx={{pt:0}}>
-                      <FoodCard foodItem={food} />
+                    <FoodCard foodItem={{Food: food[4],
+                                            Consume: food[2].substring(0,food[2].length - 4),
+                                            Calories: food[1].substring(0,food[1].length - 4),
+                                            Image: food[3],}} />
                     </Item>
                   </Grid>
                 ))}
@@ -102,10 +113,13 @@ const Diet = () => {
           <Grid item xs={12} md={11}>
             <Item elevation={0} sx={{pt:0}}>
               <Grid container>
-                {Dinner.map((food) => (
+                {dinnerArr.map((food) => (
                   <Grid item xs={12} md={2}>
                     <Item elevation={0} sx={{pt:0}}>
-                      <FoodCard foodItem={food} />
+                    <FoodCard foodItem={{Food: food[4],
+                                            Consume: food[2].substring(0,food[2].length - 4),
+                                            Calories: food[1].substring(0,food[1].length - 4),
+                                            Image: food[3],}} />
                     </Item>
                   </Grid>
                 ))}
