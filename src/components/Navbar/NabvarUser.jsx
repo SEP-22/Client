@@ -28,7 +28,7 @@ const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    const { user, signUser } = useAuth();
+  const { user, signUser } = useAuth();
 
 
   const handleOpenNavMenu = (event) => {
@@ -166,7 +166,7 @@ const ResponsiveAppBar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="User" src="" />
+                  <Avatar alt="User" src="https://i.pinimg.com/564x/a6/58/32/a65832155622ac173337874f02b218fb--people-icon-avatar.jpg" />
                 </IconButton>
               </Tooltip>
               <Menu
