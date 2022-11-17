@@ -9,7 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import "./managePage.css";
+// import "./managePage.css";
 import { signUp, getUserByID, haveActiveDietPlan } from "../../utils/api/user";
 import useAuth from "../../utils/providers/AuthProvider";
 import { useTheme } from "@mui/material/styles";
@@ -19,12 +19,14 @@ import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
 import Checkbox from "@mui/material/Checkbox";
 import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded";
 import FoodBankRoundedIcon from "@mui/icons-material/FoodBankRounded";
 import ErrorSharpIcon from "@mui/icons-material/ErrorSharp";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import CircularProgress from "@mui/material/CircularProgress";
+import FormLabel from "@mui/material/FormLabel";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -50,6 +52,7 @@ const DietaryIntention = ["Loose Weight", "Maintain Weight", "Gain Weight"];
 
 export default function ManagePage() {
   const [activePlan, setActivePlan] = useState(null);
+  const [activePlanID, setActivePlanID] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [age, setAge] = useState(0);
@@ -60,6 +63,7 @@ export default function ManagePage() {
   const [workingHours, setWorkingHours] = useState(WorkingHours[0]);
   const [dietaryIntention, setDietaryIntention] = useState(DietaryIntention[0]);
   const [selectFoods, setSelectFoods] = useState(false);
+  const [name, setName] = useState("");
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -87,6 +91,42 @@ export default function ManagePage() {
     setSelectFoods(event.target.checked);
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    let diabetics = 0;
+    let cholesterol = 0;
+    let bloodpressure = 0;
+
+    medConditions.map((med) => {
+      if (med === "Diabetics") {
+        diabetics = 1;
+      } else if (med === "Cholesterol") {
+        cholesterol = 1;
+      } else if (med === "High Blood Pressure") {
+        bloodpressure = 1;
+      }
+    });
+
+    if (age !== null && height !== "" && weight !== "") {
+      let d = age.toDate();
+      const data = {
+        dob: d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(),
+        gender: gender,
+        activity: workingHours,
+        intention: dietaryIntention,
+        height: height,
+        weight: weight,
+        diabetics: diabetics,
+        cholesterol: cholesterol,
+        bloodpressure: bloodpressure,
+        name: name,
+      };
+      // sendData(data);
+      console.log(data);
+    }
+  };
+
   useEffect(() => {
     const getActiveDietPlanDetails = async () => {
       const res = await haveActiveDietPlan({ user_Id: user.id });
@@ -95,6 +135,7 @@ export default function ManagePage() {
         setError(false);
         const data = res.data;
         setActivePlan(data.active);
+        setActivePlanID(data.activePlan_Id);
 
         if (data.active) {
           const currentUser = await getUserByID(user.id);
@@ -104,6 +145,7 @@ export default function ManagePage() {
             setAge(currentUser.data.activeDietPlan.dob);
             setWeight(currentUser.data.activeDietPlan.weight);
             setHeight(currentUser.data.activeDietPlan.height);
+            setName(currentUser.data.activeDietPlan.name)
             setWorkingHours(
               currentUser.data.activeDietPlan.activity === "verylight"
                 ? "Very Light"
@@ -162,14 +204,30 @@ export default function ManagePage() {
       {activePlan && !loading && !error && (
         <div className="signUpContainer">
           <div className="signUpFormContainer">
-            <p className="signUpTitle">Active Diet Plan Details</p>
-            <form className="signUpFormContainer">
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2} columns={16}>
-                  <Grid item xs={4}>
-                    <p>Birthday</p>
+          <Typography gutterBottom mt={4} mb={4} variant="h6">Active Diet Plan Details</Typography>
+            <form onSubmit={handleSubmit}>
+              <Box sx={{ flexGrow: 1, alignContent:"center" }}>
+                <Grid container spacing={2}  align="center">
+                <Grid item xs={12} align="center">
+                    <FormControl sx={{ width: "100%" }}>
+                      <InputLabel htmlFor="component-outlined" required>
+                        Name
+                      </InputLabel>
+                      <OutlinedInput
+                        style={{ marginBottom: "3vh" }}
+                        id="outlined-basic"
+                        variant="outlined"
+                        label="name"
+                        fullWidth
+                        required
+                        value={name}
+                        onChange={(event) => {
+                          setName(event.target.value);
+                        }}
+                      />
+                    </FormControl>
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} align="center">
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         disableFuture
@@ -181,32 +239,14 @@ export default function ManagePage() {
                           setAge(newValue);
                         }}
                         renderInput={(params) => (
-                          <TextField {...params} required />
+                          <TextField {...params} required sx={{ width: "100%" }}/>
                         )}
                       />
                     </LocalizationProvider>
                   </Grid>
-                  <Grid item xs={4}>
-                    <p>Height</p>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      style={{ marginBottom: "3vh" }}
-                      id="outlined-basic"
-                      variant="outlined"
-                      fullWidth
-                      required
-                      value={height}
-                      onChange={(event) => {
-                        setHeight(event.target.value);
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <p>Gender</p>
-                  </Grid>
                   <Grid item xs={12} align="center">
-                    <FormControl>
+                    <FormControl >
+                      <FormLabel id="gender-group-label" >Gender</FormLabel>
                       <RadioGroup
                         aria-labelledby="gender-group-label"
                         defaultValue="female"
@@ -229,27 +269,54 @@ export default function ManagePage() {
                       </RadioGroup>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={4}>
-                    <p>Weight</p>
+                  <Grid item xs={12} align="center">
+                    <FormControl sx={{ width: "100%" }}>
+                      <InputLabel htmlFor="component-outlined" required>
+                        Height
+                      </InputLabel>
+                      <OutlinedInput
+                        style={{ marginBottom: "3vh" }}
+                        id="outlined-basic"
+                        variant="outlined"
+                        label="height"
+                        type="number"
+                        fullWidth
+                        required
+                        value={height}
+                        endAdornment={
+                          <InputAdornment position="end">cm</InputAdornment>
+                        }
+                        onChange={(event) => {
+                          setHeight(event.target.value);
+                        }}
+                      />
+                    </FormControl>
                   </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      style={{ marginBottom: "3vh" }}
-                      id="outlined-basic"
-                      variant="outlined"
-                      fullWidth
-                      required
-                      value={weight}
-                      onChange={(event) => {
-                        setWeight(event.target.value);
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <p>Working Hours</p>
+                  <Grid item xs={12} align="center">
+                    <FormControl sx={{ width: "100%" }}>
+                      <InputLabel htmlFor="component-outlined" required>
+                        Weight
+                      </InputLabel>
+                      <OutlinedInput
+                        style={{ marginBottom: "3vh" }}
+                        id="outlined-basic"
+                        variant="outlined"
+                        label="weight"
+                        fullWidth
+                        required
+                        value={weight}
+                        onChange={(event) => {
+                          setWeight(event.target.value);
+                        }}
+                        endAdornment={
+                          <InputAdornment position="end">kg</InputAdornment>
+                        }
+                        type="number"
+                      />
+                    </FormControl>
                   </Grid>
 
-                  <Grid item xs={12}>
+                  <Grid item xs={12} align="center">
                     <FormControl sx={{ width: "100%" }}>
                       {" "}
                       <InputLabel id="demo-multiple-chip-label">
@@ -278,10 +345,7 @@ export default function ManagePage() {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={4}>
-                    <p>Dietary Intention</p>
-                  </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} align="center">
                     <FormControl sx={{ width: "100%" }}>
                       {" "}
                       <InputLabel id="demo-multiple-chip-label">
@@ -289,7 +353,7 @@ export default function ManagePage() {
                       </InputLabel>
                       <Select
                         name="category"
-                        label="Select Dietary Intention"
+                        label="Dietary Intention"
                         value={dietaryIntention}
                         onChange={handleDietaryIntentionChange}
                         fullWidth
@@ -303,10 +367,7 @@ export default function ManagePage() {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={4}>
-                    <p>Medical Conditions</p>
-                  </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} align="center">
                     <FormControl sx={{ width: "100%" }}>
                       {" "}
                       <InputLabel id="demo-multiple-chip-label">
@@ -378,7 +439,7 @@ export default function ManagePage() {
                 variant="contained"
                 type="submit"
                 fullWidth
-                onClick={() => {}}
+                // onClick={() => {}}
               >
                 Update Diet Plan
               </Button>

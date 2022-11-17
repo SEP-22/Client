@@ -62,7 +62,7 @@ export default function Quiz() {
   const [makeActive, setMakeActive] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [selectFoods, setSelectFoods] = React.useState(false);
-  const [name,setName] = React.useState("");
+  const [name, setName] = React.useState("");
 
   const _id = JSON.parse(localStorage.getItem("user")).id;
   // const _id = "633601573507a646fb339d94"
@@ -187,10 +187,10 @@ export default function Quiz() {
         diabetics: diabetics,
         cholesterol: cholesterol,
         bloodpressure: bloodpressure,
-        name:name,
+        name: name,
       };
       sendData(data);
-      console.log("Name",name)
+      console.log("Name", name);
     }
   };
 
@@ -651,7 +651,7 @@ export default function Quiz() {
 
               <Grid item xs={12} align="center">
                 <FormControl>
-                <InputLabel htmlFor="component-outlined" required>
+                  <InputLabel htmlFor="component-outlined" required>
                     Name
                   </InputLabel>
                   <OutlinedInput
