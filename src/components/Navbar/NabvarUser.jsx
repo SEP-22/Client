@@ -127,7 +127,7 @@ const ResponsiveAppBar = () => {
             <Avatar
               sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
               alt="logo"
-              src="/src/assets/images/logo.png"
+              src="src/assets/images/logo.png"
             />
 
             <Typography

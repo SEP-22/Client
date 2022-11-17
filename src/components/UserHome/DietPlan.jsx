@@ -13,6 +13,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { getWeeklyDietPlanActiveForHome } from "../../utils/api/dietPlan";
 import { haveActiveDietPlan } from "../../utils/api/user";
 import ErrorSharpIcon from "@mui/icons-material/ErrorSharp";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,7 +61,7 @@ export default function DietPlan() {
     const getData = async () => {
       setIsLoading(true);
       const res0 = await haveActiveDietPlan({ user_Id: userId });
-      
+
       if (res0 && res0.status === 200) {
         const data0 = res0.data;
         setHasActive(data0.active);
@@ -76,7 +77,7 @@ export default function DietPlan() {
             setError(true);
             setIsLoading(false);
           }
-        }else{
+        } else {
           setError(false);
           setIsLoading(false);
         }
@@ -262,6 +263,40 @@ export default function DietPlan() {
                   />
                   <Typography ml={1} variant="body">
                     Something went WRONG......
+                  </Typography>
+                </Box>
+              </Grid>
+            </Paper>
+          </Grid>
+        </Box>
+      )}
+
+      {isLoading && (
+        <Box
+          mt={10}
+          sx={{
+            m: 2,
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Grid>
+            <Paper
+              sx={{
+                mt: 1,
+                mb: 1,
+                p: 4,
+                minWidth: { md: 400 },
+                borderRadius: 2,
+              }}
+            >
+              <Grid item xs={12} sx={{ justifyContent: "flex-start" }}>
+                <Box sx={{ alignContent: "flex-start", display: "flex" }}>
+                  <CircularProgress color="warning" size={20} />
+                  <Typography variant="button">
+                    &nbsp;&nbsp;Loading....{" "}
                   </Typography>
                 </Box>
               </Grid>

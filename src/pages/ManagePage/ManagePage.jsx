@@ -24,6 +24,7 @@ import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutline
 import FoodBankRoundedIcon from "@mui/icons-material/FoodBankRounded";
 import ErrorSharpIcon from "@mui/icons-material/ErrorSharp";
 import RateReviewIcon from "@mui/icons-material/RateReview";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -50,6 +51,7 @@ const DietaryIntention = ["Loose Weight", "Maintain Weight", "Gain Weight"];
 export default function ManagePage() {
   const [activePlan, setActivePlan] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [age, setAge] = useState(0);
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
@@ -137,16 +139,19 @@ export default function ManagePage() {
             }
             setMedConditions(medConditions);
             setGender(currentUser.data.activeDietPlan.gender);
+            setLoading(false);
           } else {
             setError(true);
             console.log(res);
           }
-        }else{
+        } else {
           setError(false);
+          setLoading(false);
         }
       } else {
         setError(true);
         console.log(res);
+        setLoading(false);
       }
     };
     getActiveDietPlanDetails();
@@ -154,236 +159,235 @@ export default function ManagePage() {
 
   return (
     <>
-      {activePlan &&
-        !error && (
-          <div className="signUpContainer">
-            <div className="signUpFormContainer">
-              <p className="signUpTitle">Active Diet Plan Details</p>
-              <form className="signUpFormContainer">
-                <Box sx={{ flexGrow: 1 }}>
-                  <Grid container spacing={2} columns={16}>
-                    <Grid item xs={4}>
-                      <p>Birthday</p>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          disableFuture
-                          label="Birthday"
-                          openTo="year"
-                          views={["year", "month", "day"]}
-                          value={age}
-                          onChange={(newValue) => {
-                            setAge(newValue);
-                          }}
-                          renderInput={(params) => (
-                            <TextField {...params} required />
-                          )}
-                        />
-                      </LocalizationProvider>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <p>Height</p>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        style={{ marginBottom: "3vh" }}
-                        id="outlined-basic"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        value={height}
-                        onChange={(event) => {
-                          setHeight(event.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <p>Gender</p>
-                    </Grid>
-                    <Grid item xs={12} align="center">
-                      <FormControl>
-                        <RadioGroup
-                          aria-labelledby="gender-group-label"
-                          defaultValue="female"
-                          name="gender-group"
-                          value={gender}
-                          onChange={(event) => {
-                            setGender(event.target.value);
-                          }}
-                        >
-                          <FormControlLabel
-                            value="female"
-                            control={<Radio />}
-                            label="Female"
-                          />
-                          <FormControlLabel
-                            value="male"
-                            control={<Radio />}
-                            label="Male"
-                          />
-                        </RadioGroup>
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <p>Weight</p>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        style={{ marginBottom: "3vh" }}
-                        id="outlined-basic"
-                        variant="outlined"
-                        fullWidth
-                        required
-                        value={weight}
-                        onChange={(event) => {
-                          setWeight(event.target.value);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <p>Working Hours</p>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <FormControl sx={{ width: "100%" }}>
-                        {" "}
-                        <InputLabel id="demo-multiple-chip-label">
-                          Working Hours
-                        </InputLabel>
-                        <Select
-                          name="WorkingHours"
-                          label="Working Hours"
-                          value={workingHours}
-                          fullWidth
-                          input={
-                            <OutlinedInput
-                              id="select-multiple-chip"
-                              label="Working Hours"
-                              name="WorkingHours"
-                            />
-                          }
-                          onChange={handleworkingHoursChange}
-                          required
-                        >
-                          {WorkingHours.map((type) => (
-                            <MenuItem value={type} key={type}>
-                              {type}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <p>Dietary Intention</p>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControl sx={{ width: "100%" }}>
-                        {" "}
-                        <InputLabel id="demo-multiple-chip-label">
-                          Dietary Intention
-                        </InputLabel>
-                        <Select
-                          name="category"
-                          label="Select Dietary Intention"
-                          value={dietaryIntention}
-                          onChange={handleDietaryIntentionChange}
-                          fullWidth
-                          required
-                        >
-                          {DietaryIntention.map((type) => (
-                            <MenuItem value={type} key={type}>
-                              {type}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <p>Medical Conditions</p>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControl sx={{ width: "100%" }}>
-                        {" "}
-                        <InputLabel id="demo-multiple-chip-label">
-                          Medical Conditions
-                        </InputLabel>
-                        <Select
-                          name="medConditions"
-                          multiple
-                          value={medConditions}
-                          fullWidth
-                          onChange={handleMedConditionChange}
-                          input={
-                            <OutlinedInput
-                              id="select-multiple-chip"
-                              label="Medical Conditions"
-                            />
-                          }
-                          renderValue={(selected) => (
-                            <Box
-                              sx={{
-                                display: "flex",
-                                flexWrap: "wrap",
-                                gap: 0.5,
-                              }}
-                            >
-                              {selected.map((value) => (
-                                <Chip key={value} label={value} />
-                              ))}
-                            </Box>
-                          )}
-                          MenuProps={MenuProps}
-                        >
-                          {MedicalConditions.map((med) => (
-                            <MenuItem
-                              key={med}
-                              value={med}
-                              style={getStyles(med, MedicalConditions, theme)}
-                            >
-                              {med}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Grid>
+      {activePlan && !loading && !error && (
+        <div className="signUpContainer">
+          <div className="signUpFormContainer">
+            <p className="signUpTitle">Active Diet Plan Details</p>
+            <form className="signUpFormContainer">
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2} columns={16}>
+                  <Grid item xs={4}>
+                    <p>Birthday</p>
                   </Grid>
-                </Box>
-                <br></br>
-                <br></br>
-                <Grid>
-                  <Grid item xs={12} align="center">
-                    <FormControlLabel
-                      label="select food for Prefered Foods"
-                      control={
-                        <Checkbox
-                          checked={selectFoods}
-                          icon={<CheckBoxOutlineBlankRoundedIcon />}
-                          checkedIcon={<FoodBankRoundedIcon />}
-                          onChange={handleSelectFoods}
-                          inputProps={{ "aria-label": "controlled" }}
-                        />
-                      }
+                  <Grid item xs={12}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker
+                        disableFuture
+                        label="Birthday"
+                        openTo="year"
+                        views={["year", "month", "day"]}
+                        value={age}
+                        onChange={(newValue) => {
+                          setAge(newValue);
+                        }}
+                        renderInput={(params) => (
+                          <TextField {...params} required />
+                        )}
+                      />
+                    </LocalizationProvider>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <p>Height</p>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      style={{ marginBottom: "3vh" }}
+                      id="outlined-basic"
+                      variant="outlined"
+                      fullWidth
+                      required
+                      value={height}
+                      onChange={(event) => {
+                        setHeight(event.target.value);
+                      }}
                     />
-                    <br></br>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <p>Gender</p>
+                  </Grid>
+                  <Grid item xs={12} align="center">
+                    <FormControl>
+                      <RadioGroup
+                        aria-labelledby="gender-group-label"
+                        defaultValue="female"
+                        name="gender-group"
+                        value={gender}
+                        onChange={(event) => {
+                          setGender(event.target.value);
+                        }}
+                      >
+                        <FormControlLabel
+                          value="female"
+                          control={<Radio />}
+                          label="Female"
+                        />
+                        <FormControlLabel
+                          value="male"
+                          control={<Radio />}
+                          label="Male"
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <p>Weight</p>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      style={{ marginBottom: "3vh" }}
+                      id="outlined-basic"
+                      variant="outlined"
+                      fullWidth
+                      required
+                      value={weight}
+                      onChange={(event) => {
+                        setWeight(event.target.value);
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <p>Working Hours</p>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <FormControl sx={{ width: "100%" }}>
+                      {" "}
+                      <InputLabel id="demo-multiple-chip-label">
+                        Working Hours
+                      </InputLabel>
+                      <Select
+                        name="WorkingHours"
+                        label="Working Hours"
+                        value={workingHours}
+                        fullWidth
+                        input={
+                          <OutlinedInput
+                            id="select-multiple-chip"
+                            label="Working Hours"
+                            name="WorkingHours"
+                          />
+                        }
+                        onChange={handleworkingHoursChange}
+                        required
+                      >
+                        {WorkingHours.map((type) => (
+                          <MenuItem value={type} key={type}>
+                            {type}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <p>Dietary Intention</p>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl sx={{ width: "100%" }}>
+                      {" "}
+                      <InputLabel id="demo-multiple-chip-label">
+                        Dietary Intention
+                      </InputLabel>
+                      <Select
+                        name="category"
+                        label="Select Dietary Intention"
+                        value={dietaryIntention}
+                        onChange={handleDietaryIntentionChange}
+                        fullWidth
+                        required
+                      >
+                        {DietaryIntention.map((type) => (
+                          <MenuItem value={type} key={type}>
+                            {type}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <p>Medical Conditions</p>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl sx={{ width: "100%" }}>
+                      {" "}
+                      <InputLabel id="demo-multiple-chip-label">
+                        Medical Conditions
+                      </InputLabel>
+                      <Select
+                        name="medConditions"
+                        multiple
+                        value={medConditions}
+                        fullWidth
+                        onChange={handleMedConditionChange}
+                        input={
+                          <OutlinedInput
+                            id="select-multiple-chip"
+                            label="Medical Conditions"
+                          />
+                        }
+                        renderValue={(selected) => (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexWrap: "wrap",
+                              gap: 0.5,
+                            }}
+                          >
+                            {selected.map((value) => (
+                              <Chip key={value} label={value} />
+                            ))}
+                          </Box>
+                        )}
+                        MenuProps={MenuProps}
+                      >
+                        {MedicalConditions.map((med) => (
+                          <MenuItem
+                            key={med}
+                            value={med}
+                            style={getStyles(med, MedicalConditions, theme)}
+                          >
+                            {med}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
                   </Grid>
                 </Grid>
-                <Button
-                  className="formItem"
-                  style={{ backgroundColor: "#F178B6", marginBottom: "3vh" }}
-                  variant="contained"
-                  type="submit"
-                  fullWidth
-                  onClick={() => {}}
-                >
-                  Update Diet Plan
-                </Button>
-              </form>
-            </div>
+              </Box>
+              <br></br>
+              <br></br>
+              <Grid>
+                <Grid item xs={12} align="center">
+                  <FormControlLabel
+                    label="select food for Prefered Foods"
+                    control={
+                      <Checkbox
+                        checked={selectFoods}
+                        icon={<CheckBoxOutlineBlankRoundedIcon />}
+                        checkedIcon={<FoodBankRoundedIcon />}
+                        onChange={handleSelectFoods}
+                        inputProps={{ "aria-label": "controlled" }}
+                      />
+                    }
+                  />
+                  <br></br>
+                </Grid>
+              </Grid>
+              <Button
+                className="formItem"
+                style={{ backgroundColor: "#F178B6", marginBottom: "3vh" }}
+                variant="contained"
+                type="submit"
+                fullWidth
+                onClick={() => {}}
+              >
+                Update Diet Plan
+              </Button>
+            </form>
           </div>
-        )}
+        </div>
+      )}
 
-      {!activePlan && !error && (
+      {!activePlan && !loading && !error && (
         <Box
           mt={10}
           sx={{
@@ -425,7 +429,7 @@ export default function ManagePage() {
         </Box>
       )}
 
-      {error && (
+      {error && !loading && (
         <Box
           mt={10}
           sx={{
@@ -458,6 +462,40 @@ export default function ManagePage() {
                   />
                   <Typography ml={1} variant="body">
                     Something went WRONG......
+                  </Typography>
+                </Box>
+              </Grid>
+            </Paper>
+          </Grid>
+        </Box>
+      )}
+
+      {loading && (
+        <Box
+          mt={10}
+          sx={{
+            m: 2,
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Grid>
+            <Paper
+              sx={{
+                mt: 1,
+                mb: 1,
+                p: 4,
+                minWidth: { md: 400 },
+                borderRadius: 2,
+              }}
+            >
+              <Grid item xs={12} sx={{ justifyContent: "flex-start" }}>
+                <Box sx={{ alignContent: "flex-start", display: "flex" }}>
+                  <CircularProgress color="warning" size={20} />
+                  <Typography variant="button">
+                    &nbsp;&nbsp;Loading....{" "}
                   </Typography>
                 </Box>
               </Grid>
