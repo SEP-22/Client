@@ -15,6 +15,7 @@ const HomeUser = () => {
     <Box>
         <DietPlan/>
         <StatsMain/>
+        <Reminder/>
 
     </Box>
   </>
