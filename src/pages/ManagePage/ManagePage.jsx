@@ -141,6 +141,8 @@ export default function ManagePage() {
             setError(true);
             console.log(res);
           }
+        }else{
+          setError(false);
         }
       } else {
         setError(true);
@@ -148,12 +150,12 @@ export default function ManagePage() {
       }
     };
     getActiveDietPlanDetails();
-  }, []);
+  }, [user.id]);
 
   return (
     <>
       {activePlan &&
-        !error(
+        !error && (
           <div className="signUpContainer">
             <div className="signUpFormContainer">
               <p className="signUpTitle">Active Diet Plan Details</p>

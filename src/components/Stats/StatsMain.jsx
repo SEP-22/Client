@@ -39,7 +39,6 @@ const StatsMain = () => {
     const getData = async () => {
       const res = await haveActiveDietPlan({ user_Id: _id });
       if (res && res.status === 200) {
-        setError(false);
         const data = res.data;
         setActivePlan(data.active);
 

@@ -107,10 +107,10 @@ export default function FoodCard(props) {
     <ReactCardFlip isFlipped={Flipped} flipDirection="vertical">
       <Card
         sx={{
-          maxWidth: "30vw",
           display: "flex",
           flexDirection: "column",
           m: 2,
+          height:{xs:"unset", md:500},
         }}
       >
         <CardMedia
@@ -118,6 +118,7 @@ export default function FoodCard(props) {
           component="img"
           alt={FoodItem.Food}
           width="100%"
+          height="80%"
           image={FoodItem.image}
           loading="lazy"
         />
