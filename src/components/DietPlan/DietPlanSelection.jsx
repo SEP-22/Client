@@ -66,7 +66,7 @@ export default function DietPlanSelection() {
           let i3 = element.indexOf("breakfast") + 12;
           let i4 = element.indexOf("lunch") + 8;
           let i5 = element.indexOf("dinner")+10;
-          console.log(i1, i2, i3, i4, i5);
+          
           let dp = element.slice(i1, i2);
           let i = element.slice(i2, i3);
           let br = element.slice(i3, i4).split("],");
@@ -125,11 +125,13 @@ export default function DietPlanSelection() {
           dietPlan.push(obj);
         });
         setDietPlan(dietPlan);
-        console.log(dietPlan);
+        setIsLoading(false);
+        setError();
+      }else{
+        setError("Something went Wrong");
         setIsLoading(false);
       }
-      setError("Something went Wrong");
-      setIsLoading(false);
+
     };
 
     getData();
@@ -154,11 +156,9 @@ export default function DietPlanSelection() {
   };
 
   const sendData = async (data) => {
-    console.log(data)
     const res = await saveDietPlans(data);
     const res2 = await createAndSaveShoppingList(data);
     if (res.status === 200) {
-      console.log(res.data);
       if(res2.status === 200){
         navigate("/eatsmart/dietplans", {
           state: {
