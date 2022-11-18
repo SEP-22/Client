@@ -8,12 +8,10 @@ import { editUserName } from '../../utils/api/user';
 const EditName = () => {
 
   const navigate = useNavigate();
-
-  const[profileDet , setProfileDet] = React.useState({});
-  //const _id = "6335d3657e7aaea82d5e3650"
   const _id = JSON.parse(localStorage.getItem("user")).id;
+  const[profileDet , setProfileDet] = React.useState({});
   const[newName,setNewName] = React.useState('')
-  //const[newName,setNewName] = React.useState(profileDet.name)
+  const [error, setError] = React.useState("");
 
   React.useEffect(() =>{
     const getData = async() => {
@@ -30,22 +28,17 @@ const EditName = () => {
 
   const handleChange = (event) => {
     setNewName(event.target.value)
-    //console.log(event.target.value)
   }
 
   const handleSubmit = (event) =>{
     event.preventDefault();
-
-    // sendData({
-    //   userId : _id,
-    //   name: newName,
-    // });
-
-    console.log(newName)
-    if(newName.trim() != "") {
-      //update the name in db
-      //const data = ({userId:_id,name:newName});
-      //editUserProfile(data.json());
+    if(newName == ""){
+      setError("Name cannot be empty!");
+    }
+    else if(newName.trim() == ""){
+      setError("Name cannot be empty!");
+    }
+    else {
       sendData({
         userId : _id,
         name: newName,
@@ -104,6 +97,7 @@ const EditName = () => {
                     onChange={handleChange}
                     />
                 </FormControl>
+                {error !== "" ? <p style={{ color: "red" }}>{error}</p> : <p></p>}
             </Box>
             <br></br>
             <br></br>
@@ -115,6 +109,7 @@ const EditName = () => {
                 justifyContent: "space-between",
               }}
             >
+             
               <Button
                 variant="outlined"
                 color="secondary"

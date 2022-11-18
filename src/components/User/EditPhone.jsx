@@ -8,12 +8,12 @@ import { editUserPhone } from '../../utils/api/user';
 const EditPhone = () => {
 
     const navigate = useNavigate();
-
-    const[profileDet , setProfileDet] = React.useState({});
-    //const _id = "6335d3657e7aaea82d5e3650"
     const _id = JSON.parse(localStorage.getItem("user")).id;
-    const[newPhone,setNewPhone] = React.useState('')
-    //const[newName,setNewName] = React.useState(profileDet.name)
+    const[profileDet , setProfileDet] = React.useState({});
+    const[newPhone,setNewPhone] = React.useState('');
+    const [error, setError] = React.useState("");
+
+    const reContact = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
   
     React.useEffect(() =>{
       const getData = async() => {
@@ -30,29 +30,23 @@ const EditPhone = () => {
   
     const handleChange = (event) => {
       setNewPhone(event.target.value)
-      //console.log(event.target.value)
     }
   
     const handleSubmit = (event) =>{
       event.preventDefault();
-  
-      // sendData({
-      //   userId : _id,
-      //   name: newName,
-      // });
-  
-      console.log(newPhone)
-      if(newPhone.trim() != "") {
-        //update the name in db
-        //const data = ({userId:_id,name:newName});
-        //editUserProfile(data.json());
+      if(newPhone == "" || newPhone.trim()==""){
+        setError("The phone number cannot be empty!")
+      }
+      else if(!reContact.test(newPhone)){
+        setError("Please enter a valid phone number!");
+      }
+      else{
         sendData({
           userId : _id,
           phone: newPhone,
         });
         navigate("/eatsmart/profile");
       }
-      //notify that name cannot be empty
     };
   
     const sendData = async (data) => {
@@ -96,13 +90,13 @@ const EditPhone = () => {
                   <OutlinedInput
                     name='phonenumber'
                     label="Phonenumber"
+                    pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                     required
-                    //value={"0762878555"}
                     defaultValue={profileDet.phone}
-                    //value={profileDet.name}
                     onChange={handleChange}
                     />
                 </FormControl>
+                {error !== "" ? <p style={{ color: "red" }}>{error}</p> : <p></p>}
             </Box>
             <br></br>
             <br></br>
