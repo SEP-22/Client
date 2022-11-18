@@ -11,7 +11,7 @@ import { Chart } from "react-google-charts";
 export const options = {
   chartArea:{left:20,top:40,width:'100%',height:'75%'},
   fontName:"Roboto",
-  colors:['#ba68c8','#ef5350', "#4fc3f7", "#9ccc65","#ffc107" ,],
+  colors:['#ba68c8','#ef5350', "#4fc3f7", "#9ccc65","#ffc107","#ff80ab",],
 };
 
 const CategoryChart = ({data}) => {
