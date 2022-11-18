@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://localhost:4000/";
+const url = "https://eat-smart.onrender.com/";
 //const url ="http://localhost:5000/"
 let baseApi = "/";
 const refreshToken = localStorage.getItem("_RT");
