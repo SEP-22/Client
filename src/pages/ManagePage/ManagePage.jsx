@@ -110,8 +110,9 @@ export default function ManagePage() {
       }
     });
 
+
     if (age !== null && height !== "" && weight !== "") {
-      let d = age.toDate();
+      let d = age.includes('-') ? age : age.toDate();
       let activity = 
         workingHours === "Very Light"
           ? "verylight"
@@ -135,7 +136,7 @@ export default function ManagePage() {
           : ""
 
       const data = {
-        dob: d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(),
+        dob: d.includes('-') ? d : d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(),
         gender: gender,
         activity: activity,
         intention: intention,

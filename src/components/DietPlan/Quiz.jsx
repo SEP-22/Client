@@ -80,46 +80,6 @@ export default function Quiz() {
     getData();
   }, [_id]);
 
-  function getSteps(id) {
-    let temp = [];
-    switch (id) {
-      case 0:
-        temp = [
-          "Fruits and Vegetables",
-          "Starchy food",
-          "Proteins",
-          "Dairy and Fats",
-          "Sugar",
-        ];
-        break;
-
-      case 1:
-        temp = ["Fruits and Vegetables", "Starchy food", "Proteins"];
-        break;
-
-      case 2:
-        temp = [
-          "Fruits and Vegetables",
-          "Starchy food",
-          "Proteins",
-          "Dairy and Fats",
-        ];
-        break;
-
-      case 3:
-        temp = ["Fruits and Vegetables", "Starchy food", "Sugar"];
-        break;
-
-      case 4:
-        temp = ["Fruits and Vegetables", "Starchy food"];
-        break;
-
-      default:
-        break;
-    }
-    return temp;
-  }
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -224,23 +184,8 @@ export default function Quiz() {
           }
         }
       } else if (selectFoods) {
-        let id = 0;
-        if (data.bloodpressure || (data.bloodpressure && data.diabetics)) {
-          id = 1;
-        } else if (data.diabetics) {
-          id = 2;
-        } else if (data.cholesterol) {
-          id = 3;
-        } else if (
-          (data.bloodpressure && data.cholesterol) ||
-          (data.diabetics && data.cholesterol) ||
-          (data.bloodpressure && data.diabetics && data.cholesterol)
-        ) {
-          id = 4;
-        }
         navigate("/eatsmart/foodselection", {
           state: {
-            steps: getSteps(id),
             _id: res.data._id,
           },
         });

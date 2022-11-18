@@ -35,11 +35,12 @@ const MenuProps = {
 };
 
 const Category = [
-  "Fruits and Vegetables",
+  "Vegetables",
+  "Fruits",
   "Starchy food",
   "Proteins",
-  "Dairy and Fats",
-  "Sugar",
+  "Dairy",
+  "Fats and Sugar",
 ];
 
 function getStyles(name, foodCategory, theme) {

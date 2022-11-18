@@ -81,7 +81,7 @@ export default function DietPlanSelection() {
             let t4 = e.indexOf(",", t3 + 1);
             b.push([
               e.slice(e.indexOf("'") + 1, t1 - 1),
-              e.slice(t1 + 3, e.indexOf("cal") + 3),
+              e.slice(t1 + 3, e.indexOf("kcal") + 4),
               e.slice(t2 + 3, e.indexOf("g") + 1),
               e.slice(t3 + 3, t4 - 1),
               e.slice(t4 + 3, e.lastIndexOf("'")),
@@ -96,7 +96,7 @@ export default function DietPlanSelection() {
             let t4 = e.indexOf(",", t3 + 1);
             l.push([
               e.slice(e.indexOf("'") + 1, t1 - 1),
-              e.slice(t1 + 3, e.indexOf("cal") + 3),
+              e.slice(t1 + 3, e.indexOf("kcal") + 4),
               e.slice(t2 + 3, e.indexOf("g") + 1),
               e.slice(t3 + 3, t4 - 1),
               e.slice(t4 + 3, e.lastIndexOf("'")),
@@ -111,7 +111,7 @@ export default function DietPlanSelection() {
             let t4 = e.indexOf(",", t3 + 1);
             d.push([
               e.slice(e.indexOf("'") + 1, t1 - 1),
-              e.slice(t1 + 3, e.indexOf("cal") + 3),
+              e.slice(t1 + 3, e.indexOf("kcal") + 4),
               e.slice(t2 + 3, e.indexOf("g") + 1),
               e.slice(t3 + 3, t4 - 1),
               e.slice(t4 + 3, e.lastIndexOf("'")),

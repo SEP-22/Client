@@ -186,13 +186,17 @@ describe("Renders home page", () => {
         
         
         
-        cy.contains('Dairy and Fats')
+        cy.contains('Dairy')
         
         cy.contains('Starchy food')
         
     })
-    it('has fruits and vegetables foods',() => {
-        cy.contains('Fruits and Vegetables')
+    it('has fruits ',() => {
+        cy.contains('Fruits')
+        cy.contains('Apple')
+    })
+    it('hasvegetables foods',() => {
+        cy.contains('Vegetables')
         cy.contains('Beet')
     })
     it('has Starchy food',() => {
@@ -203,12 +207,12 @@ describe("Renders home page", () => {
         cy.contains('Proteins')
         cy.contains('Chicken')
     })
-    it('has Dairy and Fats food',() => {
-        cy.contains('Dairy and Fats')
+    it('has Dairy food',() => {
+        cy.contains('Dairy')
         cy.contains('Egg')
     })
-    it('has Sugar food',() => {
-        cy.contains('Sugar')
+    it('has Fats and Sugar food',() => {
+        cy.contains('Fats and Sugar')
         cy.contains('Chocolate')
     })
     it('has filter food by category',() => {

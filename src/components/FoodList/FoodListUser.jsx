@@ -15,11 +15,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function FoodList({ Category, state, id }) {
-  const [Vegetables_Fruits, setVegetablesFruits] = React.useState([]);
+  const [Vegetables, setVegetables] = React.useState([]);
+  const [Fruits, setFruits] = React.useState([]);
   const [StarchyFood, setStartchyFood] = React.useState([]);
   const [Proteins, setProteins] = React.useState([]);
-  const [Dairy_Fat, setDairyFat] = React.useState([]);
-  const [Sugar, setSugar] = React.useState([]);
+  const [Dairy, setDairy] = React.useState([]);
+  const [Fat_Sugar, setFat_Sugar] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
 
@@ -35,11 +36,12 @@ export default function FoodList({ Category, state, id }) {
       if (res && res.status === 200) {
         setError(false);
         const data = res.data;
-        setVegetablesFruits(data.Vegetables_Fruits);
+        setVegetables(data.Vegetables);
+        setFruits(data.Fruits);
         setStartchyFood(data.StarchyFood);
-        setDairyFat(data.Dairy_Fat);
+        setDairy(data.Dairy);
         setProteins(data.Proteins);
-        setSugar(data.Sugar);
+        setFat_Sugar(data.Fat_Sugar);
         setIsLoading(false);
       } else {
         setIsLoading(false);
@@ -51,16 +53,18 @@ export default function FoodList({ Category, state, id }) {
   }, []);
 
   function getArray(name) {
-    if (name === "Fruits and Vegetables") {
-      return Vegetables_Fruits;
+    if (name === "Vegetables") {
+      return Vegetables;
+    } else if (name === "Fruits") {
+      return Fruits;
     } else if (name === "Starchy food") {
       return StarchyFood;
     } else if (name === "Proteins") {
       return Proteins;
-    } else if (name === "Dairy and Fats") {
-      return Dairy_Fat;
-    } else if (name === "Sugar") {
-      return Sugar;
+    } else if (name === "Dairy") {
+      return Dairy;
+    } else if (name === "Fats and Sugar") {
+      return Fat_Sugar;
     } else {
       return [];
     }
