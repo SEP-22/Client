@@ -96,30 +96,6 @@ export default function ManagePage() {
     event.preventDefault();
     setLoading(true);
 
-    useEffect(() => {
-      const getActiveDietPlanDetails = async () => {
-        console.log(user);
-        const currentUser = await getUserByID(user.id);
-        console.log(currentUser.data.activeDietPlan);
-        setAge(currentUser.data.activeDietPlan.dob);
-        setWeight(currentUser.data.activeDietPlan.weight);
-        setHeight(currentUser.data.activeDietPlan.height);
-        setWorkingHours(
-          currentUser.data.activeDietPlan.activity == "verylight"
-            ? "Very Light"
-            : currentUser.data.activeDietPlan.activity == "light"
-            ? "Light"
-            : currentUser.data.activeDietPlan.activity == "moderate"
-            ? "Moderate"
-            : currentUser.data.activeDietPlan.activity == "heavy"
-            ? "Heavy"
-            : currentUser.data.activeDietPlan.activity == "veryheavy"
-            ? "Very Heavy"
-            : ""
-        );
-      };
-    });
-
     let diabetics = 0;
     let cholesterol = 0;
     let bloodpressure = 0;
@@ -135,8 +111,8 @@ export default function ManagePage() {
     });
 
     if (age !== null && height !== "" && weight !== "") {
-      let d = age.includes("-") ? age : age.toDate();
-      let activity =
+      let d = age.toDate();
+      let activity = 
         workingHours === "Very Light"
           ? "verylight"
           : workingHours === "Light"
@@ -147,21 +123,19 @@ export default function ManagePage() {
           ? "heavy"
           : workingHours === "Very Heavy"
           ? "veryheavy"
-          : "";
+          : ""
 
-      let intention =
+      let intention = 
         dietaryIntention === "Loose Weight"
           ? "loose"
           : dietaryIntention === "Maintain Weight"
           ? "maintain"
           : dietaryIntention === "Gain Weight"
           ? "gain"
-          : "";
+          : ""
 
       const data = {
-        dob: d.includes("-")
-          ? d
-          : d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(),
+        dob: d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(),
         gender: gender,
         activity: activity,
         intention: intention,
@@ -172,11 +146,13 @@ export default function ManagePage() {
         bloodpressure: bloodpressure,
         name: name,
       };
+      // sendData(data);
       sendData(data);
       console.log(data);
       console.log(activePlanID);
     }
   };
+
 
   const sendData = async (data) => {
     const res = await updateActiveDietPlanDetails(activePlanID, data);
@@ -201,6 +177,9 @@ export default function ManagePage() {
       console.log(res.status);
     }
   };
+
+
+
 
   useEffect(() => {
     const getActiveDietPlanDetails = async () => {
