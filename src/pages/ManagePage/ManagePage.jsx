@@ -91,7 +91,7 @@ export default function ManagePage() {
           : currentUser.data.activeDietPlan.activity == "light"
           ? "Light"
           : currentUser.data.activeDietPlan.activity == "moderate"
-          ? "Mderate"
+          ? "Moderate"
           : currentUser.data.activeDietPlan.activity == "heavy"
           ? "Heavy"
           : currentUser.data.activeDietPlan.activity == "veryheavy"
