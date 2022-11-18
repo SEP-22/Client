@@ -23,6 +23,7 @@ import { useTheme } from "@mui/material/styles";
 import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { haveActiveDietPlan, updateActiveDietPlan } from "../../utils/api/user";
+import FoodBankRoundedIcon from "@mui/icons-material/FoodBankRounded";
 
 function getStyles(name, medicalConditions, theme) {
   return {
@@ -59,6 +60,9 @@ export default function Quiz() {
   const [medConditions, setMedConditions] = React.useState([]);
   const [activePlan, setActivePlan] = React.useState(null);
   const [makeActive, setMakeActive] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [selectFoods, setSelectFoods] = React.useState(false);
+  const [name, setName] = React.useState("");
 
   const _id = JSON.parse(localStorage.getItem("user")).id;
   // const _id = "633601573507a646fb339d94"
@@ -76,45 +80,13 @@ export default function Quiz() {
     getData();
   }, [_id]);
 
-  function getSteps(id) {
-    let temp = [];
-    switch (id) {
-      case 0:
-        temp = [
-          "Fruits and Vegetables",
-          "Starchy food",
-          "Proteins",
-          "Dairy and Fats",
-          "Sugar",
-        ];
-        break;
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-      case 1:
-        temp = ["Fruits and Vegetables", "Starchy food", "Proteins"];
-        break;
-
-      case 2:
-        temp = [
-          "Fruits and Vegetables",
-          "Starchy food",
-          "Proteins",
-          "Dairy and Fats",
-        ];
-        break;
-
-      case 3:
-        temp = ["Fruits and Vegetables", "Starchy food", "Sugar"];
-        break;
-
-      case 4:
-        temp = ["Fruits and Vegetables", "Starchy food"];
-        break;
-
-      default:
-        break;
-    }
-    return temp;
-  }
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleGenderChange = (event) => {
     setGender(event.target.value);
@@ -142,6 +114,9 @@ export default function Quiz() {
     setMakeActive(event.target.checked);
   };
 
+  const handleSelectFoods = (event) => {
+    setSelectFoods(event.target.checked);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -172,8 +147,10 @@ export default function Quiz() {
         diabetics: diabetics,
         cholesterol: cholesterol,
         bloodpressure: bloodpressure,
+        name: name,
       };
       sendData(data);
+      console.log("Name", name);
     }
   };
 
@@ -187,34 +164,37 @@ export default function Quiz() {
         });
         if (res1.status === 200) {
           if (!activePlan) {
-            let id = 0;
-            if (data.bloodpressure || (data.bloodpressure && data.diabetics)) {
-              id = 1;
-            } else if (data.diabetics) {
-              id = 2;
-            } else if (data.cholesterol) {
-              id = 3;
-            } else if (
-              (data.bloodpressure && data.cholesterol) ||
-              (data.diabetics && data.cholesterol) ||
-              (data.bloodpressure && data.diabetics && data.cholesterol)
-            ) {
-              id = 4;
-            }
             navigate("/eatsmart/foodselection", {
               state: {
-                steps: getSteps(id),
                 _id: res.data._id,
               },
             });
-          } else {
+          } else if (!selectFoods) {
             navigate("/eatsmart/dietplanselection", {
               state: {
                 dietPlan_Id: res.data._id,
               },
             });
+          } else {
+            navigate("/eatsmart/foodselection", {
+              state: {
+                _id: res.data._id,
+              },
+            });
           }
         }
+      } else if (selectFoods) {
+        navigate("/eatsmart/foodselection", {
+          state: {
+            _id: res.data._id,
+          },
+        });
+      } else {
+        navigate("/eatsmart/dietplanselection", {
+          state: {
+            dietPlan_Id: res.data._id,
+          },
+        });
       }
     } else {
       console.log(res.status);
@@ -593,6 +573,44 @@ export default function Quiz() {
               </Grid>
             </Paper>
           </Grid>
+          <Grid>
+            <Paper
+              sx={{
+                mt: 1,
+                mb: 1,
+                p: 4,
+                minWidth: { md: 400 },
+                borderRadius: 10,
+              }}
+            >
+              <Grid item xs={12}>
+                <Typography
+                  align="center"
+                  component="h4"
+                  variant="h6"
+                  gutterBottom
+                >
+                  Enter a name for your diet plan
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} align="center">
+                <FormControl>
+                  <InputLabel htmlFor="component-outlined" required>
+                    Name
+                  </InputLabel>
+                  <OutlinedInput
+                    name="name"
+                    onChange={(event) => {
+                      setName(event.target.value);
+                    }}
+                    label="name"
+                    required
+                  />
+                </FormControl>
+              </Grid>
+            </Paper>
+          </Grid>
 
           {activePlan && (
             <Grid>
@@ -624,6 +642,36 @@ export default function Quiz() {
             </Grid>
           )}
 
+          {activePlan && (
+            <Grid>
+              <Grid item xs={12} align="center">
+                <Paper
+                  sx={{
+                    mt: 1,
+                    mb: 1,
+                    p: 4,
+                    alignItems: "center",
+                    minWidth: { md: 400 },
+                  }}
+                >
+                  <FormControlLabel
+                    label="select food for Prefered Foods"
+                    control={
+                      <Checkbox
+                        checked={selectFoods}
+                        icon={<CheckBoxOutlineBlankRoundedIcon />}
+                        checkedIcon={<FoodBankRoundedIcon />}
+                        onChange={handleSelectFoods}
+                        inputProps={{ "aria-label": "controlled" }}
+                      />
+                    }
+                  />
+                  <br></br>
+                </Paper>
+              </Grid>
+            </Grid>
+          )}
+
           <Grid>
             <Grid item xs={12} align="center">
               <Paper
@@ -639,14 +687,20 @@ export default function Quiz() {
                   Make sure you entered the correct details
                 </Typography>
                 <br></br>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  type="submit"
-                  // onClick={handleSubmit}
-                >
-                  Select Foods
-                </Button>
+                {activePlan ? (
+                  <Button variant="contained" color="secondary" type="submit">
+                    Continue
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    type="submit"
+                    // onClick={handleSubmit}
+                  >
+                    Select Foods
+                  </Button>
+                )}
               </Paper>
             </Grid>
           </Grid>

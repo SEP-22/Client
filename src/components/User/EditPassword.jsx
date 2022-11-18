@@ -9,44 +9,37 @@ import { editUserPassword } from '../../utils/api/user';
 
 const EditPassword = () => {
 
-  //const[profileDet , setProfileDet] = React.useState({});
-  //const _id = "6335d3657e7aaea82d5e3650"
   const _id = JSON.parse(localStorage.getItem("user")).id;
   const [password, setPassword] = React.useState("");
   const [repassword, setRepassword] = React.useState("");
-  const navigate = useNavigate();
+  const [error,setError] = React.useState("");
 
-  //const[newName,setNewName] = React.useState(profileDet.name)
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setPassword(event.target.value)
-    //console.log(event.target.value)
   }
   const handleReChange = (event) => {
     setRepassword(event.target.value)
-    //console.log(event.target.value)
   }
 
   const handleSubmit = (event) =>{
     event.preventDefault();
-    console.log(password)
 
-    if (
-        password != "" &&
-        repassword != ""
-      ) {
-        if(password == repassword){
-            sendData({
-                userId:_id,
-                password: password,
-            });
-        }else{
-            alert("Passwords doesn't match!")
-        }
-      } else {
-        alert("Invalid inputs");
-      }
-    //notify that name cannot be empty
+    if(password == "" || repassword == "" || password.trim() == "" || repassword.trim() == ""){
+      setError("Password cannot be empty");
+    }
+    else if(password != repassword){
+      setError("The passwords doesn't match!");
+    }
+    else if(password.length < 8){
+      setError("Password length should be more than 8!");
+    }else{
+      sendData({
+        userId:_id,
+        password: password,
+      });
+    }
   };
 //navigate("/eatsmart/profile");
   const sendData = async (data) => {
@@ -106,6 +99,7 @@ const EditPassword = () => {
                     onChange={handleReChange}
                     />
                 </FormControl>
+                {error !== "" ? <p style={{ color: "red" }}>{error}</p> : <p></p>}
             </Box>
             <br></br>
             <br></br>

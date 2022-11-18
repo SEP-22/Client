@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 import FoodCardUser from "../FoodCard/FoodCardUser";
 import { foodByCategory } from "../../utils/api/food";
 import CircularProgress from "@mui/material/CircularProgress";
-import { getPreferedFoods } from "../../utils/api/user";
+import ErrorSharpIcon from "@mui/icons-material/ErrorSharp";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -14,16 +14,18 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function FoodList({Category,state}) {
-  const [Vegetables_Fruits, setVegetablesFruits] = React.useState([]);
+export default function FoodList({ Category, state, id }) {
+  const [Vegetables, setVegetables] = React.useState([]);
+  const [Fruits, setFruits] = React.useState([]);
   const [StarchyFood, setStartchyFood] = React.useState([]);
   const [Proteins, setProteins] = React.useState([]);
-  const [Dairy_Fat, setDairyFat] = React.useState([]);
-  const [Sugar, setSugar] = React.useState([]);
+  const [Dairy, setDairy] = React.useState([]);
+  const [Fat_Sugar, setFat_Sugar] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
 
   // const _id = JSON.parse(localStorage.getItem("user")).id;
-  const _id = "633601573507a646fb339d94"
+  // const _id = "633601573507a646fb339d94"
 
   // const Category = props.Category;
 
@@ -32,15 +34,18 @@ export default function FoodList({Category,state}) {
       setIsLoading(true);
       const res = await foodByCategory();
       if (res && res.status === 200) {
+        setError(false);
         const data = res.data;
-        setVegetablesFruits(data.Vegetables_Fruits);
+        setVegetables(data.Vegetables);
+        setFruits(data.Fruits);
         setStartchyFood(data.StarchyFood);
-        setDairyFat(data.Dairy_Fat);
+        setDairy(data.Dairy);
         setProteins(data.Proteins);
-        setSugar(data.Sugar);
+        setFat_Sugar(data.Fat_Sugar);
         setIsLoading(false);
       } else {
         setIsLoading(false);
+        setError(true);
       }
     };
 
@@ -48,16 +53,18 @@ export default function FoodList({Category,state}) {
   }, []);
 
   function getArray(name) {
-    if (name === "Fruits and Vegetables") {
-      return Vegetables_Fruits;
+    if (name === "Vegetables") {
+      return Vegetables;
+    } else if (name === "Fruits") {
+      return Fruits;
     } else if (name === "Starchy food") {
       return StarchyFood;
     } else if (name === "Proteins") {
       return Proteins;
-    } else if (name === "Dairy and Fats") {
-      return Dairy_Fat;
-    } else if (name === "Sugar") {
-      return Sugar;
+    } else if (name === "Dairy") {
+      return Dairy;
+    } else if (name === "Fats and Sugar") {
+      return Fat_Sugar;
     } else {
       return [];
     }
@@ -72,42 +79,110 @@ export default function FoodList({Category,state}) {
         justifyContent: "center",
       }}
     >
-      <Grid container spacing={2}>
-        {isLoading && (
-          <Box
-            sx={{
-              m: 2,
-              alignItems: "center",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <CircularProgress color="warning" size={20} />
-            <Typography variant="button">&nbsp;&nbsp;Loading.... </Typography>
-          </Box>
-        )}
-        {Category.map((type) => (
-          <>
-            <Grid key={type} item xs={12}>
-              <Item>
-                <Typography
-                  sx={{ fontWeight: "bold" }}
-                  variant="h6"
-                  component="h4"
-                  color="secondary"
-                >
-                  {type}
-                </Typography>
-              </Item>
-            </Grid>
-            {getArray(type).map((food) => (
-              <Grid key={food.Food} item xs={12} md={3}>
-                <FoodCardUser foodItem={food} checked = {state[(food._id)]} /* handleStateChange={handleStateChange} *//>
+      {!isLoading && !error && (
+        <Grid container spacing={2}>
+          {Category.map((type) => (
+            <>
+              <Grid key={type} item xs={12}>
+                <Item>
+                  <Typography
+                    sx={{ fontWeight: "bold" }}
+                    variant="h6"
+                    component="h4"
+                    color="secondary"
+                  >
+                    {type}
+                  </Typography>
+                </Item>
               </Grid>
-            ))}
-          </>
-        ))}
-      </Grid>
+              {getArray(type).map((food) => (
+                <Grid key={food.Food} item xs={12} md={3}>
+                  <FoodCardUser
+                    foodItem={food}
+                    checked={
+                      state[food._id]
+                    } /* handleStateChange={handleStateChange} */
+                  />
+                </Grid>
+              ))}
+            </>
+          ))}
+        </Grid>
+      )}
+
+      {isLoading && (
+        <Box
+          mt={10}
+          sx={{
+            m: 2,
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Grid>
+            <Paper
+              sx={{
+                mt: 1,
+                mb: 1,
+                p: 4,
+                minWidth: { md: 400 },
+                borderRadius: 2,
+              }}
+            >
+              <Grid item xs={12} sx={{ justifyContent: "flex-start" }}>
+                <Box sx={{ alignContent: "flex-start", display: "flex" }}>
+                  <CircularProgress color="warning" size={20} />
+                  <Typography variant="button">
+                    &nbsp;&nbsp;Loading....{" "}
+                  </Typography>
+                </Box>
+              </Grid>
+            </Paper>
+          </Grid>
+        </Box>
+      )}
+      {error && !isLoading && (
+        <Box
+          mt={10}
+          sx={{
+            m: 2,
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Grid>
+            <Paper
+              sx={{
+                mt: 1,
+                mb: 1,
+                p: 4,
+                minWidth: { md: 400 },
+                borderRadius: 2,
+              }}
+            >
+              <Grid item xs={12} sx={{ justifyContent: "flex-start" }}>
+                <Box sx={{ alignContent: "flex-start", display: "flex" }}>
+                  <ErrorSharpIcon
+                    sx={{
+                      display: "flex",
+                      alignSelf: "center",
+                      fontWeight: "bold",
+                    }}
+                    fontSize="small"
+                  />
+                  <Typography ml={1} variant="body">
+                    Something went WRONG......
+                  </Typography>
+                </Box>
+              </Grid>
+            </Paper>
+          </Grid>
+        </Box>
+      )}
     </Box>
   );
 }

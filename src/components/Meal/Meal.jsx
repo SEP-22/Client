@@ -1,11 +1,12 @@
-import * as React from 'react';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
+import * as React from "react";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
 //import { Grid, Box, Paper, Typography } from '@mui/system';
-import { Grid, Box, Paper, Typography} from '@mui/material';
+import { Grid, Box, Paper, Typography, ImageListItemBar } from "@mui/material";
 import { styled } from "@mui/material/styles";
-//import Stack from '@mui/material';
-import Stack from '@mui/material/Stack';
+import "./meal.css";
+import IconButton from "@mui/material/IconButton";
+import InfoIcon from "@mui/icons-material/Info";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -15,145 +16,291 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function Meal() {
+export default function Meal(props) {
+  const mealDetails = props.meal;
+  const breakfastDetails = mealDetails.breakfast;
+  const lunchDetails = mealDetails.lunch;
+  const dinnerDetails = mealDetails.dinner;
+  // console.log(breakfastDetails);
+  // console.log(lunchDetails);
+  // console.log(dinnerDetails);
+
   return (
     <>
-    <Box
-      sx={{
-        m: 2,
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "center",
-      }}>
-      {/* <Stack direction="row" alignItems="center" gap={1}>
+      <Box
+        sx={{
+          m: 2,
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        {/* <Stack direction="row" alignItems="center" gap={1}>
         <Typography variant="body1" align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>BREAKFAST</Typography>
       </Stack> */}
-      <Grid container spacing={2}>
-      <Grid item xs={12} sx ={{m: 2,
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "center",
-        flexGrow: 1,}}>
-      <Grid item>
-        <Item>
-          <Typography align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>
-            BREAKFAST
-          </Typography>
-        </Item>
-      </Grid>
-      <ImageList sx={{ width: 338, height: 330 , marginRight: 2,}} cols={2} rowHeight={164} >
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
-            <img
-              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
-      {/* <Stack direction="row" alignItems="center" gap={1}>
+        <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
+          <Grid item xs={4} sm={6} md={4}>
+            <Grid item>
+              <Item>
+                <Typography align="center" sx={{ fontSize: 21 }}>
+                  BREAKFAST
+                </Typography>
+              </Item>
+            </Grid>
+            <Box
+              sx={{
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <ImageList
+                sx={{ width: 338, height: 330, marginRight: 2 }}
+                cols={2}
+                rowHeight={164}
+              >
+                {breakfastDetails.map((item) => (
+                  <ImageListItem
+                    key={item[0]}
+                    borderColor="primary.main"
+                    borderTop={4}
+                    borderBottom={4}
+                  >
+                    <img
+                      // src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
+                      // srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                      src={item[3]}
+                      srcSet={item[3]}
+                      alt={item[4]}
+                      loading="lazy"
+                    />
+                    <div className="imageListItemBar">
+                      <ImageListItemBar
+                        sx={{
+                          background:
+                            "linear-gradient(to bottom, rgba(76, 175, 80, 0.6) 0%, " +
+                            "rgba(76, 175, 80, 0.6) 70%, rgba(76, 175, 80, 0.6) 100%)",
+                        }}
+                        // sx={{
+                        //   background:
+                        //     'linear-gradient(to bottom, rgba(255, 170, 232, 0.6) 0%, ' +
+                        //     'rgba(255, 170, 232, 0.6) 70%, rgba(255, 170, 232,0.6) 100%)',
+
+                        // }}
+                        // style: {
+                        //   maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                        //   width: 250,
+                        // },
+                        title={item[4]}
+                        subtitle={item[2]}
+                      />
+                    </div>
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </Box>
+          </Grid>
+          <Grid item xs={4} sm={4} md={4}>
+            <Grid item>
+              <Item>
+                <Typography align="center" sx={{ fontSize: 21 }}>
+                  LUNCH
+                </Typography>
+              </Item>
+            </Grid>
+            <Box
+              sx={{
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+            <ImageList
+              sx={{ width: 338, height: 330, marginRight: 2 }}
+              cols={2}
+              rowHeight={164}
+            >
+              {lunchDetails.map((item) => (
+                <ImageListItem
+                  key={item[0]}
+                  borderColor="primary.main"
+                  borderTop={4}
+                  borderBottom={4}
+                >
+                  <img
+                    src={item[3]}
+                    srcSet={item[3]}
+                    alt={item[4]}
+                    loading="lazy"
+                  />
+                  <div className="imageListItemBar">
+                    <ImageListItemBar
+                      sx={{
+                        background:
+                          "linear-gradient(to bottom, rgba(76, 175, 80, 0.6) 0%, " +
+                          "rgba(76, 175, 80, 0.6) 70%, rgba(76, 175, 80, 0.6) 100%)",
+                      }}
+                      title={item[4]}
+                      subtitle={item[2]}
+                    />
+                  </div>
+                </ImageListItem>
+              ))}
+            </ImageList>
+            </Box>
+          </Grid>
+          <Grid item xs={4} sm={4} md={4}>
+            <Grid item>
+              <Item>
+                <Typography align="center" sx={{ fontSize: 21 }}>
+                  DINNER
+                </Typography>
+              </Item>
+            </Grid>
+            <Box
+              sx={{
+                alignItems: "center",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+            <ImageList
+              sx={{ width: 338, height: 330, marginRight: 2 }}
+              cols={2}
+              rowHeight={164}
+            >
+              {dinnerDetails.map((item) => (
+                <ImageListItem
+                  key={item[0]}
+                  borderColor="primary.main"
+                  borderTop={4}
+                  borderBottom={4}
+                >
+                  <img
+                    src={item[3]}
+                    srcSet={item[3]}
+                    alt={item[4]}
+                    loading="lazy"
+                  />
+                  <div className="imageListItemBar">
+                    <ImageListItemBar
+                      sx={{
+                        background:
+                          "linear-gradient(to bottom, rgba(76, 175, 80, 0.6) 0%, " +
+                          "rgba(76, 175, 80, 0.6) 70%, rgba(76, 175, 80, 0.6) 100%)",
+                      }}
+                      // style: {
+                      //   maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                      //   width: 250,
+                      // },
+                      title={item[4]}
+                      subtitle={item[2]}
+                    />
+                  </div>
+                </ImageListItem>
+              ))}
+            </ImageList>
+            </Box>
+          </Grid>
+          {/* <Stack direction="row" alignItems="center" gap={1}>
         <Typography variant="body1" align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>LUNCH</Typography>
       </Stack> */}
-      <Grid item >
+          {/* <Grid item >
         <Item>
           <Typography align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>
             LUNCH
           </Typography>
         </Item>
-      </Grid>
-      <ImageList sx={{ width: 338, height: 330, marginRight: 2,}} cols={2} rowHeight={164}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+      </Grid> */}
+          {/* <ImageList sx={{ width: 338, height: 330, marginRight: 2,}} cols={2} rowHeight={164}>
+      {lunchDetails.map((item) => (
+          <ImageListItem key={item[0]}>
             <img
-              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
+              src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              alt={item[4]}
               loading="lazy"
             />
           </ImageListItem>
         ))}
-      </ImageList>
-      {/* <Stack direction="row" alignItems="center" gap={1}>
+      </ImageList> */}
+          {/* <Stack direction="row" alignItems="center" gap={1}>
         <Typography variant="body1" align="center" sx={{ fontSize: 21 , writingMode: {xs: "none", md:"vertical-lr"}, textOrientation: {xs: "none", md:"upright"},}}>DINNER</Typography>
       </Stack> */}
-      <Grid item >
+          {/* <Grid item >
         <Item>
           <Typography align="center" sx={{ fontSize: 21 , writingMode: {xs: "vertical-lr", md:"vertical-lr"}, textOrientation: {xs: "upright", md:"upright"},}}>
             DINNER
           </Typography>
         </Item>
-      </Grid>
-      <ImageList sx={{ width: 338, height: 330 ,marginRight: 2,}} cols={2} rowHeight={164}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+      </Grid> */}
+          {/* <ImageList sx={{ width: 338, height: 330 ,marginRight: 2,}} cols={2} rowHeight={164}>
+      {dinnerDetails.map((item) => (
+          <ImageListItem key={item[0]}>
             <img
-              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
+              src={`${item[3]}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${item[3]}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              alt={item[4]}
               loading="lazy"
             />
           </ImageListItem>
         ))}
-      </ImageList>
-      </Grid>
-      </Grid>
-      
-      {/* </div> */}
-    </Box>
-    
+      </ImageList> */}
+        </Grid>
+
+        {/* </div> */}
+      </Box>
     </>
   );
 }
 
 const itemData = [
   {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
+    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+    title: "Breakfast",
   },
   {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
+    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
+    title: "Burger",
   },
   {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
+    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
+    title: "Camera",
   },
   {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
+    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
+    title: "Coffee",
   },
   {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
+    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
+    title: "Hats",
   },
   {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
+    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
+    title: "Honey",
   },
   {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
+    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
+    title: "Basketball",
   },
   {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
+    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
+    title: "Fern",
   },
   {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
+    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
+    title: "Mushrooms",
   },
   {
-    img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    title: 'Tomato basil',
+    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
+    title: "Tomato basil",
   },
   {
-    img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    title: 'Sea star',
+    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
+    title: "Sea star",
   },
   {
-    img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-    title: 'Bike',
+    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    title: "Bike",
   },
 ];

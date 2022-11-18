@@ -18,7 +18,6 @@ const pages = [
   ["FOOD LIST", "foodlist"],
 ];
 const settings = [
-  ["Profile", "profile"],
   ["Logout", "/login"],
 ];
 

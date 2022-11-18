@@ -35,11 +35,12 @@ const MenuProps = {
 };
 
 const Category = [
-  "Fruits and Vegetables",
+  "Vegetables",
+  "Fruits",
   "Starchy food",
   "Proteins",
-  "Dairy and Fats",
-  "Sugar",
+  "Dairy",
+  "Fats and Sugar",
 ];
 
 function getStyles(name, foodCategory, theme) {
@@ -61,8 +62,8 @@ export default function GuideUserFoodList() {
   const [FoodList, setFoodList] = React.useState([]);
   const [state, setState] = React.useState({});
 
-  // const _id = JSON.parse(localStorage.getItem("user")).id;
-  const _id = "633601573507a646fb339d94"
+  const _id = JSON.parse(localStorage.getItem("user")).id;
+  // const _id = "633601573507a646fb339d94"
 
   const handleChange = (event) => {
     const {
@@ -73,6 +74,7 @@ export default function GuideUserFoodList() {
       typeof value === "string" ? value.split(",") : value
     );
   };
+
 
   // const handleStateChange = (f_id,checked) => {
   //   setState({
@@ -205,9 +207,9 @@ export default function GuideUserFoodList() {
         </Box>
       )}
       {foodCategory.length === 0 ? (
-        <FoodListUser Category={Category} state={state} /* handleStateChange={handleStateChange} *//>
+        <FoodListUser Category={Category} state={state} id = {0}/* handleStateChange={handleStateChange} *//>
       ) : (
-        <FoodListUser Category={foodCategory} state={state} /* handleStateChange={handleStateChange} */ />
+        <FoodListUser Category={foodCategory} state={state} id = {1} /* handleStateChange={handleStateChange} */ />
       )}
       {/* {console.log(foodCategory)} */}
     </>

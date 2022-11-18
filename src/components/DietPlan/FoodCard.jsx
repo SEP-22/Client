@@ -11,11 +11,12 @@ export default function FoodCard(props) {
    const FoodItem = props.foodItem;
 
   return (
-      <Card sx={{minHeight:{xs:"unset", md:270}, maxHeight:{xs:"unset", md:290}, display:"flex" , flexDirection:"column",}}>
+      <Card sx={{ height:{xs:"unset", md:290}, display:"flex" , flexDirection:"column",}}>
         <CardMedia
           component="img"
           alt={FoodItem.Food}
           width="100%"
+          height="80%"
           image={FoodItem.Image}
           loading="lazy"
         />

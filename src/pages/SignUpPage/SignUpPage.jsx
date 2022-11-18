@@ -19,6 +19,9 @@ export default function SignUpPage() {
 
   const { user, signUser } = useAuth();
 
+  const reContact = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+  const reEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+
   const submitForm = async (event) => {
     event.preventDefault();
     if (
@@ -29,7 +32,9 @@ export default function SignUpPage() {
       repassword == ""
     ) {
       setError("All fields should be filled!");
-    } else if (phone.length != 10) {
+    } else if (!reEmail.test(email)) {
+      setError("Please enter a valid Email!");
+    } else if (!reContact.test(phone)) {
       setError("Please enter a valid phone number!");
     } else if (password !== repassword) {
       setError("Passwords do not match!");
@@ -71,6 +76,7 @@ export default function SignUpPage() {
               label="Email"
               variant="outlined"
               type="email"
+              pattern="/^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/"
               fullWidth
               required
               onChange={(event) => {

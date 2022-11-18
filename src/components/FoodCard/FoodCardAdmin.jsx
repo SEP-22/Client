@@ -71,17 +71,17 @@ export default function FoodCardAdmin(props) {
       <ReactCardFlip isFlipped={Flipped} flipDirection="vertical">
         <Card
           sx={{
-            maxWidth: "300",
             m: 2,
             display: "flex",
             flexDirection: "column",
+            height:{xs:"unset", md:500},
           }}
         >
           <CardMedia
-            sx={{}}
             component="img"
             alt={FoodItem.name}
             width="100%"
+            height="80%"
             image={FoodItem.image}
             loading="lazy"
           />

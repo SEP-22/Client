@@ -20,6 +20,7 @@ import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutline
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import { generateDietPlan, saveDietPlans } from "../../utils/api/dietPlan";
 import CircularProgress from "@mui/material/CircularProgress";
+import { createAndSaveShoppingList } from "../../utils/api/shoppingList";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -80,7 +81,7 @@ export default function DietPlanSelection() {
             let t4 = e.indexOf(",", t3 + 1);
             b.push([
               e.slice(e.indexOf("'") + 1, t1 - 1),
-              e.slice(t1 + 3, e.indexOf("cal") + 3),
+              e.slice(t1 + 3, e.indexOf("kcal") + 4),
               e.slice(t2 + 3, e.indexOf("g") + 1),
               e.slice(t3 + 3, t4 - 1),
               e.slice(t4 + 3, e.lastIndexOf("'")),
@@ -95,7 +96,7 @@ export default function DietPlanSelection() {
             let t4 = e.indexOf(",", t3 + 1);
             l.push([
               e.slice(e.indexOf("'") + 1, t1 - 1),
-              e.slice(t1 + 3, e.indexOf("cal") + 3),
+              e.slice(t1 + 3, e.indexOf("kcal") + 4),
               e.slice(t2 + 3, e.indexOf("g") + 1),
               e.slice(t3 + 3, t4 - 1),
               e.slice(t4 + 3, e.lastIndexOf("'")),
@@ -110,7 +111,7 @@ export default function DietPlanSelection() {
             let t4 = e.indexOf(",", t3 + 1);
             d.push([
               e.slice(e.indexOf("'") + 1, t1 - 1),
-              e.slice(t1 + 3, e.indexOf("cal") + 3),
+              e.slice(t1 + 3, e.indexOf("kcal") + 4),
               e.slice(t2 + 3, e.indexOf("g") + 1),
               e.slice(t3 + 3, t4 - 1),
               e.slice(t4 + 3, e.lastIndexOf("'")),
@@ -153,14 +154,20 @@ export default function DietPlanSelection() {
   };
 
   const sendData = async (data) => {
+    console.log(data)
     const res = await saveDietPlans(data);
+    const res2 = await createAndSaveShoppingList(data);
     if (res.status === 200) {
       console.log(res.data);
-      navigate("/eatsmart/dietplans", {
-        state: {
-          dietPlan_Id: res.data._id,
-        },
-      });
+      if(res2.status === 200){
+        navigate("/eatsmart/dietplans", {
+          state: {
+            dietPlan_Id: res.data._id,
+          },
+        });
+      }else{
+        console.log(res2.data);
+      }
     } else {
       console.log(res.status);
     }

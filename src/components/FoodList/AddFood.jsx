@@ -27,11 +27,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Category = [
-  "Fruits and Vegetables",
+  "Vegetables",
+  "Fruits",
   "Starchy food",
   "Proteins",
-  "Dairy and Fats",
-  "Sugar",
+  "Dairy",
+  "Fats and Sugar",
 ];
 
 const ITEM_HEIGHT = 48;

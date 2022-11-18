@@ -8,12 +8,12 @@ import { editUserEmail } from '../../utils/api/user';
 const EditEmail = () => {
 
   const navigate = useNavigate();
-
-  const[profileDet , setProfileDet] = React.useState({});
-  //const _id = "6335d3657e7aaea82d5e3650"
   const _id = JSON.parse(localStorage.getItem("user")).id;
-  const[newEmail,setNewEmail] = React.useState('')
-  //const[newName,setNewName] = React.useState(profileDet.name)
+  const[profileDet , setProfileDet] = React.useState({});
+  const[newEmail,setNewEmail] = React.useState('');
+  const [error, setError] = React.useState("");
+
+  const reEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
   React.useEffect(() =>{
     const getData = async() => {
@@ -30,38 +30,38 @@ const EditEmail = () => {
 
   const handleChange = (event) => {
     setNewEmail(event.target.value)
-    //console.log(event.target.value)
   }
 
   const handleSubmit = (event) =>{
     event.preventDefault();
-
-    // sendData({
-    //   userId : _id,
-    //   name: newName,
-    // });
-
-    console.log(newEmail)
-    if(newEmail.trim() != "") {
-      //update the name in db
-      //const data = ({userId:_id,name:newName});
-      //editUserProfile(data.json());
+    if(newEmail == "" || newEmail.trim() == ""){
+      setError("Email cannot be empty!");
+    }
+    else if(!reEmail.test(newEmail)){
+      setError("Please enter a valid email address!");
+    }
+    else{
       sendData({
         userId : _id,
         email: newEmail,
       });
     }
-    //notify that name cannot be empty
   };
 
   const sendData = async (data) => {
+    console.log(data);
     const res = await editUserEmail(data);
-    if(res.status == 200 ){
-      console.log(res.body);
-      navigate("/eatsmart/profile");
+    if(res){
+      if(res.status === 200 ){
+        console.log(res.body);
+        navigate("/eatsmart/profile");
+      }else{
+        setError(res.body.error);
+      }
     }else{
-      console.log(res.status);
+      setError("The email is already is use..")
     }
+    
   };
 
   return (
@@ -96,11 +96,13 @@ const EditEmail = () => {
                   <OutlinedInput
                     name='emailaddress'
                     label="Emailaddress"
+                    pattern="/^[a-zA-Z0-9.! #$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/"
                     required
-                    defaultvalue={profileDet.email}
+                    defaultValue={profileDet.email}
                     onChange={handleChange}
                     />
                 </FormControl>
+                {error !== "" ? <p style={{ color: "red" }}>{error}</p> : <p></p>}
             </Box>
             <br></br>
             <br></br>

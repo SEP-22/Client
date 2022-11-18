@@ -22,15 +22,23 @@ import { setPreferedFoods } from "../../utils/api/user";
 function FoodSelection() {
   const location = useLocation();
   const navigate = useNavigate();
-  const steps = location.state.steps;
+  const steps = [
+    "Vegetables",
+    "Fruits",
+    "Starchy food",
+    "Proteins",
+    "Dairy",
+    "Fats and Sugar",
+  ];
   const dietPlan_Id = location.state._id;
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [Vegetables_Fruits, setVegetablesFruits] = React.useState([]);
+  const [Vegetables, setVegetables] = React.useState([]);
+  const [Fruits, setFruits] = React.useState([]);
   const [StarchyFood, setStartchyFood] = React.useState([]);
   const [Proteins, setProteins] = React.useState([]);
-  const [Dairy_Fat, setDairyFat] = React.useState([]);
-  const [Sugar, setSugar] = React.useState([]);
+  const [Dairy, setDairy] = React.useState([]);
+  const [Fat_Sugar, setFat_Sugar] = React.useState([]);
   const [state, setState] = React.useState({});
   const [error, setError] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
@@ -42,17 +50,19 @@ function FoodSelection() {
       const res = await foodByCategory();
       if (res.status === 200) {
         const data = res.data;
-        setVegetablesFruits(data.Vegetables_Fruits);
+        setVegetables(data.Vegetables);
+        setFruits(data.Fruits);
         setStartchyFood(data.StarchyFood);
-        setDairyFat(data.Dairy_Fat);
+        setDairy(data.Dairy);
         setProteins(data.Proteins);
-        setSugar(data.Sugar);
+        setFat_Sugar(data.Fat_Sugar);
 
-        data.Vegetables_Fruits.map((f) => (states[f._id] = false));
+        data.Vegetables.map((f) => (states[f._id] = false));
+        data.Fruits.map((f) => (states[f._id] = false));
         data.StarchyFood.map((f) => (states[f._id] = false));
-        data.Dairy_Fat.map((f) => (states[f._id] = false));
+        data.Dairy.map((f) => (states[f._id] = false));
         data.Proteins.map((f) => (states[f._id] = false));
-        data.Sugar.map((f) => (states[f._id] = false));
+        data.Fat_Sugar.map((f) => (states[f._id] = false));
       }
       setState(states);
       setIsLoading(false);
@@ -106,7 +116,7 @@ function FoodSelection() {
       console.log(res.data);
       navigate("/eatsmart/dietplanselection", {
         state: {
-          dietPlan_Id: res.data._id,
+          dietPlan_Id: dietPlan_Id,
         },
       });
     } else {
@@ -122,7 +132,7 @@ function FoodSelection() {
         c = c + 1;
       }
     }
-    if (c >= 2) {
+    if (c >= 4) {
       return false;
     } else {
       return true;
@@ -132,17 +142,18 @@ function FoodSelection() {
   //   const error = getError(steps[activeStep]).filter((v) => v).length !== 2;
 
   function getArray(name) {
-    if (name === "Fruits and Vegetables") {
-      return Vegetables_Fruits;
+    if (name === "Vegetables") {
+      return Vegetables;
+    } else if (name === "Fruits") {
+      return Fruits;
     } else if (name === "Starchy food") {
       return StarchyFood;
     } else if (name === "Proteins") {
       return Proteins;
-    } else if (name === "Dairy and Fats") {
-      return Dairy_Fat;
-    } else if (name === "Sugar") {
-      return Sugar;
-    } else if (name === "High Blood Pressure") {
+    } else if (name === "Dairy") {
+      return Dairy;
+    } else if (name === "Fats and Sugar") {
+      return Fat_Sugar;
     } else {
       return [];
     }
@@ -172,7 +183,7 @@ function FoodSelection() {
               }}
             >
               <Typography align="center">
-                Select at least 3 foods !!!
+                Select at least 2 foods !!!
               </Typography>
               <MobileStepper
                 variant="progress"
@@ -249,7 +260,6 @@ function FoodSelection() {
                 {isLoading && (
                   <Box
                     sx={{
-                      m: 2,
                       alignItems: "center",
                       display: "flex",
                       justifyContent: "center",
@@ -261,6 +271,7 @@ function FoodSelection() {
                     </Typography>
                   </Box>
                 )}
+
                 <FormControl
                   required
                   error={getError(steps[activeStep])}
@@ -271,29 +282,40 @@ function FoodSelection() {
                     Pick at least TWO
                   </FormLabel>
                   <FormGroup>
-                    {getArray(steps[activeStep]).map((food) => (
-                      <Stack direction="row" spacing={2} key={food._id} mb={2}>
-                        <Avatar
-                          alt={food.name}
-                          src={food.image}
-                          sx={{ width: 56, height: 56, boxShadow: 3 }}
-                          variant="rounded"
-                        />
-
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              checked={state[food._id]}
-                              onChange={handleChange}
-                              name={food._id}
+                    <Grid container spacing={2} m={2}>
+                      {" "}
+                      {getArray(steps[activeStep]).map((food) => (
+                        <Grid item xs={12} md={4}>
+                          <Stack
+                            direction="row"
+                            spacing={2}
+                            key={food._id}
+                            mb={2}
+                            mr={1}
+                          >
+                            <Avatar
+                              alt={food.name}
+                              src={food.image}
+                              sx={{ width: 56, height: 56, boxShadow: 3 }}
+                              variant="rounded"
                             />
-                          }
-                          label={food.name}
-                        />
-                      </Stack>
-                    ))}
+
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={state[food._id]}
+                                  onChange={handleChange}
+                                  name={food._id}
+                                />
+                              }
+                              label={food.name}
+                            />
+                          </Stack>
+                        </Grid>
+                      ))}
+                    </Grid>
                   </FormGroup>
-                  <FormHelperText>You can display an error</FormHelperText>
+                  <FormHelperText sx={{alignSelf:"center"}}>You must select at least 2 foods</FormHelperText>
                 </FormControl>
               </Grid>
             </Paper>

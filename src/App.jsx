@@ -29,6 +29,8 @@ import ProfilePageMain from "./pages/Profile/ProfilePageMain";
 import FoodSelection from "./components/DietPlan/FoodSelection";
 import ManagePage from "./pages/ManagePage/ManagePage"
 import DietPlanSelection from "./components/DietPlan/DietPlanSelection";
+import MultipleDietPlansMain from "./pages/MultipleDietPlans/MultipleDietPlansMain";
+import ViewDiet from "./components/UserDietPlans/ViewDiet";
 
 const theme = createTheme({
   palette: {
@@ -82,7 +84,11 @@ function App() {
                 <Route path="editphone" element={<EditPhone />} />
                 <Route path="editpassword" element={<EditPassword />} />
               </Route>
-              <Route path="dietplans" element={<MultipleDietPlans />} />
+              <Route path="dietplans" element={<MultipleDietPlansMain />}>
+                <Route index element={<MultipleDietPlans />} />
+                <Route path="viewPlan" element={<ViewDiet />} />
+              </Route>
+              <Route path="dietplans" element={<MultipleDietPlansMain />} />
               <Route path="quiz" element={<Quiz />} />
               <Route path="foodselection" element={<FoodSelection />} />
               <Route path="dietplanselection" element={<DietPlanSelection />} />
