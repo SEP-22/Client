@@ -5,10 +5,9 @@ import Footer from "../../components/Footer/Footer";
 import Button from "@mui/material/Button";
 import FoodCard from "../../components/FoodCard/FoodCardUser";
 import NavbarLanding from "../../components/Navbar/NavbarLanding";
-import LandingImg1 from "../../assets/images/LandingPic1.png"
+import LandingImg1 from "../../assets/images/LandingPic1.png";
 import LandingImg2 from "../../assets/images/LandingPic2.png";
-import "./landingPage.css"
-
+import "./landingPage.css";
 
 export default function LandingPage() {
   return (
@@ -18,13 +17,14 @@ export default function LandingPage() {
         <div className="landingCard">
           <div className="landingDesc">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Healthy - Smart - Easy - User Friendly
+            <p  className="eatsmart">EatSmart</p>
+              Customized diet plans to achieve all of your body goals.<br></br> Unique
+              food preferences; No worries we got you 7 choices.<br></br> Each diet plan
+              comes with a shopping list.<br></br> Checking off all the boxes for
+              nutritional levels, we guarantee a BALANCED diet.<br></br> Complete the
+              quiz to create your own diet plan.<br></br> Hurry UP! No time to waste...<br></br>
+              Jump into your healthy lifestyle with EatSmart
             </p>
             <Button className="landingBtn" variant="contained">
               GET YOUR DIET PLAN
@@ -36,13 +36,11 @@ export default function LandingPage() {
           <img className="landingCardImg" src={LandingImg2} alt="" />
           <div className="landingDesc">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              A healthy lifestyle not only changes your body, it changes your
+              mind, attitude and your mood!<br></br> With Eatsmart now you can set your
+              goals for a healthy life.<br></br> Don't forget to install EatSmart to your
+              mobile device for your easy access.<br></br> Click below to get the app
+              installed! Make your a priority!
             </p>
             <Button
               className="landingBtn"

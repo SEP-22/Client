@@ -20,6 +20,12 @@ margin-bottom: 10vh;
     font-size: larger;
 }
 
+.eatsmart{
+    font-size:x-large;
+    color: #4caf50;
+    font-weight: bold;
+}
+
 .landingCardImg{
     height: 35vh;
     margin: 0 3vw 0 3vw;
