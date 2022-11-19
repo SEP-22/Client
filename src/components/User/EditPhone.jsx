@@ -45,7 +45,7 @@ const EditPhone = () => {
           userId : _id,
           phone: newPhone,
         });
-        navigate("/eatsmart/profile");
+        // navigate("/eatsmart/profile");
       }
     };
   
@@ -53,6 +53,7 @@ const EditPhone = () => {
       const res = await editUserPhone(data);
       if(res.status == 200 ){
         console.log(res.body);
+        navigate("/eatsmart/profile");
       }else{
         console.log(res.status);
       }

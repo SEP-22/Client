@@ -49,8 +49,8 @@ const SingleDietPlan = (props) => {
   };
   const handleChange = () => {
     sendData({ user_Id: _id, activePlan_Id: props.completeDet._id });
-    handleClose();
-    window.location.reload(false);
+    // handleClose();
+    // window.location.reload(false);
   };
   const handleView = () => {
     navigate("viewPlan");
@@ -65,9 +65,9 @@ const SingleDietPlan = (props) => {
   const handleDelWindowChange = () => {
     //sendData({user_Id:_id,activePlan_Id:props.completeDet._id});
     deleteData(props.completeDet._id);
-    handleDelWindowClose();
-    console.log("delwindow closed");
-    window.location.reload(false);
+    // handleDelWindowClose();
+    // console.log("delwindow closed");
+    // window.location.reload(false);
   };
 
   const completeDetails = props.completeDet.dietIDs;
@@ -80,6 +80,8 @@ const SingleDietPlan = (props) => {
     const res = await updateActiveDietPlan(data);
     if (res.status == 200) {
       console.log(res.body);
+      handleClose();
+    window.location.reload(false);
     } else {
       console.log(res.status);
     }
@@ -88,6 +90,9 @@ const SingleDietPlan = (props) => {
     const res = await deleteDietPlan(data);
     if (res.status == 200) {
       console.log(res.body);
+      handleDelWindowClose();
+      console.log("delwindow closed");
+      window.location.reload(false);
     } else {
       console.log(res.status);
     }

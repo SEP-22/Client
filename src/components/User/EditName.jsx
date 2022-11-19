@@ -43,7 +43,7 @@ const EditName = () => {
         userId : _id,
         name: newName,
       });
-      navigate("/eatsmart/profile");
+      // navigate("/eatsmart/profile");
     }
     //notify that name cannot be empty
   };
@@ -52,6 +52,7 @@ const EditName = () => {
     const res = await editUserName(data);
     if(res.status == 200 ){
       console.log(res.body);
+      navigate("/eatsmart/profile");
     }else{
       console.log(res.status);
     }
