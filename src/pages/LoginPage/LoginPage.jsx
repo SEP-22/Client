@@ -133,8 +133,8 @@ export default function LogInPage() {
               </Grid>
             )}
           </form>
-          <Link className="formLink">Forgot your Password?</Link>
-          <Link className="formLink">Create a new account?</Link>
+          <Link className="formLink" >Forgot your Password?</Link>
+          <Link className="formLink" to={"/signup"}>Create a new account?</Link>
         </div>
       </div>
       <Footer />
