@@ -84,14 +84,15 @@ const DietPlan = () => {
           }}
         >
           <Grid item xs={12}>
-            <Button
-              variant="contained"
-              sx={{ mb: 4 }}
-              component={Link}
-              to="/eatsmart/quiz"
-            >
-              Create a Diet Plan
-            </Button>
+          <Button
+                    id = 'quiz'
+                    variant="contained"
+                    sx={{ mb: 4 }}
+                    component={Link}
+                    to="/eatsmart/quiz"
+                  >
+                    Create a Diet Plan
+                  </Button>
           </Grid>
 
           <Typography

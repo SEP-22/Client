@@ -25,7 +25,7 @@ export default function FoodCard(props) {
             {FoodItem.Food}
           </Typography>
           <Typography variant="body1" >
-            Calories: {FoodItem.Calories} <br></br>
+            {FoodItem.Calories} <br></br>
           </Typography>
           <Typography sx={{fontWeight:"bold",}} variant="body1">
             Consume : {FoodItem.Consume} g <br></br>

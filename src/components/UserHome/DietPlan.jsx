@@ -132,6 +132,7 @@ export default function DietPlan() {
               >
                 <Grid item xs={12}>
                   <Button
+                    id = 'quiz'
                     variant="contained"
                     sx={{ mb: 4 }}
                     component={Link}

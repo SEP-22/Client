@@ -264,7 +264,7 @@ export default function Quiz() {
                     onChange={(newValue) => {
                       setDate(newValue);
                     }}
-                    renderInput={(params) => <TextField {...params} required />}
+                    renderInput={(params) => <TextField id="birthday"{...params} required />}
                   />
                 </LocalizationProvider>
               </Grid>
@@ -303,12 +303,12 @@ export default function Quiz() {
                   >
                     <FormControlLabel
                       value="female"
-                      control={<Radio />}
+                      control={<Radio id="female"/>}
                       label="Female"
                     />
                     <FormControlLabel
                       value="male"
-                      control={<Radio />}
+                      control={<Radio id="male"/>}
                       label="Male"
                     />
                   </RadioGroup>
@@ -344,6 +344,7 @@ export default function Quiz() {
                     Height
                   </InputLabel>
                   <OutlinedInput
+                  id="height"
                     name="height"
                     data-testid="height"
                     onChange={(event) => {
@@ -388,6 +389,7 @@ export default function Quiz() {
                     Weight
                   </InputLabel>
                   <OutlinedInput
+                  id = "weight"
                     name="weight"
                     onChange={(event) => {
                       setWeight(event.target.value);
@@ -436,27 +438,27 @@ export default function Quiz() {
                   >
                     <FormControlLabel
                       value="verylight"
-                      control={<Radio />}
+                      control={<Radio id="verylight"/>}
                       label="Very Light"
                     />
                     <FormControlLabel
                       value="light"
-                      control={<Radio />}
+                      control={<Radio id="light"/>}
                       label="Light"
                     />
                     <FormControlLabel
                       value="moderate"
-                      control={<Radio />}
+                      control={<Radio id="moderate"/>}
                       label="Moderate"
                     />
                     <FormControlLabel
                       value="heavy"
-                      control={<Radio />}
+                      control={<Radio id="heavy"/>}
                       label="Heavy"
                     />
                     <FormControlLabel
                       value="veryheavy"
-                      control={<Radio />}
+                      control={<Radio id="veryheavy"/>}
                       label="Very Heavy"
                     />
                   </RadioGroup>

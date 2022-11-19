@@ -111,6 +111,7 @@ const ResponsiveAppBar = () => {
               >
                 {pages.map((page) => (
                   <MenuItem
+                    id = {page[1]}
                     key={page[0]}
                     to={page[1]}
                     className="nav-link"
