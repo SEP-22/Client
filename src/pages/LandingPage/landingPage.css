@@ -25,6 +25,12 @@ margin-bottom: 10vh;
     margin: 0 3vw 0 3vw;
 }
 
+.eatsmart{
+    font-size:x-large;
+    color: #4caf50;
+    font-weight: bold;
+}
+
 @media screen and (max-width: 1000px) {
   .landingCard{
 flex-direction: column;

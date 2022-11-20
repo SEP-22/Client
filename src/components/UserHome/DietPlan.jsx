@@ -148,12 +148,14 @@ export default function DietPlan() {
                   color="dark"
                   align="center"
                 >
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse vitae vehicula dui. Etiam consectetur porta
-                  tellus, vel porta leo scelerisque semper. Orci varius natoque
-                  penatibus et magnis dis parturient montes, nascetur ridiculus
-                  mus. Aenean in dapibus metus, in ultrices libero. Nulla vel
-                  placerat lectus, a commodo elit.
+                  Are you falling behind of your fitness goals? Tired of
+                  old-fashioned dieting? <br></br> Worry no more because we've
+                  got you covered. <br></br> Your very own personalised diet
+                  plan is few clicks away. <br></br> Complete this quiz to get a
+                  balanced diet with your own food preferences that comes with
+                  all the essential nutrients.<br></br>
+                  To help you in groceries, each diet plan comes with a shopping
+                  list!!. <br></br> Hurry up and create your diet plan NOW!!
                 </Typography>
                 <br></br>
                 <br></br>

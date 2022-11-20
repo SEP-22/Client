@@ -187,7 +187,7 @@ const ShoppingList = () => {
                           {food[0]}
                         </Typography>
                         <br></br>
-                        <Typography>{food[1]} grams</Typography>
+                        <Typography>{Math.round(food[1]) > 1000 ? `${Math.round(food[1])/1000} kg`: `${Math.round(food[1])} g`} </Typography>
                       </div>
                     </Item>
                   </div>

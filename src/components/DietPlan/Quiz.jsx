@@ -422,7 +422,7 @@ export default function Quiz() {
                   gutterBottom
                 >
                   Select your Daily Activity Level
-                </Typography>
+                </Typography>     
               </Grid>
 
               <Grid item xs={12} align="center">
