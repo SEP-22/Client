@@ -37,13 +37,11 @@ export default function LandingPage() {
           <img className="landingCardImg" src={LandingImg2} alt="" />
           <div className="landingDesc">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            A healthy lifestyle not only changes your body, it changes your
+              mind, attitude and your mood!<br></br> With Eatsmart now you can set your
+              goals for a healthy life.<br></br> Don't forget to install EatSmart to your
+              mobile device for your easy access.<br></br> Click below to get the app
+              installed! Make your a priority!
             </p>
             <Button
               className="landingBtn"
