@@ -132,7 +132,7 @@ function FoodSelection() {
         c = c + 1;
       }
     }
-    if (c >= 4) {
+    if (c >= 6) {
       return false;
     } else {
       return true;
@@ -183,7 +183,7 @@ function FoodSelection() {
               }}
             >
               <Typography align="center">
-                Select at least 2 foods !!!
+                Select at least 6 foods !!!
               </Typography>
               <MobileStepper
                 variant="progress"
@@ -279,7 +279,7 @@ function FoodSelection() {
                   variant="standard"
                 >
                   <FormLabel component="typography">
-                    Pick at least TWO
+                    Pick at least SIX!
                   </FormLabel>
                   <FormGroup>
                     <Grid container spacing={2} m={2}>
@@ -315,7 +315,7 @@ function FoodSelection() {
                       ))}
                     </Grid>
                   </FormGroup>
-                  <FormHelperText sx={{alignSelf:"center"}}>You must select at least 2 foods</FormHelperText>
+                  <FormHelperText sx={{alignSelf:"center"}}>You must select at least 6 foods</FormHelperText>
                 </FormControl>
               </Grid>
             </Paper>
