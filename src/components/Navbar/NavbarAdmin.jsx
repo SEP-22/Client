@@ -119,7 +119,7 @@ const ResponsiveAppBar = () => {
           <Avatar
             sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
             alt="logo"
-            src="/src/assets/images/logo.png"
+            src="https://us.123rf.com/450wm/ylivdesign/ylivdesign2110/ylivdesign211012504/176252000-hombre-con-el-icono-de-administrador-de-inscripci%C3%B3n-contorno-hombre-con-la-inscripci%C3%B3n-admin-vector-.jpg?ver=6"
           />
 
           <Typography
